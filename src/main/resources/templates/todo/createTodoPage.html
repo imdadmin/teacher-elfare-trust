@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/fragments :: html_head}">
+    <title>default title</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{common/fragments :: navbar}">
+</nav>
+
+<main class="container mt-4 flex-grow">
+    <div class="row">
+        <div class="col-md-6 col-sm-8 mx-auto">
+            <form method="post" th:object="${todo}">
+                <h2 th:text="${pageTopic}" class="text-center">Create New  Todo</h2>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" th:field="*{id}"/>
+
+                    <input type="hidden" th:field="*{username}"/>
+
+
+                    <fieldset>
+                        <label th:for="*{description}">Description:</label>
+                        <input type="text"
+                               th:class="${#fields.hasErrors('*{description}')} ? 'form-control error' : 'form-control'"
+                               th:field="*{description}"/>
+                        <span th:if="${#fields.hasErrors('*{description}')}" th:errors="*{description}">Invalid Description</span><br/>
+                    </fieldset>
+
+                    <fieldset>
+                        <label th:for="*{targetedDate}">Date:</label>
+                        <input type="text"
+                               th:class="${#fields.hasErrors('*{targetedDate}')} ? 'form-control datepicker error' : 'form-control datepicker'"
+                               th:field="*{targetedDate}"/>
+                        <span th:if="${#fields.hasErrors('*{targetedDate}')}" th:errors="*{targetedDate}">Invalid Date</span><br>
+                    </fieldset>
+
+                    <fieldset>
+                        <label th:for="*{done}">Done?:</label>
+                        <input type="checkbox" th:checked="*{done}" th:field="*{done}"/>
+                        <span th:if="${#fields.hasErrors('*{done}')}" th:errors="*{done}">Invalid Description</span><br/>
+                    </fieldset>
+
+                </div>
+                <button type="submit" class="btn btn-primary btn-block m-2">Submit</button>
+
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer th:replace="~{common/fragments :: footer}">
+    footer
+</footer>
+
+<script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
+
+</body>
+</html>

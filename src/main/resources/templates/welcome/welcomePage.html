@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/fragments :: html_head}">
+    <title>default title</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav th:replace="~{common/fragments :: navbar}">
+    </nav>
+
+    <div class="container py-5">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Welcome to Our Website</h1>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <hr class="my-4">
+            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+            <br>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{common/fragments :: footer}">
+        footer
+    </footer>
+</body>
+</html>

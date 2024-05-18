@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/fragments :: html_head}">
+    <title>default title</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{common/fragments :: navbar}">
+</nav>
+
+<main class="container mt-4 flex-grow">
+    <h2 th:text="${successMessage}"></h2>
+    <h2 class="text-center my-4">My  Todo List</h2>
+    <a class="btn btn-success m-2" href="/create-todo">Create  Todo</a>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Username</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Is Done</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="todo:${todolist}">
+                <td th:text="${todo.username}"></td>
+                <td th:text="${todo.description}"></td>
+                <td th:text="${todo.targetedDate}"></td>
+                <td th:text="${todo.done}"></td>
+                <th>
+                    <a class="btn btn-warning" th:href="'delete-todo?id='+${todo.id}">Delete</a>
+                    <a class="btn btn-success" th:href="'update-todo?id='+${todo.id}">Update</a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <ul th:if="${totalPages > 1}">
+                <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{'/students?page=' + ${pageNum}}">Page <span th:text="${pageNum + 1}"></span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{common/fragments :: footer}">
+    footer
+</footer>
+</body>
+</html>

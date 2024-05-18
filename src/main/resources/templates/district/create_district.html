@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/fragments :: html_head}">
+    <title>default title</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{common/fragments :: navbar}">
+</nav>
+
+<main class="container mt-4 flex-grow">
+    <div class="row">
+        <div class="col-md-6 col-sm-8 mx-auto">
+            <form method="post" th:object="${districtRequestDTO}">
+                <h2 th:text="${pageTopic}" class="text-center">Edit District</h2>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" th:field="*{id}"/>
+
+                    <fieldset>
+                        <label th:for="*{b_name}">Name (Bangla):</label>
+                        <input type="text"
+                               th:class="${#fields.hasErrors('*{b_name}')} ? 'form-control error' : 'form-control'"
+                               th:field="*{b_name}"/>
+                        <span th:if="${#fields.hasErrors('*{b_name}')}" th:errors="*{b_name}">Invalid Description</span><br/>
+                    </fieldset>
+                    <fieldset>
+                        <label th:for="*{e_name}">Name (English):</label>
+                        <input type="text"
+                               th:class="${#fields.hasErrors('*{e_name}')} ? 'form-control error' : 'form-control'"
+                               th:field="*{e_name}"/>
+                        <span th:if="${#fields.hasErrors('*{e_name}')}" th:errors="*{e_name}">Invalid Description</span><br/>
+                    </fieldset>
+
+
+
+
+
+                </div>
+                <button type="submit" class="btn btn-primary btn-block m-2">Submit</button>
+
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer th:replace="~{common/fragments :: footer}">
+    footer
+</footer>
+
+
+
+</body>
+</html>
