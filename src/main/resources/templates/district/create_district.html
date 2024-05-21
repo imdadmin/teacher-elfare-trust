@@ -11,7 +11,7 @@
 <main class="container mt-4 flex-grow">
     <div class="row">
         <div class="col-md-6 col-sm-8 mx-auto">
-            <form method="post" th:object="${districtRequestDTO}">
+            <form method="post" th:object="${district}">
                 <h2 th:text="${pageTopic}" class="text-center">Edit District</h2>
                 <div class="form-group">
                     <input type="hidden" class="form-control" th:field="*{id}"/>

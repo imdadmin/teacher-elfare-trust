@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymleaf.org"
+  th:replace="adminPanel/common/fragments::Layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      
+    </style>
+  </head>
+  <body>
+<section class="mt-14 mx-2 overflow-hidden">
+  
+<div class="w-[80%]  overflow-hidden  m-3">
+  <p>Users > list</p>
+  <div class="flex justify-between ">
+    <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">  Users</h1>
+    <a href="#" class="bg-yellow-500 text-white px-4 py-2 rounded">
+      New user
+    </a>
+  </div>
+</div>
+<div class="w-[80%] rounded overflow-hidden shadow-lg m-3 bg-white px-3 py-4" >
+  <div>
+
+    <div class="flex justify-between my-3">
+        <h4 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Filters</h4>
+        <button class=" font-semibold  text-red-500" onclick="location.reload()" >Reset</button>
+    </div>
+  
+    <div class="flex justify-between my-2">
+        <div class="flex">
+            <div class="myselect mr-2">
+                <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="districtInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">District</span> </label>
+                <select id="districtInput" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" onchange="myDisupo()">
+                    <option value="" >ALL</option>
+                    <option value="Dhaka">Dhaka</option>
+                    <option value="Chittagong">Chittagong</option>
+                    <!-- Add more options as needed -->
+                </select>
+
+            </div>
+            <div class="myselect">
+                <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="upazilaInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">Upazila</span> </label>
+                <select id="upazilaInput" onchange="myDisupo()"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
+                    <option value="">ALL</option>
+                    <option value="Savar">Savar</option>
+                    <option value="Raozan">Raozan</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+        </div>
+      <div>
+            <select id="rowsPerPage" onchange="changeRowsPerPage()"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
+                <option value="3">3 Entities</option>
+                <option value="5">5 Entities</option>
+                <option value="10">10 Entities</option>
+            </select>
+      </div>
+    </div>
+
+    <div class="flex justify-end border-t border-gray-300 mb-3 pt-5 mt-5">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." class=" border-2 text-black font-bold py-1 px-2 rounded"/>
+
+        <button onclick="prevPage()" class="bg-yellow-200 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded mr-1 ml-3">
+            <strong>&lt;</strong>
+        </button>
+        <button onclick="nextPage()" class="bg-yellow-200 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded">
+            <strong>&gt;</strong>
+        </button>
+
+    </div>
+    </div >
+    <div class="overflow-auto">
+        <div id="myTable " >
+          <table class="table-auto w-full " >
+            <thead>
+              <tr>
+                <th class="px-4 py-2">
+                  <input type="checkbox" id="checkAll" />
+                </th>
+                <th>প্রোফাইল ফটো ইউআরএল</th>
+                <th>জেলা</th>
+                <th>উপজেলা</th>
+                <th>নাম</th>
+                <th>ইউআইডি</th>
+                <th>এনআইডি</th>
+                <th>ফোন</th>
+                <th>যোগদানের তারিখ</th>
+                <th>পিআরএল তারিখ</th>
+                <th>পদবী</th>
+                <th>স্কুলের নাম</th>
+                <th>জন্ম তারিখ </th>
+                <th>পেস্কেল</th>
+                <th>মোট বেতন উত্তোলন</th>
+                <th>ইমেল</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="list"  id="ttble" >
+              <tr class="hover:bg-gray-200" th:each=" user: ${userList}">
+                <td class="border px-4 py-2 text-center align-middle">
+                  <input type="checkbox" class="rowCheckbox" />
+                </td>
+                <td class="border px-4 py-2">
+                  <img th:src="@{'https://ui-avatars.com/api/?name=' + ${user.getName()} + '&color=7F9CF5&background=EBF4FF'}" alt="Profile Photo" class="rounded-full"/>
+                </td>
+                <td class="border px-4 py-2 district">District</td>
+                <td class="border px-4 py-2 upazila">Upozila</td>
+                <td class="border px-4 py-2"  th:text="${user.getName()}">Name</td>
+                <td class="border px-4 py-2"  th:text="${user.getUid()}">Uid</td>
+                <td class="border px-4 py-2" th:text="${user.getNid()}">NID</td>
+                <td class="border px-4 py-2" th:text="${user.getPhone()}" >Phone</td>
+                <td class="border px-4 py-2" th:text="${user.getNid()}" >Joining date</td>
+                <td class="border px-4 py-2"  >Prl date</td>
+                <td class="border px-4 py-2"  >Designation</td>
+                <td class="border px-4 py-2"  >School name</td>
+                <td class="border px-4 py-2"  >Date of birth</td>
+                <td class="border px-4 py-2"  >Payscale</td>
+                <td class="border px-4 py-2"  >Total salary withdraw</td>
+                <td class="border px-4 py-2"  >Email</td>
+                <td class="border px-4 py-2 flex"  >
+                  <a th:href="'view-user?id='+${user.getId()}" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action">
+                  <svg class="fi-link-icon h-4 w-4 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
+                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                  </svg>View
+                  </a>
+
+                  <a th:href="'update-user?id='+${user.getId()}"  class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-400 fi-ac-link-action text-yellow-500">
+                    <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"></path>
+                    <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"></path>
+                  </svg>Edit
+                  </a>
+
+                </td>
+                <!-- Add more data as needed -->
+              </tr>
+            
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>
+
+<!-- Table JS -->
+<script>
+    var table = document.getElementById('ttble');
+    var rows = table.rows;
+    var currentPage = 0;
+    var rowsPerPage = 3;
+
+    function myFunction() {
+        var input, filter, tr, td, i, j, visible;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        tr = table.getElementsByTagName("tr");
+        for (i = 1; i < tr.length; i++) {
+            visible = false;
+            /* Check all tds in each row - if the row contains the search term, set visible to true */
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    if (td[j].textContent.toUpperCase().indexOf(filter) > -1) {
+                        visible = true;
+                    }
+                }
+            }
+            if (visible === true) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+
+    // district and upzila get
+    function myDisupo() {
+        var districtInput, upazilaInput, filterDistrict, filterUpazila, tr, tdDistrict, tdUpazila, i;
+        districtInput = document.getElementById("districtInput");
+        upazilaInput = document.getElementById("upazilaInput");
+        filterDistrict = districtInput.value.toUpperCase();
+        filterUpazila = upazilaInput.value.toUpperCase();
+        tr = table.getElementsByTagName("tr");
+        for (i = 1; i < tr.length; i++) {
+            tdDistrict = tr[i].getElementsByClassName("district")[0];
+            tdUpazila = tr[i].getElementsByClassName("upazila")[0];
+            if (tdDistrict && tdUpazila) {
+                if (tdDistrict.textContent.toUpperCase().indexOf(filterDistrict) > -1 && tdUpazila.textContent.toUpperCase().indexOf(filterUpazila) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function nextPage() {
+        console.log(currentPage);
+        currentPage++;
+        showPage();
+    }
+
+    function prevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            showPage();
+        }
+    }
+
+    function changeRowsPerPage() {
+        rowsPerPage = document.getElementById('rowsPerPage').value;
+        currentPage = 0; // reset to first page
+        showPage();
+    }
+
+    function showPage() {
+        var start = currentPage * rowsPerPage;
+        var end = start + rowsPerPage;
+        for (var i = 1; i < rows.length; i++) {
+            if (i < start || i >= end) {
+                rows[i].classList.add('hidden');
+            } else {
+                rows[i].classList.remove('hidden');
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        $('#districtInput').select2();
+        $('#upazilaInput').select2();
+        $("#checkAll").click(function () {
+            if ($(this).is(":checked")) {
+                $(".rowCheckbox").prop("checked", true);
+            } else {
+                $(".rowCheckbox").prop("checked", false);
+            }
+        });
+
+        showPage();
+    });
+
+</script>
+</section>
+
+   
+  </body>
+</html>

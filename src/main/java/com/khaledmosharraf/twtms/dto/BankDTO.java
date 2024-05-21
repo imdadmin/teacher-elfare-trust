@@ -5,9 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class DistrictDTO {
+public class BankDTO {
     private Long id;
-    private String e_name;
-    private String b_name;
-
+    private String name;
+    private String account_no;
 }

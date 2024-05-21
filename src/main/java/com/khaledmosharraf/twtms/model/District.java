@@ -8,17 +8,17 @@ import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-@Entity
 @Data
+@Entity
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @Builder
 public class District extends Autditable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "district_sequence")
+    @SequenceGenerator(name = "district_sequence", sequenceName = "DISTRICT_SEQUENCE", allocationSize = 1)
+
     private Long id;
     private String e_name;
     private String b_name;
@@ -28,5 +28,4 @@ public class District extends Autditable{
     public District() {
         this.subDistricts = new ArrayList<>();
     }
-
 }

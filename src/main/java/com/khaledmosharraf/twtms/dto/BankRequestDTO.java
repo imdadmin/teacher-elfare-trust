@@ -7,21 +7,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DistrictRequestDTO {
+public class BankRequestDTO {
     private Long id;
 
     @NotBlank
     @Size(min = 2, max = 80, message = "{validation.size}")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "{pattern.nametype}")
-    private String e_name;
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "pattern.nametype")
+    private String name;
 
     @NotBlank
-    @Size(min = 2, max = 80, message = "{validation.size}")
-    @Pattern(regexp = "^[\\u0980-\\u09FF\\s.-]*$", message = "{pattern.bangla}")
-    private String b_name;
+    @Size(min = 2, max = 40, message = "{validation.size}")
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]+$", message = "pattern.accounttype")
+    private String account_no;
 
 }

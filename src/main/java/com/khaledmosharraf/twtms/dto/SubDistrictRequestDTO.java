@@ -1,7 +1,5 @@
 package com.khaledmosharraf.twtms.dto;
 
-import com.khaledmosharraf.twtms.model.District;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

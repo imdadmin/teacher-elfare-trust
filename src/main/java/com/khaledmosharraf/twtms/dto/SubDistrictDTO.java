@@ -1,8 +1,5 @@
 package com.khaledmosharraf.twtms.dto;
 
-import com.khaledmosharraf.twtms.model.District;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
