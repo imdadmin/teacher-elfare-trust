@@ -17,18 +17,18 @@
                     <input type="hidden" class="form-control" th:field="*{id}"/>
 
                     <fieldset>
-                        <label th:for="*{b_name}">Name (Bangla):</label>
+                        <label th:for="*{bName}">Name (Bangla):</label>
                         <input type="text"
-                               th:class="${#fields.hasErrors('*{b_name}')} ? 'form-control error' : 'form-control'"
-                               th:field="*{b_name}"/>
-                        <span th:if="${#fields.hasErrors('*{b_name}')}" th:errors="*{b_name}">Invalid Description</span><br/>
+                               th:class="${#fields.hasErrors('*{bName}')} ? 'form-control error' : 'form-control'"
+                               th:field="*{bName}"/>
+                        <span th:if="${#fields.hasErrors('*{bName}')}" th:errors="*{bName}">Invalid Description</span><br/>
                     </fieldset>
                     <fieldset>
-                        <label th:for="*{e_name}">Name (English):</label>
+                        <label th:for="*{eName}">Name (English):</label>
                         <input type="text"
-                               th:class="${#fields.hasErrors('*{e_name}')} ? 'form-control error' : 'form-control'"
-                               th:field="*{e_name}"/>
-                        <span th:if="${#fields.hasErrors('*{e_name}')}" th:errors="*{e_name}">Invalid Description</span><br/>
+                               th:class="${#fields.hasErrors('*{eName}')} ? 'form-control error' : 'form-control'"
+                               th:field="*{eName}"/>
+                        <span th:if="${#fields.hasErrors('*{eName}')}" th:errors="*{eName}">Invalid Description</span><br/>
                     </fieldset>
 
 

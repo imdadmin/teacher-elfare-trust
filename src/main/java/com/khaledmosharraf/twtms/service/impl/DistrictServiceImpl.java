@@ -24,7 +24,8 @@ public class DistrictServiceImpl extends IdCheckingService<District,Long> implem
 
     @Override
     public List<DistrictDTO> getAll() {
-        return  districtRepository.findAll().stream().map(districtMapper::toDTO).collect(Collectors.toList());
+        List<District> districts = districtRepository.findAll();
+        return districts.stream().map(districtMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override

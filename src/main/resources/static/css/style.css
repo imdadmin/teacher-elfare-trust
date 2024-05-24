@@ -1,0 +1,51 @@
+/* Sidebar */
+@media (min-width: 640px) {
+    #sidebar {
+        width: 20%;
+        display: block;
+    }
+    #main-content {
+        width: 80%;
+    }
+}
+/* Sidebar */
+
+@font-face {
+    font-family: 'Siyam Rupali';
+    src: url('fonts/siyamrupali-webfont.eot');
+    src: url('fonts/siyamrupali-webfont.eot?#iefix') format('embedded-opentype');
+    src: local('Siyam Rupali Regular'), local('Siyam Rupali'),
+    url('fonts/siyamrupali-webfont.woff') format('woff'),
+    url('fonts/siyamrupali-webfont.otf') format('opentype'),
+    url('fonts/siyamrupali-webfont.svg#siyam_rupaliregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    unicode-range: U+0980-09FF;
+}
+
+        *{
+            font-family: 'Siyam Rupali', Arial, sans-serif !important;
+        }
+        .max-w-custom{
+            width: 56rem;
+        }
+ 
+        .activeNav{
+            color: rgb(218 120 6);;
+        }
+
+        @media (min-width: 768px) and (max-width: 1199px) {  /* Medium screens */
+  .your-class {
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {  /* Large screens and above */
+  .your-class {
+    display: block;
+  }
+}
+
+.your-class {  /* Hidden on small screens (default) */
+  display: none;
+}

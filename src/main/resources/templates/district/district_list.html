@@ -25,8 +25,8 @@
             <tbody>
             <tr th:each="district:${districts}">
                 <td th:text="${district.id}"></td>
-                <td th:text="${district.e_name}"></td>
-                <td th:text="${district.b_name}"></td>
+                <td th:text="${district.eName}"></td>
+                <td th:text="${district.bName}"></td>
                 <th>
                     <a class="btn btn-warning" th:href="'delete-district?id='+${district.id}">Delete</a>
                     <a class="btn btn-success" th:href="'update-district?id='+${district.id}">Update</a>

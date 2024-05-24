@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class SubDistrictDTO {
     private Long id;
-    private String e_name;
-    private String b_name;
-    private Long district_id;
+    private String eName;
+    private String bName;
+    private DistrictDTO district;
 }

@@ -36,7 +36,7 @@ public class DistrictController {
         model.addAttribute("totalPages",16);
 
         return "adminPanel/district/list";
-        // return  "district/district_list";
+      //   return  "district/district_list";
     }
     @GetMapping("districts2")
     public String showDistrictList2(Model model){
@@ -53,7 +53,7 @@ public class DistrictController {
 
     @GetMapping("create-district")
     public String showDistrictForm(Model model ) {
-        DistrictDTO districtDTO  = DistrictDTO.builder().build();
+        DistrictDTO districtDTO  = new  DistrictDTO();
         model.addAttribute("district",districtDTO);
         model.addAttribute("pageTopic","Create New District");
         model.addAttribute("username",getLoggedUsername());
@@ -62,7 +62,7 @@ public class DistrictController {
 
         return "adminPanel/district/create";
 
-   //     return  "district/create_district";
+      //  return  "district/create_district";
     }
 
     @PostMapping("create-district")
@@ -73,7 +73,7 @@ public class DistrictController {
             model.addAttribute("pageStatus", PageStatus.CREATE);
             model.addAttribute("pageStatus_tag", PageStatus.CREATE_TAG);
             return "adminPanel/district/create";
-          //  return  "district/create_district";
+           // return  "district/create_district";
         }
         districtService.add(districtRequestMapper.toDistrictDTO(districtRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
@@ -108,10 +108,10 @@ public class DistrictController {
             model.addAttribute("pageStatus", PageStatus.UPDATE);
             model.addAttribute("pageStatus_tag", PageStatus.UPDATE_TAG);
             return "adminPanel/district/create";
-          //  return  "district/create_district";
+         //   return  "district/create_district";
         }
         DistrictDTO districtDTO= districtRequestMapper.toDistrictDTO(districtRequestDTO);
-        districtService.add(districtDTO);
+        districtService.update(districtDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
         return "redirect:/districts";
     }
@@ -126,7 +126,7 @@ public class DistrictController {
         model.addAttribute("pageStatus", PageStatus.VIEW);
         model.addAttribute("pageStatus_tag", PageStatus.VIEW_TAG);
         return "adminPanel/district/create";
-       // return  "district/create_district";
+      //  return  "district/create_district";
     }
     private String getLoggedUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

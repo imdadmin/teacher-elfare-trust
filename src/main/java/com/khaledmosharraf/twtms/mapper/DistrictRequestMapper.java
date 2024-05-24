@@ -8,7 +8,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface DistrictRequestMapper {
 
-    District toModel(DistrictRequestDTO districtRequestDTO);
-  //  DistrictRequestDTO toDTO(District districtRequestDTO);
     DistrictDTO toDistrictDTO(DistrictRequestDTO districtRequestDTO);
 }

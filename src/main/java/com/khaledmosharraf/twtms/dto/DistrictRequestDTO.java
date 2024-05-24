@@ -10,18 +10,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class DistrictRequestDTO {
     private Long id;
 
     @NotBlank
     @Size(min = 2, max = 80, message = "{validation.size}")
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "{pattern.nametype}")
-    private String e_name;
+    private String eName;
 
     @NotBlank
     @Size(min = 2, max = 80, message = "{validation.size}")
     @Pattern(regexp = "^[\\u0980-\\u09FF\\s.-]*$", message = "{pattern.bangla}")
-    private String b_name;
+    private String bName;
 
 }
