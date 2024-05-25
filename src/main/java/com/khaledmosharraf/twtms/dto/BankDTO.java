@@ -12,4 +12,6 @@ public class BankDTO {
     private Long id;
     private String name;
     private String accountNo;
+    private Double depositAmount;
+    private Double expenseAmount;
 }

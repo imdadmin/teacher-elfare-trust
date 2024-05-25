@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymleaf.org"
+  th:replace="adminPanel/common/fragments::Layout(~{::section})"
+>
+  <head th:replace="~{common/fragments :: html_head}">
+    <meta charset="UTF-8" />
+    <meta e_name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${pageTopic}">Title</title>
+  </head> 
+  <body>
+   <section class="mt-24 overflow-hidden">
+        <!-- Page Title -->
+        <header class="fi-header   gap-4 pb-10  sm:flex-row sm:items-center sm:justify-between">
+                <nav class="fi-breadcrumbs mb-2 hidden sm:block">
+                <ol class="flex flex-wrap items-center gap-x-2">
+                <li class="flex gap-x-2">
+                        <a th:href="@{/payment-request}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Payment Requests</a>
+                </li>
+                <li class="flex gap-x-2">
+                <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
+                </svg>
+                <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">Create</a>
+                </li>
+                </ol>
+                </nav>
+                <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl pt-5" th:text="${pageTopic}">Title</h1>
+        </header>
+
+        <form method="post" th:object="${payment}" class="bg-white">
+
+          <div class="px-4 py-5 sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
+
+            <div class="grid grid-cols-2 gap-6">
+
+              <input th:field="*{id}" hidden />
+
+              <!-- User Id -->
+              <fieldset>
+                <div class="col-span-2 sm:col-span-1">
+
+                  <label class="block font-medium text-sm text-gray-700" th:for="*{user_id}" ><strong><span>User Id</span ><span class="text-red-600 ml-1">*</span></strong></label>
+
+                  <input
+                    type="text"
+                    class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                    th:field="*{user_id}"
+                    th:disabled="${pageStatus == 3}"
+                  />
+
+                  <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{user_id}')}" th:errors="*{user_id}" >Error</p>
+
+                </div>
+              </fieldset>
+
+              <!-- Amount -->
+              <fieldset>
+                <div class="col-span-2 sm:col-span-1">
+
+                  <label class="block font-medium text-sm text-gray-700" th:for="*{amount}"><strong><span>Amount</span><span class="text-red-600 ml-1">*</span></strong ></label>
+
+                  <input
+                    type="text"
+                    class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                    th:field="*{amount}"
+                    th:disabled="${pageStatus == 3}"
+                  />
+
+                  <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{amount}')}" th:errors="*{amount}" >Error</p>
+
+                </div>
+              </fieldset>
+
+              <!-- Status -->
+              <fieldset>
+
+                  <div class="flex items-center justify-between gap-x-3">
+                    <label for="toggle-switch" class="fi-fo-field-wrp-label inline-flex items-center gap-x-3">
+                      <button type="button" id="toggle-switch" class="fi-fo-toggle relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent outline-none transition-colors duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-70 fi-color-gray bg-gray-200 dark:bg-gray-700" aria-checked="false" role="switch">
+                        <span class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0">
+                        <span class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity opacity-100 ease-in duration-200" aria-hidden="true">
+                        </span>
+                        <span class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity opacity-0 ease-out duration-100" aria-hidden="true">
+                        </span>
+                      </span>
+                      </button>
+                      <strong> <span class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Status</span><span class="text-red-600">*</span></strong>
+                    </label>
+                  </div>
+                  <input type="checkbox" id="status" th:field="*{status}" hidden>  
+                  <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{status}')}" th:errors="*{status}" >Error</p>
+
+              </fieldset>
+
+               <!-- Date -->
+              <fieldset>
+                <div class="col-span-2 sm:col-span-1">
+                  
+                  <label class="block font-medium text-sm text-gray-700" th:for="*{date}"> <label> <span> Date</span><span class="text-red-600 ml-1">*</span></label>strong> </label>
+
+                  <input
+                    type="date"
+                    class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                    th:field="*{date}"
+                    th:disabled="${pageStatus == 3}"
+                  />
+
+                  <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{date}')}" th:errors="*{date}" >Error</p>
+
+                </div>
+              </fieldset>
+
+            </div>
+
+            <!-- Details -->
+            <fieldset>
+                    <div class="col-span-1 sm:col-span-1">
+
+                            <label class="block font-medium text-sm text-gray-700" th:for="*{details}"><strong><span>Details</span></strong></label>
+                            
+                            <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                            th:field="*{details}"
+                            th:disabled="${pageStatus == 3}">
+                            </textarea>
+
+                            <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{details}')}" th:errors="*{details}" >Error</p>
+
+                    </div>
+            </fieldset>
+
+          </div>
+         
+          <div class="flex items-center gap-2 justify-start px-4 py-3  text-end ">
+                  <button 
+                          type="submit" 
+                          class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-sm text-white  tracking-widest hover:bg-yellow-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 " 
+                          th:text="${pageStatus == 2 ? 'Update' : 'Create'}" 
+                          th:if="${pageStatus != 3}"
+                          > 
+                          Submit 
+                  </button>
+                  <a th:href="@{/payment-request}" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                  Cancel
+                  </a>
+          </div>
+
+        </form>
+        
+
+
+      <script>
+        const toggleSwitch = document.getElementById('toggle-switch');
+        const slider = toggleSwitch.querySelector('span'); // Get the slider element
+        const statusCheckbox = document.getElementById('status');
+        let isActive = false;
+
+        toggleSwitch.addEventListener('click', () => {
+                isActive = !isActive;
+
+                if(isActive){
+                        statusCheckbox.checked = true;
+                }
+                else{
+                        statusCheckbox.checked = false;
+                }
+                console.log(statusCheckbox.checked)
+                // Update class names based on state
+                toggleSwitch.classList.toggle('bg-yellow-600', isActive); // Active color
+                toggleSwitch.classList.toggle('bg-gray-200', !isActive); // Inactive color
+                // Animate slider position (using CSS transitions)
+                slider.classList.toggle('translate-x-5', isActive); // Move slider right
+        });
+
+        $(document).ready(function () {
+                console.log(statusCheckbox.checked)
+                console.log(isActive)
+        });
+
+      </script>
+    </section>
+  </body>
+</html>

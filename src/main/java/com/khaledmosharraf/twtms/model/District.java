@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
+//@Table(name = "districts")
 public class District extends Autditable{
 
     @Id

@@ -48,4 +48,158 @@
 
 .your-class {  /* Hidden on small screens (default) */
   display: none;
+} 
+
+/* Select CSS Change */
+.select2-container {
+    box-sizing: border-box;
+    display: block;
+    width: 180px;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+}
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #4b556330;
+    border-radius: 4px;
+    width: 123%;
+}
+.select2-container .select2-selection--single {
+    height: 35px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 35px
+}
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: rgba(128, 128, 128, 0.571);
+    color: #000000;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: none;
+    font-size: medium;
+    font-family: monospace;
+}
+.select2-container--classic .select2-selection--single:focus {
+    border: 1px solid #fb9858
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 35px;
+    position: absolute;
+    top: 1px;
+    right: -30px;
+    width: 20px;
+}
+.select2-container--classic .select2-selection--multiple:focus {
+    border: 1px solid #dbd7be
+}
+
+
+/* Data Table Custom css */
+
+.dt-container .dt-search input {
+    border: 1px solid #aaaaaa9d;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: transparent;
+    color: inherit;
+    margin-left: 3px;
+    margin-bottom: 25px;
+}
+.dt-search input:focus{
+    outline: 2px solid #d97706
+}
+
+.dt-length{
+    position: relative;
+    top: 10px;
+    left: 3px;
+}
+.dt-info,.dt-paging {
+    position: relative;
+    top: -35px;
+    
+}
+
+
+
+/* Target descending sort icon specifically */
+
+
+.checkboxes {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.checkboxes__row {
+  display: flex;
+}
+.checkboxes__row:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+.checkboxes__item {
+  padding: 5px;
+  /* width: 50%; */
+}
+
+    /* STYLE C */
+
+.checkbox.style-c {
+  display: inline-block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.checkbox.style-c input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkbox.style-c input:checked ~ .checkbox__checkmark {
+  background-color: #d97706;
+}
+.checkbox.style-c input:checked ~ .checkbox__checkmark:after {
+  opacity: 1;
+}
+.checkbox.style-c:hover input ~ .checkbox__checkmark {
+  background-color: #eee;
+}
+.checkbox.style-c:hover input:checked ~ .checkbox__checkmark {
+  background-color: #d97706;
+}
+.checkbox.style-c .checkbox__checkmark {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  transition: background-color 0.25s ease;
+  border-radius: 4px;
+}
+.checkbox.style-c .checkbox__checkmark:after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.checkbox.style-c .checkbox__body {
+  color: #fff;
+  line-height: 1.4;
+  font-size: 16px;
 }

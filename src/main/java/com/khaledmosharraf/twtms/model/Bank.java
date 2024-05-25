@@ -10,6 +10,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
+// @Table(name = "banks")
 public class Bank extends Autditable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bank_sequence")

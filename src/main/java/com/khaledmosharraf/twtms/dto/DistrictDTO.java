@@ -12,5 +12,5 @@ public class DistrictDTO {
     private Long id;
     private String eName;
     private String bName;
-
+    private int subDistrictCount;
 }

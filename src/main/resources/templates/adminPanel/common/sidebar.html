@@ -6,8 +6,16 @@
     <title>Document</title>
   </head>
   <body>
-     <aside class="bg-white-800 text-gray-700  flex flex-col mb-20" th:fragment="sidebar">
-          <nav class="flex-1 mt-10 border-r-2 ">
+     <aside class="bg-white-800 text-gray-700  flex flex-col relative" th:fragment="sidebar">
+          <div style="position: fixed; left: 0; top: 0;width: 20%;    z-index: 20;">
+              <header class="fi-sidebar-header flex h-16 items-center bg-white px-6 shadow-md shadow-b-gray-400/20 dark:bg-gray-900 dark:ring-white/10 lg:shadow-sm ">
+                  <a href="https://teachers-wellfare-trust.bshcl.org/admin">
+                      <div class="fi-logo text font-bold leading-5 tracking-tight text-gray-950 dark:text-white"> Teacher Wellfare Trust</div>
+                    </a>
+              </header>
+          </div>
+        
+          <nav class="flex-1 mt-10 border-r-2 text-sm leading-6 mt-24">
             <ul class="space-y-2">
               <!-- Dashboard -->
               <li class="activeNav">
@@ -30,7 +38,7 @@
                       d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                     ></path>
                   </svg>
-                  ড্যাসবোর্ড</a
+                  Dashboard</a
                 >
               </li>
               <!-- Teachers List -->
@@ -54,13 +62,13 @@
                       d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"
                     ></path>
                   </svg>
-                 সদস্য/শিক্ষক</a
+                Members / Teachers</a
                 >
               </li>
               <!-- Payment -->
               <li>
                 <a
-                  th:href="@{/payment-requests}"
+                  th:href="@{/payment-request}"
                   class="flex gap-2 font-semibold py-2 px-5 hover:bg-gray-100"
                 >
                   <svg
@@ -78,13 +86,13 @@
                       d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"
                     ></path>
                   </svg>
-                  সাবস্ক্রিপশন পেমেন্ট তালিকা</a
+                  Subscription Payment Lists</a
                 >
               </li>
               <!-- Grand -->
               <li>
                 <a
-                  th:href="@{withdraw-requests}"
+                  th:href="@{withdraw-request}"
                   class="flex gap-2 py-2 px-5 font-semibold hover:bg-gray-100"
                 >
                   <svg
@@ -101,7 +109,7 @@
                       stroke-linejoin="round"
                       d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"
                     ></path></svg>
-                   অনুদান তালিকা
+                   Grant List
                   </a>
               </li>
               <!-- Account -->
@@ -132,7 +140,7 @@
                   <span
                     class="fi-sidebar-group-label flex-1 text-sm font-semibold leading-6 text-gray-700 dark:text-gray-200"
                   >
-                    একাউন্টস
+                    Account
                   </span>
 
                   <button
@@ -152,7 +160,7 @@
                     aria-expanded="true"
                     onclick="AccountDropDown()"
                   >
-                    <span class="sr-only"> একাউন্টস </span>
+                    <span class="sr-only"> Account </span>
                     <svg
                       class="fi-icon-btn-icon h-5 w-5"
                       xmlns="http://www.w3.org/2000/svg"
@@ -177,7 +185,7 @@
                   <li class="fi-sidebar-item">
                     <a
                       
-                      th:href="@{/deposites}"
+                      th:href="@{/deposits}"
                       x-on:click="window.matchMedia(`(max-width: 1024px)`).matches &amp;&amp; $store.sidebar.close()"
                       class="fi-sidebar-item-button relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none transition duration-75 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
                     >
@@ -196,7 +204,7 @@
                       <span
                         class="fi-sidebar-item-label flex-1 truncate text-gray-700 dark:text-gray-200 font-medium"
                       >
-                        ডিপোসিটস
+                        Deposits
                       </span>
                     </a>
                   </li>
@@ -221,7 +229,7 @@
                       <span
                         class="fi-sidebar-item-label flex-1 truncate text-gray-700 dark:text-gray-200 font-medium"
                       >
-                        এক্সপেন্সেস
+                        Expenses
                       </span>
                     </a>
                   </li>
@@ -256,7 +264,7 @@
                   <span
                     class="fi-sidebar-group-label flex-1 text-sm font-semibold leading-6 text-gray-700 dark:text-gray-200"
                   >
-                    রিপোর্ট
+                    Report
                   </span>
 
                   <button
@@ -300,7 +308,7 @@
                   <li class="fi-sidebar-item">
                     <a
                       
-                      th:href="@{/grant}"
+                      th:href="@{/report/grant}"
                       x-on:click="window.matchMedia(`(max-width: 1024px)`).matches &amp;&amp; $store.sidebar.close()"
                       class="fi-sidebar-item-button relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none transition duration-75 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
                     >
@@ -319,13 +327,13 @@
                       <span
                         class="fi-sidebar-item-label flex-1 truncate text-gray-700 dark:text-gray-200 font-medium"
                       >
-                        গ্রান্ট রিপোর্ট
+                        Grant Report
                       </span>
                     </a>
                   </li>
                   <li class="fi-sidebar-item">
                     <a
-                      th:href="@{/member}"
+                      th:href="@{/report/member}"
                       x-on:click="window.matchMedia(`(max-width: 1024px)`).matches &amp;&amp; $store.sidebar.close()"
                       class="fi-sidebar-item-button relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none transition duration-75 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
                     >
@@ -344,13 +352,13 @@
                       <span
                         class="fi-sidebar-item-label flex-1 truncate text-gray-700 dark:text-gray-200 font-medium"
                       >
-                        মেম্বার/টিচার্স রিপোর্ট
+                        Members / Teachers Report
                       </span>
                     </a>
-                  </li>
+                  </li> 
                   <li class="fi-sidebar-item ">
                     <a
-                      th:href="@{/subs}"
+                      th:href="@{/report/payment}"
                       x-on:click="window.matchMedia(`(max-width: 1024px)`).matches &amp;&amp; $store.sidebar.close()"
                       class="fi-sidebar-item-button relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none transition duration-75 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
                     >
@@ -369,7 +377,7 @@
                       <span
                         class="fi-sidebar-item-label flex-1 truncate text-gray-700 dark:text-gray-200 font-medium"
                       >
-                       সাবস্ক্রিপশন পেমেন্ট রিপোর্ট
+                       Subscription Payment Report
                       </span>
                     </a>
                   </li>
@@ -403,7 +411,7 @@
                   <span
                     class="fi-sidebar-group-label flex-1 text-sm font-semibold leading-6 text-gray-700 dark:text-gray-200"
                   >
-                    সেটিংস
+                    Settings
                   </span>
 
                   <button
@@ -423,7 +431,7 @@
                     aria-expanded="true"
                     onclick="SettingDropDown()"
                   >
-                    <span class="sr-only"> সেটিংস </span>
+                    <span class="sr-only"> Settings </span>
                     <svg
                       class="fi-icon-btn-icon h-5 w-5"
                       xmlns="http://www.w3.org/2000/svg"
@@ -466,7 +474,7 @@
                       <span
                         class="fi-sidebar-item-label flex-1 truncate text-gray-700 dark:text-gray-200 font-medium"
                       >
-                        ব্যাংক
+                        Banks
                       </span>
                     </a>
                   </li>
@@ -491,13 +499,13 @@
                       <span
                         class="fi-sidebar-item-label flex-1 truncate text-gray-700 dark:text-gray-200 font-medium"
                       >
-                       জেলা
+                       Distrcts
                       </span>
                     </a>
                   </li>
                   <li class="fi-sidebar-item ">
                     <a
-                      th:href="@{/upazila}"
+                      th:href="@{/upazilas}"
                       x-on:click="window.matchMedia(`(max-width: 1024px)`).matches &amp;&amp; $store.sidebar.close()"
                       class="fi-sidebar-item-button relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none transition duration-75 hover:bg-gray-100 focus-visible:bg-gray-100 dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
                     >
@@ -516,7 +524,7 @@
                       <span
                         class="fi-sidebar-item-label flex-1 truncate text-gray-700 dark:text-gray-200 font-medium"
                       >
-                      উপজেলা
+                      Upazilas
                       </span>
                     </a>
                   </li>

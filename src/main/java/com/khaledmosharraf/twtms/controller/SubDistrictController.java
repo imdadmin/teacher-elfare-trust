@@ -136,8 +136,10 @@ public class SubDistrictController {
     public String showViewSubDistrictForm( @RequestParam Long id , Model model) {
 
         SubDistrictDTO subDistrictDTO = subDistrictService.get(id);
-        model.addAttribute("subDistrict",subDistrictDTO);
-
+        SubDistrictRequestDTO subDistrictRequestDTO = subDistrictRequestMapper.toSubDistrictRequestDTO(subDistrictDTO);
+        model.addAttribute("subDistrict",subDistrictRequestDTO);
+        List<DistrictDTO> districts= districtService.getAll();
+        model.addAttribute("districts", districts);
         model.addAttribute("pageTopic","View Upazila");
         model.addAttribute("username",getLoggedUsername());
         model.addAttribute("pageStatus", PageStatus.VIEW);

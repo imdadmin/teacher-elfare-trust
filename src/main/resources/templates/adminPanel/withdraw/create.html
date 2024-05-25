@@ -1,381 +1,277 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th="http://www.thymleaf.org"
   th:replace="adminPanel/common/fragments::Layout(~{::section})">
-<head>
+<head th:replace="~{common/fragments :: html_head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title th:text="${pageTopic}">Title</title>
 </head>
 <body>
-   <section class="mt-14">
-          <main class="flex-1">
-            <div class="container mx-auto py-8 px-4">
-                  <p>User > Create</p>
-                  <h2 class="text-3xl font-bold mb-4" th:text="${pageTopic}">ইউজার তৈরি</h2>
-                  <form method="post" th:object="${user}" class="bg-white">
-                        <div class="px-4 py-5  sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
-                                <div class="grid grid-cols-2 gap-6">
-                                       <!-- District -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label 
-                                                        class="block font-medium text-sm text-gray-700"
-                                                        th:for="*{sub_district_id}">
-                                                                <strong> <span>জেলা</span><span class="text-red-600 ml-1 " >*</span></strong>
-                                                       </label>
-                                                       <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
-                                                                th:field="*{sub_district_id}"   th:disabled="${pageStatus == 3}">
-                                                        <option th:each="district : ${districts}"
-                                                                th:value="${district.id}"
-                                                                th:text="${district.name}"
-                                                                th:selected="${district.id == sub_district_id}"></option>
-                                                        </select>
-                                                        <div class="mt-2" style="display: none;">
-                                                                <p class="text-sm text-red-600"></p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                       <!-- Name -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
+ <section class="mt-24 overflow-hidden">
+        <!-- Page Title -->
+        <header class="fi-header   gap-4 pb-10  sm:flex-row sm:items-center sm:justify-between">
+                <nav class="fi-breadcrumbs mb-2 hidden sm:block">
+                <ol class="flex flex-wrap items-center gap-x-2">
+                <li class="flex gap-x-2">
+                        <a th:href="@{/withdraw-request}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Withdraw Requests</a>
+                </li>
+                <li class="flex gap-x-2">
+                <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
+                </svg>
+                <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">Create</a>
+                </li>
+                </ol>
+                </nav>
+                <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl pt-5" th:text="${pageTopic}">Title</h1>
+        </header>
+        <form method="post" th:object="${withdraw}" class="bg-white">
+        
+                <div class="px-4 py-5  sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
 
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{name}"><strong> <span>নাম</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                        <div class="grid grid-cols-2 gap-6">
 
-                                                        <input 
-                                                        type="text" 
-                                                        class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
-                                                        th:field="*{name}" 
-                                                        th:disabled="${pageStatus == 3}"
-                                                    >
+                                <!-- User -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{user_id}"> <strong><span>User</span><span class="text-red-600 ml-1 " >*</span></strong></label>
+
+                                                <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
+                                                        th:field="*{user_id}"   th:disabled="${pageStatus == 3}">
+                                                        <option th:each="user : ${userList}"
+                                                                th:value="${user.id}"
+                                                                th:text="${user.name}"
+                                                                th:selected="${user.id == user_id}">
+                                                        </option>
+                                                </select>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{user_id}')}" th:errors="*{user_id}" >Error</p>
+                                        </div>
+                                </fieldset>
+
+                                <!-- Status  -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700"
+                                                th:for="*{status}"><strong><span>Status</span></strong></label>
+                                                <select
+                                                class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 " th:field="*{status}"
+                                                th:disabled="${pageStatus == 3}">
+                                                        <option value="pending">পেন্ডিং</option>
+                                                        <option value="accepted">একসেপ্টেড</option>
+                                                        <option value="rejected">রিজেক্টেড</option>
+                                                </select>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{status}')}" th:errors="*{status}" >Error</p>
+                                        </div>
+                                </fieldset>
+
+                                
+                                <!-- type  -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700"
+                                                th:for="*{type}"><strong><span>type</span></strong></label>
+
+                                                <select
+                                                class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 " th:field="*{type}"
+                                                th:disabled="${pageStatus == 3}">
+                                                        <option value="medical aid">মেডিকেল এইড</option>
+                                                        <option value="scholarship">স্কলারশিপ</option>
+                                                </select>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{type}')}" th:errors="*{type}" >Error</p>
+                                        </div>
+                                </fieldset>
+
+                                <!-- Amount -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{amount}"><strong> <span>Amount</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                                                <input
+                                                type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{amount}"
+                                                th:disabled="${pageStatus == 3}">
+                                        
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{amount}')}" th:errors="*{amount}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+
+                                <!-- requested_amount -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700"
+                                                th:for="*{requested_amount}"><strong> <span>Requested Amount</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                                                <input
+                                                type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{requested_amount}"
+                                                th:disabled="${pageStatus == 3}">
+                                        
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requested_amount}')}" th:errors="*{requested_amount}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+
+                                <!-- current_payscale -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{current_payscale}"><strong> <span>Current Payscale</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                                                <input
+                                                type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{current_payscale}"
+                                                th:disabled="${pageStatus == 3}">
+                                        
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{current_payscale}')}" th:errors="*{current_payscale}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+
+                                <!-- total_salary_withdraw -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{total_salary_withdraw}"><strong> <span>Total Salary Withdraw</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                                                <input
+                                                type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{total_salary_withdraw}"
+                                                th:disabled="${pageStatus == 3}">
+                                        
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{total_salary_withdraw}')}" th:errors="*{total_salary_withdraw}" >Error</p>
+                                        </div>
+                                </fieldset>
+
+                                <!-- requested_for_name -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{requested_for_name}"><strong> <span>Requested For Name</span><span class="text-red">*</span></strong></label>
+
+                                                <input
+                                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{requested_for_name}"
+                                                th:disabled="${pageStatus == 3}">
+                                        
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requested_for_name}')}" th:errors="*{requested_for_name}" >Error</p>
+                                        </div>
+                                </fieldset> 
+
+                                <!-- requested_for_date_of_birth -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700"  th:for="*{requested_for_date_of_birth}"><strong> <span>Requested for Date of Birth</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                                                <input
+                                                type="date" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{requested_for_date_of_birth}"
+                                                th:disabled="${pageStatus == 3}">
+                                        
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requested_for_date_of_birth}')}" th:errors="*{requested_for_date_of_birth}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+                                
+                                <!-- education_details -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{education_details}"><strong><span>Education Details</span> </strong></label>
                                                 
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{name}')}" th:errors="*{name}" >Name Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                        <!-- Uid -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{uid}"><strong> <span>ইউআইডি</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                                                <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{education_details}"
+                                                th:disabled="${pageStatus == 3}">
+                                                </textarea>
 
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{uid}"
-                                                        th:disabled="${pageStatus == 3}">
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{education_details}')}" th:errors="*{education_details}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+
+                                <!-- disease_details -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{disease_details}"><strong> <span>Disease Details</span></strong></label>
                                                 
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{uid}')}" th:errors="*{uid}" >Uid Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                        <!-- Email -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{email}"><strong> <span>ইমেল</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                                                <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{disease_details}"
+                                                th:disabled="${pageStatus == 3}">
+                                                </textarea>
 
-                                                        <input 
-                                                        type="email"
-                                                        class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{email}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{email}')}" th:errors="*{email}" >email Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                         <!-- NID -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{nid}"><strong> <span>এনআইডি</span></strong></label>
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{disease_details}')}" th:errors="*{disease_details}" >Error</p>
+                                        </div>
+                                </fieldset>
 
-                                                        <input 
-                                                        type="email"
-                                                        class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{nid}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{nid}')}" th:errors="*{nid}" >email nid</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                        <!-- Blood Group  -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                        for="blood_group"><span>রক্তের গ্রুপ</span></label>
-                                                        <select
-                                                        class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 " th:field="*{blood_group}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                                <option value="A+">A+</option>
-                                                                <option value="A-">A-</option>
-                                                                <option value="B+">B+</option>
-                                                                <option value="B-">B-</option>
-                                                                <option value="O+">O+</option>
-                                                                <option value="O-">O-</option>
-                                                                <option value="AB+">AB+</option>
-                                                                <option value="AB-">AB-</option>
-                                                        </select>
+                                <!-- old_scholarship_details -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{old_scholarship_details}"><strong><span>Old Dcholarship Details</span></strong></label>
 
-                                                        <div class="mt-2" style="display: none;">
-                                                        <p class="text-sm text-red-600"></p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                         <!-- phone -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{phone}"><strong> <span>ফোন</span></strong></label>
+                                                <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{old_scholarship_details}"
+                                                th:disabled="${pageStatus == 3}">
+                                                </textarea>
 
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{phone}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{phone}')}" th:errors="*{phone}" >Uid Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset> 
-                                        <!-- father_name -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{father_name}"><strong> <span>পিতার নাম</span></strong></label>
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{old_scholarship_details}')}" th:errors="*{old_scholarship_details}" >Error</p>
 
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{father_name}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{father_name}')}" th:errors="*{father_name}" >Uid Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                         <!-- mother_name -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{mother_name}"><strong> <span>মাতার নাম</span></strong></label>
+                                        </div>
+                                </fieldset>
 
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{mother_name}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{mother_name}')}" th:errors="*{mother_name}" >Uid Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                        <!-- spouse_name -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{spouse_name}"><strong> <span>স্বামী বা স্ত্রী নাম</span></strong></label>
+                                <!-- latest_payment_receipt_details -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
 
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{spouse_name}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{spouse_name}')}" th:errors="*{spouse_name}" >Uid Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                     
-                                        <!-- present_address -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700" th:for="*{present_address}">
-                                                        <span>বর্তমান ঠিকানা</span>
-                                                        </label>
-                                                        <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{present_address}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                        </textarea>
-                                                        <div class="mt-2" style="display: none;">
-                                                       <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{present_address}')}" th:errors="*{present_address}" >present_address Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{latest_payment_receipt_details}"><strong> <span>Latest Payment Receipt Details</span></strong> </label>
 
-                                         <!-- permanent_address -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700" th:for="*{permanent_address}">
-                                                        <span>স্থায়ী ঠিকানা</span>
-                                                        </label>
-                                                        <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{permanent_address}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                        </textarea>
-                                                        <div class="mt-2" style="display: none;">
-                                                       <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{permanent_address}')}" th:errors="*{permanent_address}" >permanent_address Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
+                                                <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{latest_payment_receipt_details}"
+                                                th:disabled="${pageStatus == 3}">
+                                                </textarea>
 
-                                        <!-- joining_date -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                         th:for="*{joining_date}"><span>যোগদান তারিখ</span></label>
-                                                        
-                                                        <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        type="date"  th:field="*{joining_date}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div class="mt-2" style="display: none;">
-                                                       <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{joining_date}')}" th:errors="*{joining_date}" >joining_date Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{latest_payment_receipt_details}')}" th:errors="*{latest_payment_receipt_details}" >Error</p>
 
-                                         <!-- prl_date -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                         th:for="*{prl_date}"><span> পিআরএল তারিখ</span></label>
-                                                        
-                                                        <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        type="date"  th:field="*{prl_date}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div class="mt-2" style="display: none;">
-                                                       <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{prl_date}')}" th:errors="*{prl_date}" >prl_date Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
+                                        </div>
+                                </fieldset>
 
-                                         <!-- date_of_birth -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                         th:for="*{date_of_birth}"><span>জন্ম তারিখ</span></label>
-                                                        
-                                                        <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        type="date"  th:field="*{date_of_birth}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div class="mt-2" style="display: none;">
-                                                       <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{date_of_birth}')}" th:errors="*{date_of_birth}" >date_of_birth Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                               
-                                        <!-- designation -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{designation}"><strong> <span>উপাধি</span></strong></label>
+                                <!-- details -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
 
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{designation}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{designation}')}" th:errors="*{designation}" >designation Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{details}"><strong><span>Details</span></strong></label>
 
-                                         <!-- school_name -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{school_name}"><strong> <span>স্কুলের নাম</span></strong></label>
+                                                <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{details}"
+                                                th:disabled="${pageStatus == 3}">
+                                                </textarea>
 
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{school_name}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{school_name}')}" th:errors="*{school_name}" >school_name Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{details}')}" th:errors="*{details}" >Error</p>
 
-                                        <!-- payscale -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{payscale}"><strong> <span>পে স্কেল</span></strong></label>
+                                        </div>
+                                </fieldset>
 
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{payscale}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{payscale}')}" th:errors="*{payscale}" >payscale Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-
-                                        <!-- total_salary_withdraw -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700"
-                                                       th:for="*{total_salary_withdraw}"><strong> <span>মোট_বেতন_উত্তোলন</span></strong></label>
-
-                                                        <input
-                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                                        th:field="*{total_salary_withdraw}"
-                                                        th:disabled="${pageStatus == 3}">
-                                                
-                                                        <div  class="mt-2" style="display: none;">
-                                                          <p class="text-sm text-red-600" th:text="${}" th:if="${#fields.hasErrors('*{total_salary_withdraw}')}" th:errors="*{total_salary_withdraw}" >total_salary_withdraw Error</p>
-                                                        </div>
-                                                </div>
-                                        </fieldset>
-                                        <!-- Image  -->
-                                        <fieldset>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                        <label class="block font-medium text-sm text-gray-700 "
-                                                       th:for="*{profile_photo_path}"><strong> <span>ছবি</span></strong></label>
-                                                        <div class="mt-1">
-                                                                <div class="flex items-center justify-center w-full">
-                                                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-18 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                                
-                                                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                                                                </div>
-                                                                <input id="dropzone-file" type="file" 
-                                                                class="hidden"
-                                                                th:field="*{profile_photo_path}" 
-                                                                th:disabled="${pageStatus == 3}"/>
-                                                                </label>
-                                                                </div> 
-                                                        </div>
-                                                </div>
-                                        </fieldset>                        
-                                </div>
                         </div>
-                        <div class="flex items-center gap-2 justify-start px-4 py-3  text-end ">
-                                <div class="me-3">
-                                </div>
-                                <button type="submit"
-                               class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-sm text-white  tracking-widest hover:bg-yellow-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 " th:text="${pageStatus == 2 ? 'Update' : 'Create'}" 
-                               th:classAppend="${ pageStatus == 3} ? 'hidden':''" >
-                                Create </button>
-                                <a href="#" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                        Cancel
-                                </a>
-                        </div>
-                </form>
-            </div>
-        </main>
+                </div>
+
+                <div class="flex items-center gap-2 justify-start px-4 py-3  text-end mb-5">
+                        <button 
+                                type="submit" 
+                                class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-sm text-white  tracking-widest hover:bg-yellow-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 " 
+                                th:text="${pageStatus == 2 ? 'Update' : 'Create'}" 
+                                th:if="${pageStatus != 3}"
+                                > 
+                                Submit 
+                        </button>
+                        <a th:href="@{/withdraw-request}" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        Cancel
+                        </a>
+                </div>
+        </form>
    </section>
 </body>
 </html>

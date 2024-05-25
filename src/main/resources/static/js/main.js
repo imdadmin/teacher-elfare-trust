@@ -1,7 +1,6 @@
-
-
 // Listener
-document.getElementById("toggle-bar").addEventListener("click", function () {
+function Menu() {
+  
   var sidebar = document.getElementById("sidebar");
   var mainContent = document.getElementById("main-content");
   var hSidebar = document.getElementById("h-sidebar");
@@ -17,7 +16,8 @@ document.getElementById("toggle-bar").addEventListener("click", function () {
     hSidebar.style.display = "none";
     hMain.style.width = "100%";
   }
-});
+
+}
 
 // Functions
 function AccountDropDown() {

@@ -3,11 +3,14 @@ package com.khaledmosharraf.twtms.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
+//@Table(name = "sub_districts")
 public class SubDistrict extends Autditable {
 
     @Id
@@ -18,5 +21,8 @@ public class SubDistrict extends Autditable {
     @ManyToOne
     @JoinColumn(name = "district_id")
     District district;
+
+    @OneToMany(mappedBy = "subDistrict", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<User> users;
 
 }

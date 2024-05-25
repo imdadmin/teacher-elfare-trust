@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/fragments :: html_head}">
+    <title>default title</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{common/fragments :: navbar}">
+</nav>
+
+<main class="container mt-4 flex-grow">
+    <div class="row">
+        <div class="col-md-6 col-sm-8 mx-auto">
+            <form method="post" th:object="${subDistrict}">
+                <h2 th:text="${pageTopic}" class="text-center">Edit Upazila</h2>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" th:field="*{id}"/>
+
+                    <fieldset>
+                        <label th:for="*{districtId}">District:</label>
+                        <select th:class="${#fields.hasErrors('*{districtId}')} ? 'form-control error' : 'form-control'"
+                                th:field="*{districtId}">
+                            <option th:each="district : ${districts}" th:value="${district.id}" th:text="${district.eName}">District Name</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('*{districtId}')}" th:errors="*{districtId}">Invalid Description</span><br/>
+                    </fieldset>
+                    <fieldset>
+                        <label th:for="*{bName}">Name (Bangla):</label>
+                        <input type="text"
+                               th:class="${#fields.hasErrors('*{bName}')} ? 'form-control error' : 'form-control'"
+                               th:field="*{bName}"/>
+                        <span th:if="${#fields.hasErrors('*{bName}')}" th:errors="*{bName}">Invalid Description</span><br/>
+                    </fieldset>
+                    <fieldset>
+                        <label th:for="*{eName}">Name (English):</label>
+                        <input type="text"
+                               th:class="${#fields.hasErrors('*{eName}')} ? 'form-control error' : 'form-control'"
+                               th:field="*{eName}"/>
+                        <span th:if="${#fields.hasErrors('*{eName}')}" th:errors="*{eName}">Invalid Description</span><br/>
+                    </fieldset>
+
+
+
+
+
+                </div>
+                <button type="submit" class="btn btn-primary btn-block m-2">Submit</button>
+
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer th:replace="~{common/fragments :: footer}">
+    footer
+</footer>
+
+
+
+</body>
+</html>

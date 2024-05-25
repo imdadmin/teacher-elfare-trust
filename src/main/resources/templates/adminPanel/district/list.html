@@ -1,196 +1,211 @@
 <!DOCTYPE html>
 <html
-  lang="en"
-  xmlns:th="http://www.thymleaf.org"
-  th:replace="adminPanel/common/fragments::Layout(~{::section})"
+        lang="en"
+        xmlns:th="http://www.thymleaf.org"
+        th:replace="adminPanel/common/fragments::Layout(~{::section})"
 >
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      
-    </style>
-  </head>
-  <body>
-<section class="mt-14 mx-2 ">
-  
-<div class="w-[80%]  overflow-hidden  m-3">
-  <p class="text-sm pb-5">জেলা<strong class="px-2">></strong> <span class="text-yellow-500 ">লিস্ট</span></p>
-  <div class="flex justify-between ">
-    <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl" th:text="${pagetitle}">Title</h1>
-    <a th:href="@{/create-district}" class="bg-yellow-500 text-white px-4 py-2 rounded" th:text="'নতুন'">
-      Create New 
-    </a>
-  </div>
-</div>
-<div class="w-[80%] rounded overflow-hidden shadow-lg m-3 bg-white px-3 py-4" >
-  <div class="border-gray-300 border-b">
-        <div class="flex justify-between my-2 ">
-            <div>
-                  <select id="rowsPerPage" onchange="changeRowsPerPage()"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
-                      <option value="10">10 Entities</option>
-                      <option value="25">25 Entities</option>
-                      <option value="50">50 Entities</option>
-                  </select>
-            </div>
-            <div class="flex justify-end  pt-5 ">
-              <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..." class=" border-2 text-black font-bold py-1 px-2 rounded"/>
-              <button onclick="prevPage()" class="bg-yellow-200 hover:bg-yello-600 text-white font-bold py-1 px-2 rounded mr-1 ml-3">
-                <strong>&lt;</strong>
-              </button>
-              <button onclick="nextPage()" class="bg-yellow-200 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded">
-                <strong>&gt;</strong>
-              </button>
+</head>
+<body>
+<section class="mt-24 overflow-hidden">
+    <!-- Page Title -->
+    <header class="fi-header flex flex-col gap-4 pb-10  sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <nav class="fi-breadcrumbs mb-2 hidden sm:block">
+                <ol class="flex flex-wrap items-center gap-x-2">
+                    <li class="flex gap-x-2">
+                        <a th:href="@{/districts}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Districts</a>
+                    </li>
+                    <li class="flex gap-x-2">
+                        <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
+                        </svg>
+                        <a th:href="@{/districts}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">List</a>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">Districts</h1>
+        </div>
+
+        <div class="fi-ac gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
+            <a th:href="@{/create-district}" class="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-yellow fi-btn-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-yellow-600 text-white hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-400 focus-visible:ring-yellow-500/50 dark:focus-visible:ring-yellow-400/50 fi-ac-btn-action">
+
+              <span class="fi-btn-label">
+                  New District
+              </span>
+            </a>
+        </div>
+    </header>
+    <!-- Page Title -->
+
+    <!--Table  -->
+    <div class="fi-ta-ctn divide-y divide-gray-200 overflow-hidden rounded bg-white shadow-sm ring-1 ring-gray-200  dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10 mb-2">
+        <!--  //Search  -->
+        <div class="fi-ta-header-toolbar flex items-center  gap-x-4 px-4 py-3 sm:px-6">
+            <div></div>
+            <div class="ms-auto flex items-center gap-x-4">
+                <!-- //Search  -->
+                <div  class="fi-ta-search-field" >
+                    <label class="sr-only" > Search</label>
+                    <div class="fi-input-wrp flex rounded-lg shadow-sm transition duration-75 bg-white focus-within:ring-2 dark:bg-white/5 ring-gray-950/10 focus-within:ring-yellow-600 dark:ring-white/20 dark:focus-within:ring-yellow-600" style="box-shadow: 3px 0px 7px 1px #80808075;">
+                        <div class="items-center gap-x-3 ps-3 flex pe-2 px-2">
+                            <svg  class="fi-input-wrp-icon h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <input class="leading-6 py-2 px-3 focus:outline-none" placeholder="Search" id="Customsearch">
+                        </div>
+                    </div>
+                </div>
+                <!-- Search // -->
             </div>
         </div>
-    </div >
-    
-    <div class="overflow-auto">
-        <div id="myTable " >
-          <table class="table-auto w-full " >
-            <thead>
-              <tr>
-                <th class="px-4 py-2">
-                  <input type="checkbox" id="checkAll" />
-                </th>
-                <th>জেলার ইংরেজি নাম</th>
-                <th>জেলার বাংলা নাম</th>
-                <th>উপজেলা</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody class="list"  id="ttble" >
-              <tr class="hover:bg-gray-200" th:each=" district: ${districts}">
-                <td class="border px-4 py-2 text-center align-middle">
-                  <input type="checkbox" class="rowCheckbox" />
-                </td>
-                <td class="border px-4 py-2 text-center align-middle"  th:text="${district.eName}">Name</td>
-                 <td class="border px-4 py-2 text-center align-middle" th:text="${district.bName}">Name</td>
-                 <td class="border px-4 py-2 text-center align-middle"  >0</td>
-                <td class="border px-4 py-2 flex text-center align-middle"  >
-                  <a th:href="'view-district?id='+${district.id}" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">
-                  <svg class="fi-link-icon h-4 w-4 text-gray-600 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
-                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
-                  </svg>View
-                  </a>
+        <!--  Search//  -->
+        <!-- //TABLE -->
+        <div class="block text-sm">
+            <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
+                <thead class="bg-gray-50 dark:bg-white/5">
+                <tr class=" text-black">
+                    <th class="px-4 py-2" data-orderable="false">
+                        <div class="checkboxes__row">
+                            <div class="checkboxes__item">
+                                <label class="checkbox style-c">
+                                    <input type="checkbox" id="checkAll"/>
+                                    <div class="checkbox__checkmark"></div>
+                                    <div class="checkbox__body">""</div>
+                                </label>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="px-4 py-2  whitespace-nowrap">Name</th>
+                    <th class="px-4 py-2  whitespace-nowrap">নাম</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Upazilas</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="hover:bg-gray-50 py-1" th:each="district : ${districts}">
 
-                  <a th:href="'update-district?id='+${district.id}"  class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-600 fi-ac-link-action text-yellow-500">
-                    <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"></path>
-                    <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"></path>
-                  </svg>Edit
-                  </a>
+                    <td class="border px-4 py-2 text-center ">
+                        <div class="checkboxes__row">
+                            <div class="checkboxes__item">
+                                <label class="checkbox style-c">
+                                    <input type="checkbox" class="rowCheckbox"/>
+                                    <div class="checkbox__checkmark"></div>
+                                    <div class="checkbox__body">""</div>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
 
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                    <td class="px-4 py-2" th:text="${district.eName}">District Name</td>
+                    <td class="px-4 py-2" th:text="${district.bName}">Bangla Name</td>
+                    <td class="px-4 py-2" th:text="${district.subDistrictCount}">Upazilas</td>
+                    <td class="px-4 py-2 ">
+                        <div class="flex gap-x-1 ">
+                            <a th:href="'view-district?id='+${district.id}" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">
+                                <svg class="fi-link-icon h-4 w-4 text-gray-600 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
+                                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                                </svg>View
+                            </a>
+
+                            <a th:href="'update-district?id='+${district.id}"  class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-600 fi-ac-link-action text-yellow-500">
+                                <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"></path>
+                                    <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"></path>
+                                </svg>Edit
+                            </a>
+                        </div>
+
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
         </div>
+        <!-- TABLE// -->
     </div>
-</div>
+    <!--Table  -->
 
-<!-- Table JS -->
-<script>
-    var table = document.getElementById('ttble');
-    var rows = table.rows;
-    var currentPage = 0;
-    var rowsPerPage = 10;
-
-    function myFunction() {
-        var input, filter, tr, td, i, j, visible;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        tr = table.getElementsByTagName("tr");
-        for (i = 1; i < tr.length; i++) {
-            visible = false;
-            /* Check all tds in each row - if the row contains the search term, set visible to true */
-            td = tr[i].getElementsByTagName("td");
-            for (j = 0; j < td.length; j++) {
-                if (td[j]) {
-                    if (td[j].textContent.toUpperCase().indexOf(filter) > -1) {
-                        visible = true;
+    <!-- Script  -->
+    <script >
+        $(document).ready(function() {
+            // Filter Initialization
+            var districtInput =  $('#districtInput').select2();
+            var upazilaInput =   $('#upazilaInput').select2();
+            // DataTable Options
+            var table = $('#myDataTable').DataTable({
+                searching: true,
+                ordering: true,
+                info: false,
+                scrollX: false,
+                responsive: true,
+                serverSide: false,
+                pagingType: 'simple',
+                language: {
+                    paginate: {
+                        previous: 'Previous', // Change to your desired label
+                        next: 'Next', // Change to your desired label
+                    },
+                    search: '_INPUT_', // Remove the label
+                    searchPlaceholder: 'Search...', // Add a placeholder
+                    lengthMenu: 'Show _MENU_ entries per page',
+                },
+                layout :{
+                    topStart:null,
+                    topEnd:null,
+                    bottom:{
+                        pageLength: {
+                            menu: [ 10, 25, 50, 100 ]
+                        }
                     }
-                }
-            }
-            if (visible === true) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
+                },
+            });
+            // Filter Option
+            function filterTable() {
+                var selectedDistrict = districtInput.val();
+                var selectedUpazila = upazilaInput.val();
 
-    // district and upzila get
-    function myDisupo() {
-        var districtInput, upazilaInput, filterDistrict, filterUpazila, tr, tdDistrict, tdUpazila, i;
-        districtInput = document.getElementById("districtInput");
-        upazilaInput = document.getElementById("upazilaInput");
-        filterDistrict = districtInput.value.toUpperCase();
-        filterUpazila = upazilaInput.value.toUpperCase();
-        tr = table.getElementsByTagName("tr");
-        for (i = 1; i < tr.length; i++) {
-            tdDistrict = tr[i].getElementsByClassName("district")[0];
-            tdUpazila = tr[i].getElementsByClassName("upazila")[0];
-            if (tdDistrict && tdUpazila) {
-                if (tdDistrict.textContent.toUpperCase().indexOf(filterDistrict) > -1 && tdUpazila.textContent.toUpperCase().indexOf(filterUpazila) > -1) {
-                    tr[i].style.display = "";
+                // Filter logic based on selected values
+                table.column(0) // District column index (assuming 0)
+                    .search(selectedDistrict)
+                    .draw();
+
+                if (selectedUpazila) { // Check if upazila is selected
+                    table.column(1) // Districts column index (assuming 1)
+                        .search(selectedUpazila)
+                        .draw();
                 } else {
-                    tr[i].style.display = "none";
+                    // Reset upazila filter if no upazila selected
+                    table.column(1).search("").draw();
                 }
             }
-        }
-    }
-
-    function nextPage() {
-        console.log(currentPage);
-        currentPage++;
-        showPage();
-    }
-
-    function prevPage() {
-        if (currentPage > 0) {
-            currentPage--;
-            showPage();
-        }
-    }
-
-    function changeRowsPerPage() {
-        rowsPerPage = document.getElementById('rowsPerPage').value;
-        currentPage = 0; // reset to first page
-        showPage();
-    }
-
-    function showPage() {
-        var start = currentPage * rowsPerPage;
-        var end = start + rowsPerPage;
-        for (var i = 1; i < rows.length; i++) {
-            if (i < start || i >= end) {
-                rows[i].classList.add('hidden');
-            } else {
-                rows[i].classList.remove('hidden');
-            }
-        }
-    }
-
-    $(document).ready(function () {
-        $('#districtInput').select2();
-        $('#upazilaInput').select2();
-        $("#checkAll").click(function () {
-            if ($(this).is(":checked")) {
-                $(".rowCheckbox").prop("checked", true);
-            } else {
-                $(".rowCheckbox").prop("checked", false);
-            }
+            districtInput.on('change', filterTable);
+            upazilaInput.on('change', filterTable);
+            // Filter Option//
+            // Custom Search
+            $('#Customsearch').on('keyup', function() {
+                table.search($(this).val()).draw();
+            });
+            // Custom Search//
+            // Check Box
+            $("#checkAll").click(function () {
+                if ($(this).is(":checked")) {
+                    $(".rowCheckbox").prop("checked", true);
+                } else {
+                    $(".rowCheckbox").prop("checked", false);
+                }
+            });
+            // Check Box//
         });
-
-        showPage();
-    });
-
-</script>
+    </script>
+    <!-- Script  -->
 </section>
-
-   
-  </body>
+</body>
 </html>

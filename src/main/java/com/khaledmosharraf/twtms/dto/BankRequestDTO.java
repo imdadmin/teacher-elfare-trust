@@ -15,7 +15,7 @@ public class BankRequestDTO {
     private Long id;
 
     @NotBlank
-    @Size(min = 2, max = 80, message = "{validation.size}")
+    @Size(min = 2, max = 80, message = "{validation.size}" )
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "{pattern.nametype}")
     private String name;
 
