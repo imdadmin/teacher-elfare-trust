@@ -3,19 +3,18 @@ package com.khaledmosharraf.twtms.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
-@NoArgsConstructor
-// @Table(name = "banks")
+@Table(name = "banks")
 public class Bank extends Autditable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bank_sequence")
     @SequenceGenerator(name = "bank_sequence", sequenceName = "BANK_SEQUENCE", allocationSize = 1)
-
     private Long id;
     private String name;
     private String accountNo;
@@ -25,4 +24,9 @@ public class Bank extends Autditable{
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Expense> expenses;
+
+    public Bank() {
+        this.deposits = new ArrayList<>();
+        this.expenses = new ArrayList<>();
+    }
 }

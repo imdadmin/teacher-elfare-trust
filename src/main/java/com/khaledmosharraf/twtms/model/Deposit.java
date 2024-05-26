@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "deposits")
+@Table(name = "deposits")
 public class Deposit extends Autditable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deposits_sequence")

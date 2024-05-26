@@ -1,9 +1,6 @@
 package com.khaledmosharraf.twtms.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -15,10 +12,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "todos")
 public class Todo {
-    @NotNull
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "todo_sequence")
+    @SequenceGenerator(name = "todo_sequence", sequenceName = "TODO_SEQUENCE", allocationSize = 1)
     private Integer id;
     @NotNull
     @NotBlank

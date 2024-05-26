@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "grants")
+@Table(name = "grants")
 public class Grant extends Autditable {
 
     @Id
@@ -30,9 +30,9 @@ public class Grant extends Autditable {
     private int status;
     private int type;
     private String details;
-    private String currentPayscale;
-    private String requestedAmount;
-    private String totalSalaryWithdraw;
+    private Double currentPayscale;
+    private Double requestedAmount;
+    private Double totalSalaryWithdraw;
     private String requestedForName;
     private LocalDate requestedForDateOfBirth;
     private String relation;

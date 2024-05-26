@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "expenses")
+@Table(name = "expenses")
 public class Expense extends Autditable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "expanses_sequence")

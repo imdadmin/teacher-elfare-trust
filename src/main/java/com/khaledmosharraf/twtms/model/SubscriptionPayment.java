@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "subscription_payments")
+@Table(name = "subscription_payments")
 public class SubscriptionPayment extends Autditable {
 
     @Id
@@ -29,7 +29,7 @@ public class SubscriptionPayment extends Autditable {
     private double amount;
     private int status;
     private String details;
-    private LocalDate date;
+    private LocalDate paymentDate;
 
 
 }

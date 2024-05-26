@@ -16,7 +16,7 @@ public class DepositRequestDTO {
     private Long id;
 
     @NotNull
-    private long bankId;
+    private Long bankId;
     @NotNull
     @DecimalMin(value = "0.0", message = "{validation.amount}")
     private Double amount;

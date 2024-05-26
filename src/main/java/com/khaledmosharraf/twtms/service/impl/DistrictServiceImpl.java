@@ -1,7 +1,9 @@
 package com.khaledmosharraf.twtms.service.impl;
 
 import com.khaledmosharraf.twtms.dto.DistrictDTO;
+import com.khaledmosharraf.twtms.dto.DistrictwithSubDistrictListDTO;
 import com.khaledmosharraf.twtms.mapper.DistrictMapper;
+import com.khaledmosharraf.twtms.mapper.DistrictwithSubDistrictListMapper;
 import com.khaledmosharraf.twtms.model.District;
 import com.khaledmosharraf.twtms.repository.DistrictRepository;
 import com.khaledmosharraf.twtms.service.DistrictService;
@@ -18,6 +20,8 @@ public class DistrictServiceImpl extends IdCheckingService<District,Long> implem
     DistrictRepository districtRepository;
     @Autowired
     DistrictMapper districtMapper;
+    @Autowired
+    DistrictwithSubDistrictListMapper districtwithSubDistrictListMapper;
     public DistrictServiceImpl(DistrictRepository districtRepository) {
         super(districtRepository);
     }
@@ -26,6 +30,11 @@ public class DistrictServiceImpl extends IdCheckingService<District,Long> implem
     public List<DistrictDTO> getAll() {
         List<District> districts = districtRepository.findAll();
         return districts.stream().map(districtMapper::toDTO).collect(Collectors.toList());
+    }
+    @Override
+    public List<DistrictwithSubDistrictListDTO> getAllwithSubDistrictList() {
+        List<District> districts = districtRepository.findAll();
+        return districts.stream().map(districtwithSubDistrictListMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override

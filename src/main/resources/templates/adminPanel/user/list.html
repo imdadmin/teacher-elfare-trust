@@ -1,386 +1,270 @@
 <!DOCTYPE html>
 <html
-  lang="en"
-  xmlns:th="http://www.thymleaf.org"
-  th:replace="adminPanel/common/fragments::Layout(~{::section})"
+        lang="en"
+        xmlns:th="http://www.thymleaf.org"
+        th:replace="adminPanel/common/fragments::Layout(~{::section})"
 >
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      
-    </style>
-  </head>
-  <body>
-  <section class="mt-24 overflow-hidden">
+</head>
+<body>
+<section class="mt-24 overflow-hidden">
     <!-- Page Title -->
     <header class="fi-header flex flex-col gap-4 pb-10  sm:flex-row sm:items-center sm:justify-between">
-
-                <div>
-                  <nav class="fi-breadcrumbs mb-2 hidden sm:block">
-                    <ol class="flex flex-wrap items-center gap-x-2">
-                      <li class="flex gap-x-2">
-                          <a href="https://teachers-wellfare-trust.bshcl.org/admin/users" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Users</a>
-                      </li>
-                      <li class="flex gap-x-2">
+        <div>
+            <nav class="fi-breadcrumbs mb-2 hidden sm:block">
+                <ol class="flex flex-wrap items-center gap-x-2">
+                    <li class="flex gap-x-2">
+                        <a th:href="@{/users}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Users</a>
+                    </li>
+                    <li class="flex gap-x-2">
                         <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
+                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
                         </svg>
-                        <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">List</a>
-                      </li>
-                    </ol>
-                  </nav>
-                  <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">Users</h1>
-                </div>
-            
-                <div class="fi-ac gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
-                  <a th:href="@{/create-user}" class="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-yellow fi-btn-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-yellow-600 text-white hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-400 focus-visible:ring-yellow-500/50 dark:focus-visible:ring-yellow-400/50 fi-ac-btn-action">
+                        <a th:href="@{/users}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">List</a>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">Users</h1>
+        </div>
 
-                        <span class="fi-btn-label">
-                            New user
-                        </span>
-                    </a>
-              </div>
+        <div class="fi-ac gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
+            <a th:href="@{/create-user}" class="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-yellow fi-btn-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-yellow-600 text-white hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-400 focus-visible:ring-yellow-500/50 dark:focus-visible:ring-yellow-400/50 fi-ac-btn-action">
+              <span class="fi-btn-label">
+                  New User
+              </span>
+            </a>
+        </div>
     </header>
-   
+
 
     <!-- Page Title -->
     <!--Table  -->
     <div class="fi-ta-ctn divide-y divide-gray-200 overflow-hidden rounded bg-white shadow-sm ring-1 ring-gray-200  dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10 mb-2">
-
-      <div class="grid gap-y-4 px-4 py-4 sm:px-6">
-        <!-- Table Title -->
-        <div class="flex justify-between ">
-          <h4 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Filters</h4>
-          <button class=" font-semibold  text-red-500 text-sm" onclick="location.reload()" >Reset</button>
-        </div>
-        <!-- Table Title -->
         <!-- Filter and Reset -->
-        <div class="flex">
-              <div class="mr-10">
+        <div class="grid gap-y-4 px-4 py-4 sm:px-6">
+            <!-- Table Title -->
+            <div class="flex justify-between ">
+                <h4 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Filters</h4>
+                <button class=" font-semibold  text-red-500 text-sm" onclick="location.reload()" >Reset</button>
+            </div>
+            <!-- Table Title -->
+            <!-- Filter and Reset -->
+            <div class="flex">
+                <div class="mr-10">
 
-                  <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="districtInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">District</span> </label>
+                    <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="districtInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">District</span> </label>
 
-                  <select id="districtInput" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
-                      <option value="" >ALL</option>
-                      <option value="Dhaka">Dhaka</option>
-                      <option value="Chittagong">Chittagong</option>
-                      <!-- Add more options as needed -->
-                  </select>
+                    <select id="districtInput" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
+                        <option value="" >Search District</option>
+                        <option th:each="district : ${districts}" th:value="${district.eName}" th:text="${district.eName}">District Name</option>
+                    </select>
 
-              </div>
-              <div class="ml-5">
+                </div>
+                <div class="ml-5">
 
-                  <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="upazilaInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">Upazila</span> </label>
+                    <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="upazilaInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">Upazila</span> </label>
 
-                  <select id="upazilaInput" onchange="myDisupo()"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
-                      <option value="">ALL</option>
-                      <option value="Savar">Savar</option>
-                      <option value="Raozan">Raozan</option>
-                      <!-- Add more options as needed -->
-                  </select>
-                  
-              </div>
-        </div>
-        <!-- Filter and Reset -->
-      </div>
+                    <select id="upazilaInput" onchange="myDisupo()"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
+                        <option value="">Search Upazila</option>
+                        <option th:each="subDistrict : ${subDistricts}" th:value="${subDistrict.eName}" th:text="${subDistrict.eName}">Upazila Name</option>
+                        <!-- Add more options as needed -->
+                    </select>
 
-      <!--  //Search  -->
-      <div class="fi-ta-header-toolbar flex items-center justify-between gap-x-4 px-4 py-3 sm:px-6">
-
-          <!-- //Not required -->
-          <div class="flex shrink-0 items-center gap-x-4" >
-            <div class="fi-ta-actions flex shrink-0 items-center gap-3 justify-end" x-show="selectedRecords.length" style="display: none;">
-          
-              <div class="fi-dropdown">
-                  <div class="fi-dropdown-trigger flex cursor-pointer">
-                      <button style="--c-300:var(--gray-300);--c-400:var(--gray-400);--c-500:var(--gray-500);--c-600:var(--gray-600);" class="fi-icon-btn relative flex items-center justify-center rounded-lg outline-none transition duration-75 focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-70 -m-2 h-9 w-9 fi-color-gray text-gray-400 hover:text-gray-500 focus-visible:ring-primary-600 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:ring-primary-500 sm:hidden fi-ac-btn-group" title="Bulk actions" type="button">
-                              <span class="sr-only">
-                          Bulk actions
-                      </span>
-
-                  <svg class="fi-icon-btn-icon h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"></path>
-                  </svg>
-
-                      </button>
-
-
-                  <button style=";" class="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-gray fi-btn-color-gray fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm hidden sm:inline-grid shadow-sm bg-white text-gray-950 hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 ring-1 ring-gray-950/10 dark:ring-white/20 fi-ac-btn-group" type="button" wire:loading.attr="disabled">
-                                              <svg class="fi-btn-icon h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"></path>
-                  </svg>             
-
-                  <span class="fi-btn-label">Bulk actions</span>
-
-                    
-
-                    
-
-                    
-                  </button>
-
-                  </div>
-
-                  <div x-float.placement.bottom-start.flip.teleport.offset="{ offset: 8 }" x-ref="panel" x-transition:enter-start="opacity-0" x-transition:leave-end="opacity-0" class="fi-dropdown-panel absolute z-10 w-screen divide-y divide-gray-100 rounded-lg bg-white shadow-lg ring-1 ring-gray-950/5 transition dark:divide-white/5 dark:bg-gray-900 dark:ring-white/10 max-w-[14rem]" style="position: fixed; display: none;">
-                              <div class="fi-dropdown-list p-1">
-                                  <button style="--c-50:var(--danger-50);--c-400:var(--danger-400);--c-500:var(--danger-500);--c-600:var(--danger-600);" class="fi-dropdown-list-item flex w-full items-center gap-2 whitespace-nowrap rounded-md p-2 text-sm transition-colors duration-75 outline-none disabled:pointer-events-none disabled:opacity-70 fi-color-custom fi-dropdown-list-item-color-danger hover:bg-custom-50 focus-visible:bg-custom-50 dark:hover:bg-custom-400/10 dark:focus-visible:bg-custom-400/10 fi-ac-grouped-action" type="button" wire:loading.attr="disabled" wire:target="mountTableBulkAction('delete')" x-on:click="mountBulkAction('delete')" x-bind:disabled="! selectedRecords.length" disabled="disabled">
-                              <svg wire:loading.remove.delay.default="1" wire:target="mountTableBulkAction('delete')" class="fi-dropdown-list-item-icon h-5 w-5 text-custom-500 dark:text-custom-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z" clip-rule="evenodd"></path>
-                  </svg>        
-
-                              <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="animate-spin fi-dropdown-list-item-icon h-5 w-5 text-custom-500 dark:text-custom-400" wire:loading.delay.default="" wire:target="mountTableBulkAction('delete')">
-                  <path clip-rule="evenodd" d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill-rule="evenodd" fill="currentColor" opacity="0.2"></path>
-                  <path d="M2 12C2 6.47715 6.47715 2 12 2V5C8.13401 5 5 8.13401 5 12H2Z" fill="currentColor"></path>
-                  </svg>
-
-                  <span class="fi-dropdown-list-item-label flex-1 truncate text-start text-custom-600 dark:text-custom-400 ">
-                      Delete selected
-                  </span>
-
-                      </button>
-
-                            
-                  </div>
-                    
-                  </div>
                 </div>
             </div>
-          </div>
-          <!-- Not required// -->
-
-          <div class="ms-auto flex items-center gap-x-4">
-              <!-- //Search  -->
-              <div  class="fi-ta-search-field" >
-                  <label class="sr-only" for="input-1"> Search</label>
-                  <div class="fi-input-wrp flex rounded-lg shadow-sm transition duration-75 bg-white focus-within:ring-2 dark:bg-white/5 ring-gray-950/10 focus-within:ring-yellow-600 dark:ring-white/20 dark:focus-within:ring-yellow-600" style="box-shadow: 3px 0px 7px 1px #80808075;">
-                    <div class="items-center gap-x-3 ps-3 flex pe-2 px-2">
-                        <svg  class="fi-input-wrp-icon h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"></path>
-                        </svg>             
-                    </div>
-                    <div class="min-w-0 flex-1">
-                        <input class="leading-6 py-2 px-3 focus:outline-none" placeholder="Search" id="Customsearch">
-                    </div>
-                  </div>
-              </div>
-              <!-- Search // -->
-              <!-- //Not required -->
-              <div class="fi-dropdown fi-ta-col-toggle" style="display: none;">
-                  <div class="fi-dropdown-trigger flex cursor-pointer">
-                      <button style="--c-300:var(--gray-300);--c-400:var(--gray-400);--c-500:var(--gray-500);--c-600:var(--gray-600); display:none" class="fi-icon-btn relative flex items-center justify-center rounded-lg outline-none transition duration-75 focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-70 -m-2 h-9 w-9 fi-color-gray text-gray-400 hover:text-gray-500 focus-visible:ring-primary-600 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:ring-primary-500 fi-ac-icon-btn-action" title="Toggle columns" type="button" >
-                            <span class="sr-only">Toggle columns</span>
-                            <svg class="fi-icon-btn-icon h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                              <path d="M14 17h2.75A2.25 2.25 0 0019 14.75v-9.5A2.25 2.25 0 0016.75 3H14v14zM12.5 3h-5v14h5V3zM3.25 3H6v14H3.25A2.25 2.25 0 011 14.75v-9.5A2.25 2.25 0 013.25 3z"></path>
+            <!-- Filter and Reset -->
+        </div>
+        <!--  //Search  -->
+        <div class="fi-ta-header-toolbar flex items-center justify-between gap-x-4 px-4 py-3 sm:px-6">
+            <div></div>
+            <div class="ms-auto flex items-center gap-x-4">
+                <!-- //Search  -->
+                <div  class="fi-ta-search-field" >
+                    <label class="sr-only" > Search</label>
+                    <div class="fi-input-wrp flex rounded-lg shadow-sm transition duration-75 bg-white focus-within:ring-2 dark:bg-white/5 ring-gray-950/10 focus-within:ring-yellow-600 dark:ring-white/20 dark:focus-within:ring-yellow-600" style="box-shadow: 3px 0px 7px 1px #80808075;">
+                        <div class="items-center gap-x-3 ps-3 flex pe-2 px-2">
+                            <svg  class="fi-input-wrp-icon h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"></path>
                             </svg>
-                      </button>
-                  </div>
-
-                  <!-- Not required -->
-                  <div class="fi-dropdown-panel absolute z-10 w-screen divide-y divide-gray-100 rounded-lg bg-white shadow-lg ring-1 ring-gray-950/5 transition dark:divide-white/5 dark:bg-gray-900 dark:ring-white/10 max-w-xs" style="display: none;">
-                      <div class="grid gap-y-4 p-6">
-                        <h4 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">Columns</h4>
-                        <div style="--cols-default: repeat(1, minmax(0, 1fr)); --cols-lg: repeat(1, minmax(0, 1fr));" class="grid grid-cols-[--cols-default] lg:grid-cols-[--cols-lg] fi-fo-component-ctn gap-6">
-                            <div style="--col-span-default: span 1 / span 1;" class="col-[--col-span-default]">
-                              <div class="fi-fo-field-wrp">
-                                <div class="grid gap-y-2">
-                                  <div class="flex items-center justify-between gap-x-3">
-                                      <label class="fi-fo-field-wrp-label inline-flex items-center gap-x-3" for="toggledTableColumns.created_at">
-                                        <input type="checkbox" class="fi-checkbox-input rounded border-none bg-white shadow-sm ring-1 transition duration-75 checked:ring-0 focus:ring-2 focus:ring-offset-0 disabled:pointer-events-none disabled:bg-gray-50 disabled:text-gray-50 disabled:checked:bg-current disabled:checked:text-gray-400 dark:bg-white/5 dark:disabled:bg-transparent dark:disabled:checked:bg-gray-600 text-primary-600 ring-gray-950/10 focus:ring-primary-600 checked:focus:ring-primary-500/50 dark:text-primary-500 dark:ring-white/20 dark:checked:bg-primary-500 dark:focus:ring-primary-500 dark:checked:focus:ring-primary-400/50 dark:disabled:ring-white/10" id="toggledTableColumns.created_at">
-
-                                        <span class="text-sm font-medium leading-6 text-gray-950 dark:text-white"> Created at  </span>
-                                      </label>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          
-                            <div style="--col-span-default: span 1 / span 1;" class="col-[--col-span-default]">
-                                  <div class="fi-fo-field-wrp">
-                                  <div class="grid gap-y-2">
-                                      <div class="flex items-center justify-between gap-x-3">
-                                        <label class="fi-fo-field-wrp-label inline-flex items-center gap-x-3" for="toggledTableColumns.updated_at">
-                                          <input type="checkbox" class="fi-checkbox-input rounded border-none bg-white shadow-sm ring-1 transition duration-75 checked:ring-0 focus:ring-2 focus:ring-offset-0 disabled:pointer-events-none disabled:bg-gray-50 disabled:text-gray-50 disabled:checked:bg-current disabled:checked:text-gray-400 dark:bg-white/5 dark:disabled:bg-transparent dark:disabled:checked:bg-gray-600 text-primary-600 ring-gray-950/10 focus:ring-primary-600 checked:focus:ring-primary-500/50 dark:text-primary-500 dark:ring-white/20 dark:checked:bg-primary-500 dark:focus:ring-primary-500 dark:checked:focus:ring-primary-400/50 dark:disabled:ring-white/10" id="toggledTableColumns.updated_at">
-
-                                          <span class="text-sm font-medium leading-6 text-gray-950 dark:text-white">  Updated at </span>
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </div>
-                            </div>
-                  
                         </div>
-                      </div>
-                  </div>
-              </div>
-              <!-- Not required// -->
-          </div>
-      </div>
-      <!--  Search//  -->
-
-      <!-- //TABLE -->
-      <div class="block text-sm">
-        <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
-          <thead class="bg-gray-50 dark:bg-white/5">
-            <tr class=" text-black">
-              <th class="px-4 py-2" data-orderable="false">
-                <div class="checkboxes__row">
-                    <div class="checkboxes__item">
-                      <label class="checkbox style-c">
-                        <input type="checkbox" id="checkAll"/>
-                        <div class="checkbox__checkmark"></div>
-                        <div class="checkbox__body">""</div>
-                      </label>
+                        <div class="min-w-0 flex-1">
+                            <input class="leading-6 py-2 px-3 focus:outline-none" placeholder="Search" id="Customsearch">
+                        </div>
                     </div>
-                  </div>
-              </th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Profile photo url</th>
-              <th class="px-4 py-2  whitespace-nowrap">District</th>
-              <th class="px-4 py-2  whitespace-nowrap">Upazila</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Name</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Uid</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Nid</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Phone</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Joining date</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Prl date</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Designation</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">School name</th>
-              <th class="px-4 py-2  whitespace-nowrap">Date of birth</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Payscale</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Total salary withdraw</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Email</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b hover:bg-gray-50 py-1">
-                <td class="border px-4 py-2 text-center align-middle">
-                  <div class="checkboxes__row">
-                    <div class="checkboxes__item">
-                      <label class="checkbox style-c">
-                        <input type="checkbox" class="rowCheckbox"/>
-                        <div class="checkbox__checkmark"></div>
-                        <div class="checkbox__body">""</div>
-                      </label>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-2">Profile photo url</td>
-                <td class="px-4 py-2">District</td>
-                <td class="px-4 py-2">Upazila</td>
-                <td class="px-4 py-2">br</td>
-                <td class="px-4 py-2">Uid</td>
-                <td class="px-4 py-2">Nid</td>
-                <td class="px-4 py-2">Phone</td>
-                <td class="px-4 py-2">Joining date</td>
-                <td class="px-4 py-2">Prl date</td>
-                <td class="px-4 py-2">Designation</td>
-                <td class="px-4 py-2">School name</td>
-                <td class="px-4 py-2" data-orderable="false">Date of birth</td>
-                <td class="px-4 py-2">Payscale</td>
-                <td class="px-4 py-2">Total salary withdraw</td>
-                <td class="px-4 py-2">Email</td>
-                <td class="px-4 py-2 ">
-                  <div class="flex gap-x-1 ">
-                    <a href="'view-district?id" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">
-                    <svg class="fi-link-icon h-4 w-4 text-gray-600 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
-                      <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
-                    </svg>View
-                    </a>
+                </div>
+                <!-- Search // -->
+            </div>
+        </div>
+        <!--  Search//  -->
 
-                    <a href="'update-district"  class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-600 fi-ac-link-action text-yellow-500">
-                      <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"></path>
-                      <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"></path>
-                    </svg>Edit
-                    </a>
-                  </div>
-                 
-                </td>
-            </tr>
-            
-          </tbody>
-        </table>
+        <!-- //TABLE -->
+        <div class="block text-sm">
+            <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
+                <thead class="bg-gray-50 dark:bg-white/5">
+                <tr class=" text-black">
+                    <th class="px-4 py-2" data-orderable="false">
+                        <div class="checkboxes__row">
+                            <div class="checkboxes__item">
+                                <label class="checkbox style-c">
+                                    <input type="checkbox" id="checkAll"/>
+                                    <div class="checkbox__checkmark"></div>
+                                    <div class="checkbox__body">""</div>
+                                </label>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Profile photo</th>
+                    <th class="px-4 py-2  whitespace-nowrap">District</th>
+                    <th class="px-4 py-2  whitespace-nowrap">Upazila</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Name</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Uid</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Nid</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Phone</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Joining date</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Prl date</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Designation</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">School name</th>
+                    <th class="px-4 py-2  whitespace-nowrap">Date of birth</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Payscale</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Total salary withdraw</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Email</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
+                </tr>
+                </thead>
+                <tbody>
 
-      </div>
-       <!-- TABLE// -->
+                <tr class=" hover:bg-gray-50 py-1" th:each="user : ${users}">
+                    <td class=" px-4 py-2 text-center align-middle" >
+                        <div class="checkboxes__row">
+                            <div class="checkboxes__item">
+                                <label class="checkbox style-c">
+                                    <input type="checkbox" class="rowCheckbox"/>
+                                    <div class="checkbox__checkmark"></div>
+                                    <div class="checkbox__body">""</div>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-2">
+                        <img th:src="@{'https://ui-avatars.com/api/?name=' + ${user.name} + '&color=7F9CF5&background=EBF4FF'}" alt="Profile Photo" class="rounded-full"/>
+                    </td>
+                    <td class="px-4 py-2" th:text="${user.subDistrict.district.eName}">District</td>
+                    <td class="px-4 py-2" th:text="${user.subDistrict.eName}">Upazila</td>
+                    <td class="px-4 py-2" th:text="${user.name}">Name</td>
+                    <td class="px-4 py-2" th:text="${user.uniId}">Uid</td>
+                    <td class="px-4 py-2" th:text="${user.nid}">Nid</td>
+                    <td class="px-4 py-2" th:text="${user.phone}">Phone</td>
+                    <td class="px-4 py-2" th:text="${user.joiningDate}">Joining date</td>
+                    <td class="px-4 py-2" th:text="${user.prlDate}">Prl date</td>
+                    <td class="px-4 py-2" th:text="${user.designation}">Designation</td>
+                    <td class="px-4 py-2" th:text="${user.schoolName}">School name</td>
+                    <td class="px-4 py-2" data-orderable="false" th:text="${user.dateOfBirth}">Date of birth</td>
+                    <td class="px-4 py-2" th:text="${user.payscale}">Payscale</td>
+                    <td class="px-4 py-2" th:text="${user.totalSalaryWithdraw}">Total salary withdraw</td>
+                    <td class="px-4 py-2" th:text="${user.email}">Email</td>
+                    <td class="px-4 py-2 ">
+                        <div class="flex gap-x-1 ">
+                            <a th:href="'view-user?id='+${user.id}" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">
+                                <svg class="fi-link-icon h-4 w-4 text-gray-600 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
+                                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                                </svg>View
+                            </a>
+
+                            <a th:href="'update-user?id='+${user.id}"  class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-600 fi-ac-link-action text-yellow-500">
+                                <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"></path>
+                                    <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"></path>
+                                </svg>Edit
+                            </a>
+                        </div>
+
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+        <!-- TABLE// -->
     </div>
     <!--Table  -->
     <!-- Script  -->
     <script >
-      $(document).ready(function() {
-          // Filter Initialization 
-          var districtInput =  $('#districtInput').select2();
-          var upazilaInput =   $('#upazilaInput').select2();
-          // DataTable Options
-          var table = $('#myDataTable').DataTable({
-            searching: true,
-            ordering: true,
-            info: true,
-            scrollX: true,
-            responsive: true,
-            serverSide: false,
-            pagingType: 'simple',
-            language: {
-                paginate: {
-                  previous: 'Previous', // Change to your desired label
-                  next: 'Next', // Change to your desired label
-                  },
-                  search: '_INPUT_', // Remove the label
-                  searchPlaceholder: 'Search...', // Add a placeholder
-                  lengthMenu: 'Show _MENU_ entries per page',
-            },
-            layout :{
-              topStart:null,
-              topEnd:null,
-              bottom:{ 
-                pageLength: {
-                  menu: [ 10, 25, 50, 100 ]
-                }
-                }
-            },
-        });
-        // Filter Option
-        function filterTable() {
-              var selectedDistrict = districtInput.val();
-              var selectedUpazila = upazilaInput.val();
+        $(document).ready(function() {
+            // Filter Initialization
+            var districtInput =  $('#districtInput').select2();
+            var upazilaInput =   $('#upazilaInput').select2();
+            // DataTable Options
+            var table = $('#myDataTable').DataTable({
+                searching: true,
+                ordering: true,
+                info: true,
+                scrollX: true,
+                responsive: true,
+                serverSide: false,
+                pagingType: 'simple',
+                language: {
+                    paginate: {
+                        previous: 'Previous', // Change to your desired label
+                        next: 'Next', // Change to your desired label
+                    },
+                    search: '_INPUT_', // Remove the label
+                    searchPlaceholder: 'Search...', // Add a placeholder
+                    lengthMenu: 'Show _MENU_ entries per page',
+                },
+                layout :{
+                    topStart:null,
+                    topEnd:null,
+                    bottom:{
+                        pageLength: {
+                            menu: [ 10, 25, 50, 100 ]
+                        }
+                    }
+                },
+            });
+            // Filter Option
+            function filterTable() {
+                var selectedDistrict = districtInput.val();
+                var selectedUpazila = upazilaInput.val();
 
-              // Filter logic based on selected values
-              table.column(0) // District column index (assuming 0)
-                .search(selectedDistrict)
-                .draw();
+                // Filter logic based on selected values
+                table.column(2) // District column index (assuming 0)
+                    .search(selectedDistrict)
+                    .draw();
 
-              if (selectedUpazila) { // Check if upazila is selected
-                table.column(1) // Upazila column index (assuming 1)
-                  .search(selectedUpazila)
-                  .draw();
-              } else {
-                // Reset upazila filter if no upazila selected
-                table.column(1).search("").draw();
+                if (selectedUpazila) { // Check if upazila is selected
+                    table.column(3) // Upazila column index (assuming 1)
+                        .search(selectedUpazila)
+                        .draw();
+                } else {
+                    // Reset upazila filter if no upazila selected
+                    table.column(3).search("").draw();
+                }
             }
-          }
-        districtInput.on('change', filterTable);
-        upazilaInput.on('change', filterTable);
-        // Filter Option//
-        // Custom Search
-          $('#Customsearch').on('keyup', function() {
-            table.search($(this).val()).draw();
-          });
-        // Custom Search//
-        // Check Box
-         $("#checkAll").click(function () {
-            if ($(this).is(":checked")) {
-                $(".rowCheckbox").prop("checked", true);
-            } else {
-                $(".rowCheckbox").prop("checked", false);
-            }
+            districtInput.on('change', filterTable);
+            upazilaInput.on('change', filterTable);
+            // Filter Option//
+            // Custom Search
+            $('#Customsearch').on('keyup', function() {
+                table.search($(this).val()).draw();
+            });
+            // Custom Search//
+            // Check Box
+            $("#checkAll").click(function () {
+                if ($(this).is(":checked")) {
+                    $(".rowCheckbox").prop("checked", true);
+                } else {
+                    $(".rowCheckbox").prop("checked", false);
+                }
+            });
+            // Check Box//
         });
-        // Check Box//
-      });
     </script>
     <!-- Script  -->
-  </section>
-  </body>
+</section>
+</body>
 </html>
