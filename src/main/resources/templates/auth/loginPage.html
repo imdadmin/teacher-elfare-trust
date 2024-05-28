@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{common/fragments::html_head}">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" >
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.min.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-8 mx-auto">
-                <form class="login-form" method="post">
-                    <h2 class="text-center">Login</h2>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block m-2">Login</button>
-
-                    <div id="error" class="error-message" th:text="${errorMessage}"></div>
-                </form>
-            </div>
-        </div>
+<h1>Login</h1>
+<form th:action="@{/login}" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
     </div>
-    <footer th:replace="~{common/fragments :: footer}"></footer>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <button type="submit" >Login</button>
+    </div>
+    <div th:if="${param.error}">
+        <p style="color:red;">Invalid username or password.</p>
+    </div>
+</form>
 </body>
 </html>

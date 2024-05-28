@@ -106,6 +106,23 @@
 
                 </fieldset>
 
+                <!-- Username -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{username}"><strong> <span>Username</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                        <input
+                                type="text"
+                                class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{username}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{username}')}" th:errors="*{username}" >Error</p>
+
+                    </div>
+                </fieldset>
+
                 <!-- Name -->
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
@@ -142,7 +159,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{email}"><strong> <span>Email</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{email}"><strong> <span>Email</span></strong></label>
 
                         <input
                                 type="email"

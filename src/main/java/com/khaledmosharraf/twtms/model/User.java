@@ -1,18 +1,14 @@
 package com.khaledmosharraf.twtms.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
+@ToString
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
@@ -25,7 +21,7 @@ public class User extends Autditable{
         private Long id;
 
         @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "sub_district_id",nullable = false)
+        @JoinColumn(name = "sub_district_id")
         private SubDistrict subDistrict;
 
         private String name;
@@ -65,8 +61,12 @@ public class User extends Autditable{
         private String email;
 
         private LocalDate emailVerifiedAt;
-
+        private String username;
         private String password;
+        @ElementCollection(fetch = FetchType.EAGER)
+        @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
+        @Column(name = "authority")
+        private Set<String> roles;
 
         private String twoFactorSecret;
 
@@ -82,6 +82,7 @@ public class User extends Autditable{
 
         private Boolean completed;
 
+
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         private List<Grant> grants;
 
@@ -89,8 +90,8 @@ public class User extends Autditable{
         private List<SubscriptionPayment> subscriptionPayments;
 
         public User() {
-                this.password="12345678";
                 this.grants = new ArrayList<>();
                 this.subscriptionPayments = new ArrayList<>();
+                this.roles = new HashSet<>();
         }
 }

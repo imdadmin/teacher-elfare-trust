@@ -119,6 +119,7 @@
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Profile photo</th>
                     <th class="px-4 py-2  whitespace-nowrap">District</th>
                     <th class="px-4 py-2  whitespace-nowrap">Upazila</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Username</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Name</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Uid</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Nid</th>
@@ -130,7 +131,6 @@
                     <th class="px-4 py-2  whitespace-nowrap">Date of birth</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Payscale</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Total salary withdraw</th>
-                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Email</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
                 </tr>
                 </thead>
@@ -153,6 +153,7 @@
                     </td>
                     <td class="px-4 py-2" th:text="${user.subDistrict.district.eName}">District</td>
                     <td class="px-4 py-2" th:text="${user.subDistrict.eName}">Upazila</td>
+                    <td class="px-4 py-2" th:text="${user.username}">Username</td>
                     <td class="px-4 py-2" th:text="${user.name}">Name</td>
                     <td class="px-4 py-2" th:text="${user.uniId}">Uid</td>
                     <td class="px-4 py-2" th:text="${user.nid}">Nid</td>
@@ -164,7 +165,6 @@
                     <td class="px-4 py-2" data-orderable="false" th:text="${user.dateOfBirth}">Date of birth</td>
                     <td class="px-4 py-2" th:text="${user.payscale}">Payscale</td>
                     <td class="px-4 py-2" th:text="${user.totalSalaryWithdraw}">Total salary withdraw</td>
-                    <td class="px-4 py-2" th:text="${user.email}">Email</td>
                     <td class="px-4 py-2 ">
                         <div class="flex gap-x-1 ">
                             <a th:href="'view-user?id='+${user.id}" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">

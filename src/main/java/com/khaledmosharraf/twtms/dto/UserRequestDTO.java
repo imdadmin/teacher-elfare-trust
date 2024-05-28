@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -54,9 +55,12 @@ public class UserRequestDTO {
 
     private Double totalSalaryWithdraw;
 
+    @Email(message = "Please provide a valid email address")
     private String email;
 
     private LocalDate emailVerifiedAt;
+
+    private String username;
 
     private String password;
 

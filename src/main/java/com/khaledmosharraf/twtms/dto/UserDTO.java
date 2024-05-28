@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -54,7 +55,11 @@ public class UserDTO {
 
     private LocalDate emailVerifiedAt;
 
+    private String username;
+
     private String password;
+
+    private Set<String> roles;
 
     private String twoFactorSecret;
 

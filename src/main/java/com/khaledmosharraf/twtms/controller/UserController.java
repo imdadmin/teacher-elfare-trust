@@ -1,11 +1,13 @@
 package com.khaledmosharraf.twtms.controller;
 
 import com.khaledmosharraf.twtms.dto.*;
+import com.khaledmosharraf.twtms.exception.IncorrectPasswordException;
 import com.khaledmosharraf.twtms.mapper.UserRequestMapper;
 import com.khaledmosharraf.twtms.service.DistrictService;
 import com.khaledmosharraf.twtms.service.SubDistrictService;
 import com.khaledmosharraf.twtms.service.UserService;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.validations.UserValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,6 +28,8 @@ public class UserController {
     UserRequestMapper userRequestMapper;
     @Autowired
     UserService userService;
+    @Autowired
+    UserValidator userValidator;
     @Autowired
     SubDistrictService subDistrictService;
     @Autowired
@@ -79,6 +83,7 @@ public class UserController {
 
     @PostMapping("create-user")
     public String submitUserForm(@Valid @ModelAttribute("user") UserRequestDTO userRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        userValidator.validate(userRequestDTO, bindingResult);
         if(bindingResult.hasErrors()){
             List<SubDistrictDTO> subDistricts= subDistrictService.getAll();
             model.addAttribute("subDistricts", subDistricts);
@@ -118,6 +123,7 @@ public class UserController {
 
     @PostMapping("update-user")
     public String submitUpdateUserForm(@Valid @ModelAttribute("user") UserRequestDTO userRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        userValidator.validate(userRequestDTO, bindingResult);
         if(bindingResult.hasErrors()){
 
             List<SubDistrictDTO> subDistricts= subDistrictService.getAll();
@@ -148,7 +154,19 @@ public class UserController {
         model.addAttribute("pageStatus", PageStatus.VIEW);
         model.addAttribute("pageStatus_tag", PageStatus.VIEW_TAG);
         return "adminPanel/user/create";
-      //  return  "user/create_user";
+
+    }
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam("oldPassword") String username, @RequestParam("oldPassword") String oldPassword,
+                                @RequestParam("newPassword") String newPassword,
+                                Model model) {
+        try {
+            userService.resetPasswordWithOldPassword(username,oldPassword,newPassword);
+            return "redirect:/logout";
+        } catch (IncorrectPasswordException e) {
+            model.addAttribute("errorMessage", "Incorrect old password");
+            return "reset-password";
+        }
     }
     private String getLoggedUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
