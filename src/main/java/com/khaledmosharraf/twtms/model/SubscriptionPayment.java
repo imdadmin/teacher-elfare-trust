@@ -25,9 +25,8 @@ public class SubscriptionPayment extends Autditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
+    private Integer year;
     private double amount;
-    private int status;
     private String details;
     private LocalDate paymentDate;
 

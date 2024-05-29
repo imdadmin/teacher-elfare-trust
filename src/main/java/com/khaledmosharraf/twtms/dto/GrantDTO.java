@@ -1,31 +1,22 @@
-package com.khaledmosharraf.twtms.model;
+package com.khaledmosharraf.twtms.dto;
 
-
-import jakarta.persistence.*;
+import com.khaledmosharraf.twtms.model.Bank;
+import com.khaledmosharraf.twtms.model.User;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "grants")
-public class Grant extends Autditable {
+@AllArgsConstructor
+public class GrantDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "grant_sequence")
-    @SequenceGenerator(name = "grant_sequence", sequenceName = "GRANT_SEQUENCE", allocationSize = 1)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
-
     private double amount;
     private String status;
     private String type;
@@ -41,5 +32,4 @@ public class Grant extends Autditable {
     private String diseaseDetails;
     private String oldScholarshipDetails;
     private String latestPaymentReceiptDetails;
-
 }
