@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" th:fragment="Layout(content)">
+<head>
+<meta charset="ISO-8859-1" >
+<title>Insert title here</title>
+<script th:src="@{https://cdn.tailwindcss.com}"></script>
+<link rel="stylesheet" th:href="@{css/style.css}">
+</head>
+<body>
+
+ <!-- Header Section -->
+ <header th:replace="teacherPanel/header::header"/>
+ <!-- Main Section -->
+ <div th:insert="${content}" />
+ <!-- Footer Section  -->
+ <footer th:replace="teacherPanel/footer::footer" />
+
+</body>
+</html>

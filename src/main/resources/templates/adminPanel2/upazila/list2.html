@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common2/fragments :: html_head}">
+    <title>default title</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{common2/fragments :: navbar}">
+</nav>
+
+<main class="container mt-4 flex-grow">
+    <h2 th:text="${successMessage}"></h2>
+    <h2 class="text-center my-4">Upazila List</h2>
+    <a class="btn btn-success m-2" href="/create-upazila">Create Upazila</a>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>District E</th>
+                <th>District B</th>
+                <th>Bangla Name</th>
+                <th>English Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subDistrict:${subDistricts}">
+                <td th:text="${subDistrict.id}"></td>
+                <td th:text="${subDistrict.district.eName}"></td>
+                <td th:text="${subDistrict.district.bName}"></td>
+                <td th:text="${subDistrict.eName}"></td>
+                <td th:text="${subDistrict.bName}"></td>
+                <th>
+                    <a class="btn btn-warning" th:href="'delete-upazila?id='+${subDistrict.id}">Delete</a>
+                    <a class="btn btn-success" th:href="'update-upazila?id='+${subDistrict.id}">Update</a>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</main>
+
+<footer th:replace="~{common2/fragments :: footer}">
+    footer
+</footer>
+</body>
+</html>

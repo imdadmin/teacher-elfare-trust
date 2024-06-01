@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html  lang="" xmlns:th="http://www.thymeleaf.org" >
+<head th:fragment="html_head">
+    <meta name="viewport" charset="UTF-8">
+    <title th:text="${pageTitle}">Title</title>
+    <script th:src="@{https://cdn.tailwindcss.com}"></script>
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css}" rel="stylesheet" /> 
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js}"></script>
+</head>
+<body class="bg-[#f3f4f6]">
+ 
+    <!-- /Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="flex mx-auto px-4 border-b border-gray-200 px-4 sm:px-6 lg:px-8 h-16 py-4">
+            <img th:src="@{images/logo-sm.png}" alt="images" class="w-auto rounded-xl h-10">
+            <div class="flex justify-between w-full px-8">
+                <a href="" class="inline-flex items-center px-1 h-16 -my-4  border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">Dashboard</a>
+                <div>
+                        <button 
+                        id="dropdownDefaultButton" 
+                        data-dropdown-toggle="dropdown" 
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150" 
+                        type="button"
+                        th:if="${true}"
+                        >
+                            <span th:text="${'Jahangir Alam'}">Jahangir Alam</span>
+                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                <a th:href="@{/profile}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                            </li>
+                          
+                          
+                            <li>
+                                <a th:href="@{/logout}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                            </li>
+                            </ul>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <img th:src="@{'https://ui-avatars.com/api/?name=J+A&color=7F9CF5&background=EBF4FF'}" alt="Profile Photo" class="rounded-full"/>
+            <h1 class="text-xl text-gray-800 leading-tight">Welcome   
+                <span class="font-semibold">Jahangir Alam</span>
+            </h1>
+            <p class="text-sm">xyz@gmail.com</p>
+        </div>
+        
+    </header>
+    <!-- Header/ -->
+
+    <div class="container px-5 sm:px-10 md:px-20 lg:px-25 gap-6 flex-wrap sm:flex mt-3">
+      <div class="bg-slate-300 w-full rounded-md h-full min-h-screen px-5 sm:px-10 md:px-15 lg:px-20">
+
+        <div class="flex items-center justify-center h-32 gap-10 mb-4"> 
+            <button class="px-3 py-2 bg-blue-400 rounded-md text-white" onclick="showPaymentForm()"> Make Subscription Payment </button>
+            <button class="px-3 py-2 bg-green-700 rounded-md text-white" onclick="showGrantForm()"> Application for Grant </button>
+        </div>
+        
+        <!-- Payment Form -->
+        <div class="py-4 px-5 sm:px-15 md:px-20 hidden" id="paymentForm">
+            <form method="post" th:object="${payment}">
+
+                <div class="py-3 bg-gray-50 px-5 rounded-lg shadow-md">
+                    <div class="w-full gap-5 py-3">
+                    <h1 class="text-2xl text-center">Payment Request Form</h1>
+                    
+                    <!-- Amount -->
+                    <fieldset>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{amount}"><span>Amount</span></label>
+                        <input 
+                        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" type="number" required
+                        placeholder="Enter Amount"
+                        th:field="*{amount}" 
+                         >
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{amount}')}" th:errors="*{amount}" >Error</p>
+
+                    </fieldset>
+
+                    <!-- PaymentDate -->
+                    <fieldset>
+                            <label class="block font-medium text-sm text-gray-700" th:for="*{paymentDate}"><span>Date</span></label>
+                            <input 
+                            class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"  
+                            type="date"  
+                            placeholder="Select Date"
+                            th:field="*{paymentDate}"
+                            >
+                            <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{paymentDate}')}" th:errors="*{paymentDate}" >Error</p>
+                    </fieldset>
+
+                </div>
+                <div class="flex items-center justify-end gap-5">
+                    <button class="px-3 py-2 bg-gray-500 text-white rounded-lg" type="button" onclick="showSubscriptionTable()">Cancel</button>
+                    <button class="px-3 py-2 bg-blue-500 text-white rounded-lg" type="submit">Send</button>
+                </div>
+                </div>
+            </form>
+        </div>
+
+        <!--  Grant Form -->
+        <div class="py-4 px-5 sm:px-15 md:px-20 hidden" id="grantForm">
+
+            <form  method="post" th:object="${grant}">
+                <div class="w-full bg-gray-50 px-3 py-2 rounded-lg shadow-md">
+                        <h1 class="text-2xl text-center">Application for Grant Form</h1>
+                        
+                        <div class="grid grid-cols-2 gap-5 mb-6 border-t my-3 py-5 px-3">
+
+                            <!-- Fund Requeest  -->
+                            <div class="w-full">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state"> Fund Requeest Type </label>
+                                <div class="relative space-y-5">
+                                    <div class="flex gap-2 items-center">
+                                        <input type="radio" name="grantRadio" onclick="handleGrant('Medical Aid')">
+                                        <label class="block font-medium text-sm text-gray-700"><span>Medical Aid</span></label>
+                                    </div>
+                                    <div class="flex gap-2 items-center">
+                                        <input type="radio" name="grantRadio" onclick="handleGrant('Scholarship')">
+                                        <label class="block font-medium text-sm text-gray-700"><span>Scholarship</span></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Current Pay Scale -->
+                            <fieldset>
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{currentPayscale}"><span>Current Pay Scale</span></label>
+                                    <input 
+                                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" 
+                                    type="number" required  placeholder="Enter Current Payscale"
+                                    th:field="*{currentPayscale}"
+                                    >
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{currentPayscale}')}" th:errors="*{currentPayscale}" >Error</p>
+                                </div>
+                            </fieldset>
+                        
+                            <!-- Applying For -->
+                            <div class="w-full col-span-2">
+                                <h1>Applying For </h1>
+                            </div>
+
+                            <!-- requestedForName / name -->
+                            <fieldset>
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{requestedForName}"><span>Name</span></label>
+                                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" id="requested_for_name" type="text" required
+                                    placeholder="Enter Applying for Name"
+                                    th:field="*{requestedForName}"
+                                    >
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requestedForName}')}" th:errors="*{requestedForName}" >Error</p>
+                                </div>
+                            </fieldset>
+
+                           
+                            <!-- Date of Birth / requestedForDateOfBirth -->
+                            <fieldset>
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{requestedForDateOfBirth}">
+                                    <span>Date of Birth</span></label>
+                                    <input 
+                                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" 
+                                    type="date" required 
+                                    th:field="*{requestedForDateOfBirth}">
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requestedForDateOfBirth}')}" th:errors="*{requestedForDateOfBirth}" >Error</p>
+
+                                </div>
+                            </fieldset>
+                           
+                            <!-- Relation with member -->
+                            <fieldset>
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{relation}"><span>Relation with member</span></label>
+                                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" type="text" required placeholder="Enter relation with applying for"
+                                    th:field="*{relation}">
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{relation}')}" th:errors="*{relation}" >Error</p>
+                                </div>
+                            </fieldset>
+                           
+
+                            <!-- //Scholarship -->
+
+                            <fieldset>
+
+                                <!-- Scholarship  / type -->
+                                <!-- 
+                                    the value set by js when click ScholarshipType radio button
+                                 -->
+                                <input type="text" th:field="*{type}" hidden id="ScholarshipType">
+                                <!-- Name of institution studying -->
+                                <div class="w-full px-3 mb-6 md:mb-0 hidden" id="scholarshipOption1">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{educationDetails2}"><span>Name of institution studying &amp; Class</span></label>
+                                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" type="text" required placeholder="Enter Name of the institute and class"
+                                    th:field="*{educationDetails2}"
+                                    >
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{educationDetails2}')}" th:errors="*{educationDetails2}" >Error</p>
+                                </div>
+                            </fieldset>
+                            
+                            <!-- Scholarship// -->
+                            
+                            <!--// Medical Aid -->
+
+                            <div id="medicalAidOption1">
+                                <input type="text" th:field="*{type}" hidden id="medicalAidType">
+
+                                <fieldset>
+                                    <!-- Name of Disease -->
+                                    <div class="w-full px-3 mb-6 md:mb-0 hidden" >
+                                        <label class="block font-medium text-sm text-gray-700" th:for="*{diseaseDetails}"><span>Name of Disease</span></label>
+                                        <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" type="text" required 
+                                        th:field="*{diseaseDetails}"
+                                        >
+                                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{diseaseDetails}')}" th:errors="*{diseaseDetails}" >Error</p>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <!-- Requested Amount / requestedAmount -->
+                                    <div class="w-full px-3 mb-6 md:mb-0 hidden" >
+                                        <label class="block font-medium text-sm text-gray-700" th:for="*{requestedAmount}"><span>Requested Amount</span></label>
+                                        <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"  type="number" required placeholder="Enter Amount" 
+                                        th:field="*{requestedAmount}"
+                                        >
+                                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requestedAmount}')}" th:errors="*{requestedAmount}" >Error</p>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                           
+                              
+                            <!-- Medical Aid //-->
+
+                            <fieldset>
+                                <!-- Previous Medical Aid Details -->
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{oldScholarshipDetails}"><span>Previous Medical Aid Details</span></label>
+                                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" type="text" required  placeholder="Enter previous medical aid details"
+                                    th:field="*{oldScholarshipDetails}"
+                                    >
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{oldScholarshipDetails}')}" th:errors="*{oldScholarshipDetails}" >Error</p>
+                                </div>
+                            </fieldset>
+                            
+                            <fieldset>
+                                <!-- Latest Pay slip number / latestPaymentReceiptDetails -->
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{latestPaymentReceiptDetails}"><span>Latest Pay slip number &amp; date </span></label>
+                                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" type="text" required placeholder="Enter payemnt receipt no &amp; date"
+                                    th:field="*{latestPaymentReceiptDetails}"
+                                    >
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{latestPaymentReceiptDetails}')}" th:errors="*{latestPaymentReceiptDetails}" >Error</p>
+                                </div>
+                            </fieldset>
+                           
+                          
+                            <fieldset>
+                                <!-- Total Salary Withdrawn / totalSalaryWithdraw -->
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{totalSalaryWithdraw}"><span>Total Salary Withdrawn</span></label>
+                                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"  type="number" required placeholder="Enter Total Salary withdrawn"
+                                    th:field="*{totalSalaryWithdraw}"
+                                    >
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{totalSalaryWithdraw}')}" th:errors="*{totalSalaryWithdraw}" >Error</p>
+
+                                </div>
+                            </fieldset>
+
+                          
+
+                            <!-- //Scholarship -->
+                            <!-- Various Exam details -->
+
+                            <fieldset>
+                                <input type="text" th:field="*{educationDetails2}" hidden id="educationDetails2">
+                            </fieldset>
+
+                            <div class="col-span-full " id="scholarshipOption2">
+                                <h2>Various Exam details</h2>
+                                
+                                <table id="employee-table" class="w-full rounded-s-lg text-center" >
+                                    <tr>
+                                        <td>SL:</td>
+                                        <td>Exam Name:</td>
+                                        <td>GPA:</td>
+                                        <td>Passing Year:</td>
+                                        <td>Board:</td>
+                                        <td>Result:</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <button type="button" onclick="addNewRow()" ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z" fill="rgba(70,146,221,1)"></path></svg>
+                                </button>
+                            </div>
+
+                            <!-- Scholarship// -->
+
+                            <fieldset>
+                                <!-- Documents Attachment / educationDetails-->
+                                <div class="w-full px-3 mb-6 md:mb-0">
+                                    <label class="block font-medium text-sm text-gray-700" for="*{educationDetails}"><span>Documents Attachment</span></label>
+                                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full bg-white border-gray-300 rounded-lg border"  type="file" 
+                                    th:field="*{educationDetails}"
+                                    >
+                                    <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{educationDetails}')}" th:errors="*{educationDetails}" >Error</p>
+                                </div>
+                            </fieldset>
+                          
+                        </div>
+
+                        <div class="w-full md:w-1/3 px-3 flex justify-between items-center mb-6 md:mb-3">
+                            <button class="px-2 py-3 bg-gray-400 text-white border-gray-800 rounded-md" onclick="showSubscriptionTable()">Cancel</button>
+                            <button class="px-2 py-3 bg-blue-400 text-white border-gray-800 rounded-md" type="submit" onclick="getExam()">Submit</button>
+                        </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--Subscription table -->
+       <div class="bg-white text-sm font-normal rounded" id="subscriptionTable">
+           
+            <div class="mb-4">
+                <ul class="w-full flex justify-between rounded bg-gray-200 items-center h-9" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-white bg-blue-400 border-2 border-white dark:text-white dark:bg-blue-400 h-9 dark:border-white rounded-xl" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+                    <li class="w-1/2 " role="presentation">
+                        <button class="inline-block  rounded-lg w-full" id="profile-styled-tab" data-tabs-target="#styled-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Payment List</button>
+                    </li>
+                    <li class="w-1/2" role="presentation">
+                        <button class="inline-block rounded-lg w-full" id="dashboard-styled-tab" data-tabs-target="#styled-dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Application for Grant</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="default-styled-tab-content">
+
+                <!-- Payment List -->
+                <div class="hidden  rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-profile" role="tabpanel" aria-labelledby="profile-tab">
+                   
+                    <table class="w-full -mt-3 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                DATE
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    STATUS
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    AMOUNT
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    ACTION
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                2020-07-03
+                                </th>
+                                <td class="px-6 py-4">
+                                    <span>Completed</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    2000
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button class="bg-green-600 text-white px-3 py-2 rounded-lg" >Receipt</button>
+                                </td>
+                            </tr>
+
+                            <tr 
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" 
+                            th:each="payment : ${subscriptionpayment}">
+
+                                <th 
+                                scope="row" 
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" 
+                                th:text="${payment.paymentDate}">
+                                2020-07-03
+                                </th>
+                                <td 
+                                th:class="'px-6 py-4'+${payment.status == 'completed' ? 'text-green-500' : payment.status == 'pending' ? 'text-yellow-600' : payment.status == 'rejected' ? 'text-red-500':  payment.status == 'paid' ? 'text-blue-500' : ''}" >
+                                    <span 
+                                    th:text="${payment.status}">Completed</span>
+                                </td>
+                                <td class="px-6 py-4" th:text="${payemnt.amount}">
+                                    2000
+                                </td>
+                                <td class="px-6 py-4" >
+                                    <button 
+                                    class="bg-green-600 text-white px-3 py-2 rounded-lg" 
+                                    th:text="${'Receipt'}">Receipt</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <!--Application for Grant  -->
+                <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                    <table class="w-full -mt-3 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    SL
+                                </th>
+                                 <th scope="col" class="px-6 py-3">
+                                DATE
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    STATUS
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    AMOUNT
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    REQUESTED AMOUNT
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr 
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" 
+                            th:each=" grant : ${grants}"
+                            >
+                                <th 
+                                scope="row" 
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" 
+                                th:text="${'sl no'}"
+                                >
+                                1 
+                                </th>
+                                <td class="px-6 py-4" th:text="${grant.date}">
+                                    
+                                </td>
+                                <td th:class="'px-6 py-4'+${grant.status == 'completed' ? 'text-green-500' : grant.status == 'pending' ? 'text-yellow-600' : grant.status == 'rejected' ? 'text-red-500':  grant.status == 'paid' ? 'text-blue-500' : ''}">
+                                    <span th:text="${grant.status}">Completed</span>
+                                </td>
+                                <td class="px-6 py-4" th:text="${grant.date}">
+                                    2000
+                                </td>
+                                <td class="px-6 py-4" th:text="${grant.requestedAmount}">
+                                </td>
+                            </tr>
+                          
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+       </div>
+
+      </div>
+    </div>
+
+    <script>
+
+        var paymentForm = document.getElementById("paymentForm");
+        var grantForm = document.getElementById("grantForm");
+        var subscriptionTable = document.getElementById("subscriptionTable");
+        var medicalAidOption1 = document.getElementById("medicalAidOption1");
+        var scholarshipOption1 = document.getElementById("scholarshipOption1");
+        var scholarshipOption2 = document.getElementById("scholarshipOption2");
+        var ScholarshipType = document.getElementById("ScholarshipType");
+        var medicalAidType = document.getElementById("medicalAidType");
+        const grantRadio = document.querySelectorAll('input[type="radio"][name="grantRadio"]');
+        function showPaymentForm(){
+            if (paymentForm.classList.contains("hidden")) {
+                paymentForm.classList.remove("hidden");
+                grantForm.classList.remove("hidden");
+                subscriptionTable.classList.remove("hidden");
+                grantForm.classList.add("hidden");
+                subscriptionTable.classList.add("hidden");
+            } 
+        }
+        function showGrantForm(){
+            if (grantForm.classList.contains("hidden")) {
+                paymentForm.classList.remove("hidden");
+                grantForm.classList.remove("hidden");
+                subscriptionTable.classList.remove("hidden");
+                paymentForm.classList.add("hidden");
+                subscriptionTable.classList.add("hidden");
+            } 
+        }
+        function showSubscriptionTable(){
+            if (subscriptionTable.classList.contains("hidden")) {
+                paymentForm.classList.remove("hidden");
+                grantForm.classList.remove("hidden");
+                subscriptionTable.classList.remove("hidden");
+                paymentForm.classList.add("hidden");
+                grantForm.classList.add("hidden");
+            } 
+        }
+        function handleGrant(option) {
+
+            if (option == 'Medical Aid') {
+                medicalAidType.value = "Medical Aid"
+                medicalAidOption1.classList.remove('hidden');
+                scholarshipOption1.classList.remove('hidden');
+                scholarshipOption1.classList.add('hidden');
+                scholarshipOption2.classList.remove('hidden');
+                scholarshipOption2.classList.add('hidden');
+            } else if (option == 'Scholarship') {
+
+                ScholarshipType.value = "Scholarship"
+
+                scholarshipOption1.classList.remove('hidden');
+                scholarshipOption2.classList.remove('hidden');
+                medicalAidOption1.classList.remove('hidden');
+                medicalAidOption1.classList.add('hidden');
+              
+            } 
+        }
+    </script>
+
+
+  <script>
+    // Array to store table data as objects
+    var tableData = [];
+    var dataObj=[];
+    var examData = [] ;
+
+    var it = 1;
+    var educationDetails2 = document.querySelector("input[id='educationDetails2']")
+    function addNewRow() {
+      var table = document.getElementById("employee-table");
+      var rowCount = table.rows.length;
+      var cellCount = table.rows[0].cells.length;
+      var row = table.insertRow(rowCount);
+      for (var i = 0; i < cellCount; i++) {
+         var cell = row.insertCell(i);
+         if(i==0){
+            cell.innerHTML = '<input type="text" class="text-center -mr-5 w-[100%] rounded-l-lg -mr-2" value="'+ it++ +'"  disabled/>';
+         }else if(i==1){
+            cell.innerHTML = '<input type="text" class="text-center -mr-4 w-[100%]  " placeholder="Exam Name" />';
+         }else if(i==2){
+            cell.innerHTML = '<input type="text" class="text-center -mr-3 w-[100%]  " placeholder="GPA" />';
+         }else if(i==3){
+            cell.innerHTML = '<input type="text" class="text-center -mr-2 w-[100%]  "  placeholder="Passing Year" />';
+         }else if(i==4){
+            cell.innerHTML = '<input type="text" class="text-center -mr-1 w-[100%] "  placeholder="Board"/>';
+         }else if(i==5){
+            cell.innerHTML = '<input type="text" class="text-center w-[100%] rounded-r-lg "  placeholder="Result"/>';
+         }else{
+            cell.innerHTML = '<button type="button" class="text-center px-2" onclick="deleteRow(this)"  ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z" fill="rgba(221,33,33,1)"></path></svg></button>';
+         }
+
+      }
+     
+    }
+   
+    function getExam(){
+    var table = document.getElementById("employee-table");
+      var rowCount = table.rows.length;
+      var cellCount = table.rows[0].cells.length;
+      var exdata;
+      for(var i = 1;i<rowCount;i++){
+         var sl = table.rows[i].cells[0].querySelector("input").value;
+         var name = table.rows[i].cells[1].querySelector("input").value;
+         var gpa = table.rows[i].cells[2].querySelector("input").value;
+         var year = table.rows[i].cells[3].querySelector("input").value;
+         var board = table.rows[i].cells[4].querySelector("input").value;
+         var result = table.rows[i].cells[5].querySelector("input").value;
+         exdata = {'name':name,'gpa':gpa,'year':year,'board':board,'result':result,}
+         examData.push(exdata);
+
+      }
+      educationDetails2.value = examData;
+      console.log(examData);
+    }
+
+  
+
+    function deleteRow(ele) {
+      it--;
+      var table = document.getElementById('employee-table');
+      var rowCount = table.rows.length;
+      if (rowCount <= 1) {
+        alert("There is no row available to delete!");
+        return;
+      }
+      if (ele) {
+        // Delete specific row and update tableData
+        var rowIndex = ele.parentNode.parentNode.rowIndex;
+        tableData.splice(rowIndex - 1, 1); // Adjust for header row
+        ele.parentNode.parentNode.remove();
+      } else {
+        // Delete last row and update tableData
+        tableData.pop();
+        table.deleteRow(rowCount - 1);
+      }
+    }
+
+    
+  </script>
+
+</body>
+</html>

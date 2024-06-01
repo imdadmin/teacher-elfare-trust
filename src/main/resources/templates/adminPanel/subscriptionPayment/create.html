@@ -13,13 +13,13 @@
                 <nav class="fi-breadcrumbs mb-2 hidden sm:block">
                 <ol class="flex flex-wrap items-center gap-x-2">
                 <li class="flex gap-x-2">
-                        <a th:href="@{/subscriptionPayments}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Subscription Payment Requests</a>
+                        <a th:href="@{/subscriptionPayments}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">সাবস্ক্রিপশন পেমেন্ট অনুরোধ</a>
                 </li>
                 <li class="flex gap-x-2">
                 <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
                 </svg>
-                <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">Create</a>
+                <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">নতুন</a>
                 </li>
                 </ol>
                 </nav>
@@ -34,11 +34,11 @@
                                 <!-- User -->
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{userId}"> <strong><span>User</span><span class="text-red-600 ml-1 " >*</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{userId}"> <strong><span>ব্যাবহারকারী</span><span class="text-red-600 ml-1 " >*</span></strong></label>
 
                                                 <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
                                                         th:field="*{userId}"   th:disabled="${pageStatus == 3}">
-                                                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}">User Name</option>
+                                                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}">ব্যাবহারকারীর নাম</option>
                                                 </select>
 
                                                 <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{userId}')}" th:errors="*{userId}" >Error</p>
@@ -47,11 +47,11 @@
                                 <!-- Year -->
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{year}"> <strong><span>Year</span><span class="text-red-600 ml-1 " >*</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{year}"> <strong><span> বছর</span><span class="text-red-600 ml-1 " >*</span></strong></label>
 
                                                 <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
                                                         th:field="*{year}"   th:disabled="${pageStatus == 3}">
-                                                        <option th:each="year : ${years}" th:value="${year}" th:text="${year}">Year</option>
+                                                        <option th:each="year : ${years}" th:value="${year}" th:text="${year}">বছর</option>
                                                 </select>
 
                                                 <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{year}')}" th:errors="*{year}" >Error</p>
@@ -62,7 +62,7 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{amount}"><strong><span>Amount</span><span class="text-red-600 ml-1">*</span></strong ></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{amount}"><strong><span>পরিমাণ</span><span class="text-red-600 ml-1">*</span></strong ></label>
 
                                                 <input
                                                         type="text"
@@ -80,7 +80,7 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{paymentDate}"> <label> <span>Payment Date</span><span class="text-red-600 ml-1">*</span></label>strong> </label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{paymentDate}"> <strong> <span>পেমেন্ট তারিখ</span><span class="text-red-600 ml-1">*</span></strong> </label>
 
                                                 <input
                                                         type="date"
@@ -100,7 +100,7 @@
                         <fieldset>
                                 <div class="col-span-1 sm:col-span-1">
 
-                                        <label class="block font-medium text-sm text-gray-700" th:for="*{details}"><strong><span>Details</span></strong></label>
+                                        <label class="block font-medium text-sm text-gray-700" th:for="*{details}"><strong><span>বিস্তারিত</span></strong></label>
 
                                         <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                                   th:field="*{details}"
@@ -123,10 +123,10 @@
                                 th:text="${pageStatus == 2 ? 'Update' : 'Create'}" 
                                 th:if="${pageStatus != 3}"
                                 > 
-                                Submit 
+                                সাবমিট 
                         </button>
                         <a th:href="@{/subscriptionPayments}" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        Cancel
+                        বাতিল
                         </a>
                 </div>
         </form>

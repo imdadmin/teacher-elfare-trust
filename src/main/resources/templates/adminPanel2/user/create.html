@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymleaf.org"
+      th:replace="adminPanel/common/fragments::Layout(~{::section})">
+<head th:replace="~{common/fragments :: html_head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTopic}">Title</title>
+</head>
+<body>
+<section class="mt-24 overflow-hidden">
+
+    <!-- Modal Delete-->
+    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-4 md:p-5 text-center">
+                    <div class="rounded-full fi-color-custom bg-red-100 dark:bg-red-500/20 p-3" style="    width: 50px;height:50px;color: red; position: relative; left: 50%;transform: translateX(-50%); top:10px">
+                        <svg class="fi-modal-icon h-6 w-6 text-custom-600 dark:text-custom-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                        </svg>
+                    </div>
+                    <h1 class="my-5 text-xl  text-gray-700 dark:text-gray-700 font-bold" >Delete User</h1>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400 text-xl">are you sure you would like to do this?</h3>
+                    <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
+                    <a th:href="'delete-user?id='+${user.id}"
+                       type="button"
+                       class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                        Confirm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Title -->
+    <header class="fi-header   gap-4 pb-10  sm:flex-row sm:items-center sm:justify-between">
+        <nav class="fi-breadcrumbs mb-2 hidden sm:block">
+            <ol class="flex flex-wrap items-center gap-x-2">
+                <li class="flex gap-x-2">
+                    <a th:href="@{/users}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Users</a>
+                </li>
+                <li class="flex gap-x-2">
+                    <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
+                    </svg>
+                    <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">Create</a>
+                </li>
+            </ol>
+        </nav>
+        <div class="pt-5 flex justify-between">
+            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl pt-5" th:text="${pageTopic}">Create User</h1>
+            <!-- Action button -->
+            <div>
+                <a
+                        th:href="'view-user?id='+${user.id}"
+                        class="inline-flex items-center px-4 py-2 bg-gray-200 border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                        th:if="${pageStatus == 2}"
+
+                >View </a>
+
+                <a th:href="'update-user?id='+${user.id}"
+                   class="inline-flex items-center px-4 py-2 bg-yellow-600 border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-yellow-400 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white focus:ring-offset-2 transition ease-in-out duration-150"
+                   th:if="${pageStatus == 3}"
+                >
+                    Edit </a>
+
+                <button
+                        data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                        class=" text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                        type="button"
+                        th:if="${pageStatus == 2}"
+                > Delete</button>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- Page Title -->
+    <form method="post" th:object="${user}" >
+        <div class="px-4 py-5  sm:p-6  ">
+            <div class="grid grid-cols-2 gap-6">
+
+                <input th:field="*{id}" hidden>
+                <!-- SubDistrict -->
+                <fieldset>
+
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{subDistrictId}"><strong> <span>Upazila</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                        <select class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                                th:field="*{subDistrictId}" th:disabled="${pageStatus == 3}">
+                            <option th:each="subDistrict : ${subDistricts}" th:value="${subDistrict.id}" th:text="${subDistrict.eName}">Upazila Name</option>
+                        </select>
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{subDistrictId}')}" th:errors="*{subDistrictId}" >Error</p>
+
+                    </div>
+
+
+                </fieldset>
+
+                <!-- Username -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{username}"><strong> <span>Username</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                        <input
+                                type="text"
+                                class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{username}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{username}')}" th:errors="*{username}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- Name -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{name}"><strong> <span>Name</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                        <input
+                                type="text"
+                                class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                                th:field="*{name}"
+                                th:disabled="${pageStatus == 3}"
+                        >
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{name}')}" th:errors="*{name}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- Uid -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{uniId}"><strong> <span>UID</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{uniId}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{uniId}')}" th:errors="*{uniId}" >Error</p>
+                    </div>
+                </fieldset>
+
+                <!-- Email -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{email}"><strong> <span>Email</span></strong></label>
+
+                        <input
+                                type="email"
+                                class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{email}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{email}')}" th:errors="*{email}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+
+                <!-- NID -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{nid}"><strong> <span>NID</span></strong></label>
+
+                        <input
+                                type="text"
+                                class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{nid}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{nid}')}" th:errors="*{nid}" >Error</p>
+                    </div>
+                </fieldset>
+
+                <!-- Blood Group  -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{bloodGroup}" > <strong><span>Blood Group</span></strong></label>
+
+                        <select
+                                class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 "
+                                th:field="*{bloodGroup}"
+                                th:disabled="${pageStatus == 3}">
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{bloodGroup}')}" th:errors="*{bloodGroup}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- phone -->
+                <fieldset>
+
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{phone}"><strong> <span>Phone</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{phone}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{phone}')}" th:errors="*{phone}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- fatherName -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{fatherName}"><strong> <span>Father Name</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{fatherName}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{fatherName}')}" th:errors="*{fatherName}" >fatherName</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- motherName -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{motherName}"><strong> <span>Mother Name</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{motherName}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{motherName}')}" th:errors="*{motherName}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- spouseName -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700"  th:for="*{spouseName}"><strong> <span>Spouse Name</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{spouseName}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{spouseName}')}" th:errors="*{spouseName}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- presentAddress -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{presentAddress}"><strong><span>Present Address</span></strong></label>
+
+                        <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                  th:field="*{presentAddress}"
+                                  th:disabled="${pageStatus == 3}">
+                                        </textarea>
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{presentAddress}')}" th:errors="*{presentAddress}" >Error</p>
+                    </div>
+                </fieldset>
+
+                <!-- permanentAddress -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{permanentAddress}"> <strong><span>Permanent Address</span></strong> </label>
+
+                        <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                  th:field="*{permanentAddress}"
+                                  th:disabled="${pageStatus == 3}">
+                                        </textarea>
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{permanentAddress}')}" th:errors="*{permanentAddress}" >Error</p>
+                    </div>
+                </fieldset>
+
+                <!-- joiningDate -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{joiningDate}"><strong><span>Joining Date</span></strong></label>
+
+
+                        <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                type="date"  th:field="*{joiningDate}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{joiningDate}')}" th:errors="*{joiningDate}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- prlDate -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{prlDate}"><strong><span>PRL Date</span></strong></label>
+
+                        <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                type="date"  th:field="*{prlDate}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{prlDate}')}" th:errors="*{prlDate}" >Error</p>
+                    </div>
+                </fieldset>
+
+                <!-- dateOfBirth -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{dateOfBirth}"><strong><span>Date of Dirth</span></strong></label>
+
+                        <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                type="date"  th:field="*{dateOfBirth}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{dateOfBirth}')}" th:errors="*{dateOfBirth}" >Error</p>
+                    </div>
+                </fieldset>
+
+                <!-- designation -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{designation}"><strong> <span>Designation</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{designation}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{designation}')}" th:errors="*{designation}" >Error</p>
+                    </div>
+                </fieldset>
+
+                <!-- schoolName -->
+                <fieldset>
+
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{schoolName}"><strong> <span>School Name</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{schoolName}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{schoolName}')}" th:errors="*{schoolName}" >Error</p>
+                    </div>
+
+                </fieldset>
+
+                <!-- Payscale -->
+                <fieldset>
+
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{payscale}"><strong> <span>Payscale</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{payscale}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{payscale}')}" th:errors="*{payscale}" >Error</p>
+                    </div>
+
+                </fieldset>
+
+                <!-- totalSalaryWithdraw -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{totalSalaryWithdraw}"><strong> <span>Total Salary Withdraw</span></strong></label>
+
+                        <input
+                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                th:field="*{totalSalaryWithdraw}"
+                                th:disabled="${pageStatus == 3}">
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{totalSalaryWithdraw}')}" th:errors="*{totalSalaryWithdraw}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+                <!-- Image  -->
+                <fieldset>
+                    <div class="col-span-2 sm:col-span-1">
+
+                        <label class="block font-medium text-sm text-gray-700 " th:for="*{profilePhotoPath}"><strong> <span>Image</span></strong></label>
+
+
+                        <div class="mt-1 flex items-center justify-center w-full">
+                            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-18 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+
+                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                </div>
+                                <input id="dropzone-file" type="file"
+                                       class="hidden"
+                                       th:field="*{profilePhotoPath}"
+                                       th:disabled="${pageStatus == 3}"/>
+                            </label>
+                        </div>
+
+                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{profilePhotoPath}')}" th:errors="*{profilePhotoPath}" >Error</p>
+
+                    </div>
+                </fieldset>
+
+
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2 justify-start px-4 py-3  text-end ">
+
+            <button
+                    type="submit"
+                    class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-sm text-white  tracking-widest hover:bg-yellow-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 "
+                    th:text="${pageStatus == 2 ? 'Update' : 'Create'}"
+                    th:if="${pageStatus != 3}"
+            >
+                Submit
+            </button>
+            <a th:href="@{/users}" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                Cancel
+            </a>
+        </div>
+    </form>
+</section>
+</body>
+</html>

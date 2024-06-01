@@ -22,7 +22,7 @@ public class SubscriptionPayment extends Autditable {
     @SequenceGenerator(name = "subscription_payment_sequence", sequenceName = "SUBSCRIPTION_PAYMENT_SEQUENCE", allocationSize = 1)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     private Integer year;

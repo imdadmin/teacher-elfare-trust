@@ -6,7 +6,7 @@
 >
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <title>Document</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
             <nav class="fi-breadcrumbs mb-2 hidden sm:block">
                 <ol class="flex flex-wrap items-center gap-x-2">
                     <li class="flex gap-x-2">
-                        <a th:href="@{/districts}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Districts</a>
+                        <a th:href="@{/districts}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">জেলা</a>
                     </li>
                     <li class="flex gap-x-2">
                         <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -27,14 +27,14 @@
                     </li>
                 </ol>
             </nav>
-            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">Districts</h1>
+            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl"> উপজেলা</h1>
         </div>
 
         <div class="fi-ac gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
             <a th:href="@{/create-district}" class="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-yellow fi-btn-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-yellow-600 text-white hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-400 focus-visible:ring-yellow-500/50 dark:focus-visible:ring-yellow-400/50 fi-ac-btn-action">
 
               <span class="fi-btn-label">
-                  New District
+                   নতুন জেলা
               </span>
             </a>
         </div>
@@ -49,7 +49,7 @@
             <div class="ms-auto flex items-center gap-x-4">
                 <!-- //Search  -->
                 <div  class="fi-ta-search-field" >
-                    <label class="sr-only" > Search</label>
+                    <label class="sr-only" > অনুসন্ধান</label>
                     <div class="fi-input-wrp flex rounded-lg shadow-sm transition duration-75 bg-white focus-within:ring-2 dark:bg-white/5 ring-gray-950/10 focus-within:ring-yellow-600 dark:ring-white/20 dark:focus-within:ring-yellow-600" style="box-shadow: 3px 0px 7px 1px #80808075;">
                         <div class="items-center gap-x-3 ps-3 flex pe-2 px-2">
                             <svg  class="fi-input-wrp-icon h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -83,7 +83,7 @@
                     </th>
                     <th class="px-4 py-2  whitespace-nowrap">Name</th>
                     <th class="px-4 py-2  whitespace-nowrap">নাম</th>
-                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Upazilas</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">উপজেলা</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
                 </tr>
                 </thead>
@@ -104,7 +104,7 @@
 
                     <td class="px-4 py-2" th:text="${district.eName}">District Name</td>
                     <td class="px-4 py-2" th:text="${district.bName}">Bangla Name</td>
-                    <td class="px-4 py-2" th:text="${district.subDistrictCount}">Upazilas</td>
+                    <td class="px-4 py-2" th:text="${district.subDistrictCount}">উপজেলা</td>
                     <td class="px-4 py-2 ">
                         <div class="flex gap-x-1 ">
                             <a th:href="'view-district?id='+${district.id}" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">

@@ -32,4 +32,6 @@ public class GrantDTO {
     private String diseaseDetails;
     private String oldScholarshipDetails;
     private String latestPaymentReceiptDetails;
+
+    private String attachment;
 }

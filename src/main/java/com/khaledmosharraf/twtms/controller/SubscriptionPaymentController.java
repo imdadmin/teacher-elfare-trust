@@ -72,7 +72,6 @@ public class SubscriptionPaymentController {
 
         return "adminPanel/subscriptionPayment/create";
 
-        //  return  "subscriptionPayment/create_subscriptionPayment";
     }
 
     @PostMapping("create-subscriptionPayment")

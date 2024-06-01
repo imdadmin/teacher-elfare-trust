@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <header th:fragment="header">
+      <div
+        class="relative sm:flex sm:justify-center sm:items-center bg-dots-darker bg-center bg-gray-100 selection:bg-red-500 selection:text-white container mx-auto"
+      >
+        <div class="sm:fixed sm:top-0 sm:end-0 text-end z-10 w-full bg-white">
+          <div class="flex justify-between px-6">
+            <div class="flex justify-start items-center">
+              <h1
+                class="text-5xl text-center font-extrabold font-sans py-3 px-5 text-blue-600"
+              >
+                TWTM
+              </h1>
+              <p class="text-lg text-start font-semibold w-[180px]">
+                Teachers Wellfare Trust Management
+              </p>
+            </div>
+            <div class="py-2 flex items-center">
+              <img
+                class="rounded-lg w-32 h-16"
+                th:src="@{images/14.jpg}"
+                alt="primary Education"
+              />
+            </div>
+          </div>
+          <div class="flex px-10 items-center justify-between h-14 bg-sky-300">
+            <div class="py-3">
+              <select
+                name=""
+                class="bg-transparent text-white border-white rounded-lg"
+                id=""
+              >
+                <option class="text-gray-800" value="">বাংলা</option>
+              </select>
+            </div>
+            
+            <div class="py-3 flex gap-2">
+              <a
+                class="px-3 py-2 gap-2 flex bg-amber-600 text-white rounded-lg"
+                th:href="@{documents/31.pdf}"
+                >ট্রাষ্টি বোর্ড
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="rgba(255,255,255,1)"
+                >
+                  <path
+                    d="M13 10H18L12 16L6 10H11V3H13V10ZM4 19H20V12H22V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V12H4V19Z"
+                  ></path></svg
+              ></a>
+              <a
+                class="px-3 gap-2 flex py-2 bg-green-600 text-white rounded-lg"
+                th:href="@{documents/32.pdf}"
+                >গেজেট
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="rgba(255,255,255,1)"
+                >
+                  <path
+                    d="M13 10H18L12 16L6 10H11V3H13V10ZM4 19H20V12H22V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V12H4V19Z"
+                  ></path></svg
+              ></a>
+            </div>
+
+            <div class="flex py-2">
+              <a
+                
+                th:href="@{/dashboard}"
+                class="font-semibold text-white hover:bg-blue-700 px-3 py-2 flex items-centerrounded-lg bg-blue-500 focus:outline focus:outline-2 focus:rounded-lg focus:outline-blue-800"
+              >
+                Dashboard
+              </a>
+              <a
+                th:href="@{/login}"
+                class="font-semibold text-white bg-green-600 px-3 py-2 flex items-center rounded-lg hover:bg-green-700 focus:outline focus:outline-2 focus:rounded-lg focus:outline-green-800"
+              >
+                Log in
+              </a>
+              <a
+                th:if="${canRegister}"
+                th:href="@{/register}"
+                class="ms-4 font-semibold bg-violet-500 hover:bg-violet-700 text-white px-3 py-2 flex items-center rounded-lg focus:outline focus:outline-2 focus:rounded-lg focus:outline-violet-800"
+              >
+                Register
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>

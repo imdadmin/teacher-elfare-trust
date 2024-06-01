@@ -55,4 +55,16 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
         SubscriptionPayment subscriptionPayment = getIfExistById(id);
         subscriptionPaymentRepository.delete(subscriptionPayment);
     }
+
+    @Override
+    public List<SubscriptionPaymentDTO> getByUserId(Long id) {
+        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findByUserId(id);
+        return subscriptionPayments.stream().map(subscriptionPaymentMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SubscriptionPaymentDTO> getByUsername(String username) {
+        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findByUsername(username);
+        return subscriptionPayments.stream().map(subscriptionPaymentMapper::toDTO).collect(Collectors.toList());
+    }
 }

@@ -17,7 +17,7 @@ public class SubscriptionPaymentDTO {
     private Long id;
     private User user;
     private Integer year;
-    private double amount;
+    private Double amount;
     private String details;
     private LocalDate paymentDate;
 

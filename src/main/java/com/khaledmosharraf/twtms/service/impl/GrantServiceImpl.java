@@ -55,4 +55,15 @@ public class GrantServiceImpl extends IdCheckingService<Grant,Long> implements G
         Grant grant = getIfExistById(id);
         grantRepository.delete(grant);
     }
+    @Override
+    public List<GrantDTO> getByUserId(Long id) {
+        List<Grant> grants = grantRepository.findByUserId(id);
+        return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GrantDTO> getByUsername(String username) {
+        List<Grant> grants = grantRepository.findByUsername(username);
+        return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
+    }
 }

@@ -49,12 +49,12 @@
                     <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
                     </svg>
-                    <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">Create</a>
+                    <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">নতুন</a>
                 </li>
             </ol>
         </nav>
         <div class="pt-5 flex justify-between">
-            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl pt-5" th:text="${pageTopic}">Create User</h1>
+            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl pt-5" th:text="${pageTopic}">নতুন ইউজার</h1>
             <!-- Action button -->
             <div>
                 <a
@@ -62,20 +62,20 @@
                         class="inline-flex items-center px-4 py-2 bg-gray-200 border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                         th:if="${pageStatus == 2}"
 
-                >View </a>
+                >দেখুন </a>
 
                 <a th:href="'update-user?id='+${user.id}"
                    class="inline-flex items-center px-4 py-2 bg-yellow-600 border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-yellow-400 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white focus:ring-offset-2 transition ease-in-out duration-150"
                    th:if="${pageStatus == 3}"
                 >
-                    Edit </a>
+                    সংশোধন </a>
 
                 <button
                         data-modal-target="popup-modal" data-modal-toggle="popup-modal"
                         class=" text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                         type="button"
                         th:if="${pageStatus == 2}"
-                > Delete</button>
+                > মুছে ফেলুন</button>
             </div>
         </div>
 
@@ -92,11 +92,11 @@
 
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{subDistrictId}"><strong> <span>Upazila</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{subDistrictId}"><strong> <span>উপজেলা</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                         <select class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
                                 th:field="*{subDistrictId}" th:disabled="${pageStatus == 3}">
-                            <option th:each="subDistrict : ${subDistricts}" th:value="${subDistrict.id}" th:text="${subDistrict.eName}">Upazila Name</option>
+                            <option th:each="subDistrict : ${subDistricts}" th:value="${subDistrict.id}" th:text="${subDistrict.eName}">উপজেলার নাম</option>
                         </select>
 
                         <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{subDistrictId}')}" th:errors="*{subDistrictId}" >Error</p>
@@ -110,7 +110,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{username}"><strong> <span>Username</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{username}"><strong> <span> ইউজারনেম</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                         <input
                                 type="text"
@@ -127,7 +127,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{name}"><strong> <span>Name</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{name}"><strong> <span> নাম</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                         <input
                                 type="text"
@@ -144,7 +144,7 @@
                 <!-- Uid -->
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{uniId}"><strong> <span>UID</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{uniId}"><strong> <span> ইউ আই ডি</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -159,7 +159,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{email}"><strong> <span>Email</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{email}"><strong> <span> ইমেইল</span></strong></label>
 
                         <input
                                 type="email"
@@ -177,7 +177,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{nid}"><strong> <span>NID</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{nid}"><strong> <span> এন আই ডি</span></strong></label>
 
                         <input
                                 type="text"
@@ -193,7 +193,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{bloodGroup}" > <strong><span>Blood Group</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{bloodGroup}" > <strong><span> ব্লাড গ্রুপ</span></strong></label>
 
                         <select
                                 class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 "
@@ -219,7 +219,7 @@
 
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{phone}"><strong> <span>Phone</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{phone}"><strong> <span> মোবাইল</span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -234,7 +234,7 @@
                 <!-- fatherName -->
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{fatherName}"><strong> <span>Father Name</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{fatherName}"><strong> <span> পিতার নাম</span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -249,7 +249,7 @@
                 <!-- motherName -->
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{motherName}"><strong> <span>Mother Name</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{motherName}"><strong> <span>মাতার নাম</span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -265,7 +265,8 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700"  th:for="*{spouseName}"><strong> <span>Spouse Name</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700"  th:for="*{spouseName}"><strong> <span>
+স্বামী বা স্ত্রী নাম</span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -281,7 +282,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{presentAddress}"><strong><span>Present Address</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{presentAddress}"><strong><span> বর্তমান ঠিকানা</span></strong></label>
 
                         <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                   th:field="*{presentAddress}"
@@ -296,7 +297,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{permanentAddress}"> <strong><span>Permanent Address</span></strong> </label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{permanentAddress}"> <strong><span> স্থায়ী ঠিকানা</span></strong> </label>
 
                         <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                   th:field="*{permanentAddress}"
@@ -311,7 +312,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{joiningDate}"><strong><span>Joining Date</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{joiningDate}"><strong><span>যোগদানের তারিকখ</span></strong></label>
 
 
                         <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -326,7 +327,7 @@
                 <!-- prlDate -->
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{prlDate}"><strong><span>PRL Date</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{prlDate}"><strong><span> পি আর এল তারিখ</span></strong></label>
 
                         <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                 type="date"  th:field="*{prlDate}"
@@ -339,7 +340,7 @@
                 <!-- dateOfBirth -->
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{dateOfBirth}"><strong><span>Date of Dirth</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{dateOfBirth}"><strong><span>জন্ম তারিখ</span></strong></label>
 
                         <input  class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                 type="date"  th:field="*{dateOfBirth}"
@@ -353,7 +354,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{designation}"><strong> <span>Designation</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{designation}"><strong> <span>পদবি </span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -368,7 +369,7 @@
                 <fieldset>
 
                     <div class="col-span-2 sm:col-span-1">
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{schoolName}"><strong> <span>School Name</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{schoolName}"><strong> <span>বিদ্যালয়ের নাম</span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -385,7 +386,7 @@
 
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{payscale}"><strong> <span>Payscale</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{payscale}"><strong> <span>পে-স্কেল</span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -401,7 +402,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700" th:for="*{totalSalaryWithdraw}"><strong> <span>Total Salary Withdraw</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700" th:for="*{totalSalaryWithdraw}"><strong> <span>মোট বেতন উত্তোলন</span></strong></label>
 
                         <input
                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -417,7 +418,7 @@
                 <fieldset>
                     <div class="col-span-2 sm:col-span-1">
 
-                        <label class="block font-medium text-sm text-gray-700 " th:for="*{profilePhotoPath}"><strong> <span>Image</span></strong></label>
+                        <label class="block font-medium text-sm text-gray-700 " th:for="*{profilePhotoPath}"><strong> <span>ছবি</span></strong></label>
 
 
                         <div class="mt-1 flex items-center justify-center w-full">
@@ -450,10 +451,10 @@
                     th:text="${pageStatus == 2 ? 'Update' : 'Create'}"
                     th:if="${pageStatus != 3}"
             >
-                Submit
+                সাবমিট
             </button>
             <a th:href="@{/users}" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                Cancel
+                বাতিল
             </a>
         </div>
     </form>

@@ -104,5 +104,10 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
         user.setPassword(encodedNewPassword);
         userRepository.save(user);
     }
+    @Override
+    public UserDTO getByUsername(String username){
+        User user = userRepository.findByUsername(username).orElse(new User());
+        return userMapper.toDTO(user);
+    }
 
 }

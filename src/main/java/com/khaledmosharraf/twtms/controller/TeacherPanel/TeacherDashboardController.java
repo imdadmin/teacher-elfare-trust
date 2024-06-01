@@ -1,14 +1,12 @@
 package com.khaledmosharraf.twtms.controller.TeacherPanel;
 
-import com.khaledmosharraf.twtms.dto.DistrictDTO;
-import com.khaledmosharraf.twtms.dto.SubDistrictDTO;
-import com.khaledmosharraf.twtms.dto.UserDTO;
-import com.khaledmosharraf.twtms.dto.UserRequestDTO;
+import com.khaledmosharraf.twtms.dto.*;
 import com.khaledmosharraf.twtms.exception.IncorrectPasswordException;
+import com.khaledmosharraf.twtms.mapper.GrantRequestMapper;
+import com.khaledmosharraf.twtms.mapper.SubscriptionPaymentRequestMapper;
 import com.khaledmosharraf.twtms.mapper.UserRequestMapper;
-import com.khaledmosharraf.twtms.service.DistrictService;
-import com.khaledmosharraf.twtms.service.SubDistrictService;
-import com.khaledmosharraf.twtms.service.UserService;
+import com.khaledmosharraf.twtms.model.User;
+import com.khaledmosharraf.twtms.service.*;
 import com.khaledmosharraf.twtms.utils.PageStatus;
 import com.khaledmosharraf.twtms.validations.UserValidator;
 import jakarta.validation.Valid;
@@ -21,96 +19,134 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.Year;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @SessionAttributes("username")
 @RequestMapping("user/")
 public class TeacherDashboardController {
 
+
     @Autowired
-    UserRequestMapper userRequestMapper;
+    GrantRequestMapper grantRequestMapper;
     @Autowired
-    UserService userService;
+    SubscriptionPaymentRequestMapper subscriptionPaymentRequestMapper;
     @Autowired
-    UserValidator userValidator;
+    GrantService grantService;
     @Autowired
     SubDistrictService subDistrictService;
     @Autowired
+    UserService userService;
+    @Autowired
     DistrictService districtService;
+    @Autowired
+    SubscriptionPaymentService subscriptionPaymentService;
+
+
     @GetMapping("dashboard")
     public String showUserDashboard(Model model){
+        String username = getLoggedUsername();
+        UserDTO userDTO = userService.getByUsername(username);
+        List<GrantDTO> grants = grantService.getByUserId(userDTO.getId());
+        List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getByUserId(userDTO.getId());
+
+        SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO  = new SubscriptionPaymentRequestDTO();
+        GrantRequestDTO grantRequestDTO = new GrantRequestDTO();
+
+        List<Integer> years = getLast7Years();
+
+        model.addAttribute("errorFrom","no");
+        model.addAttribute("years", years);
+        model.addAttribute("user",userDTO);
+        model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
+        model.addAttribute("grant",grantRequestDTO);
+        model.addAttribute("grants",grants);
+        model.addAttribute("subscriptionPayments",subscriptionPayments);
+        model.addAttribute("pageTitle", "Dashboard Page");
+
+        model.addAttribute("username",getLoggedUsername());
+
         return "teacherPanel/dashboard";
     }
 
-    @GetMapping("update-user")
-    public String showUpdateUserForm( @RequestParam Long id , Model model) {
-
-        UserDTO userDTO = userService.get(id);
-        UserRequestDTO userRequestDTO = userRequestMapper.toUserRequestDTO(userDTO);
-        model.addAttribute("user",userRequestDTO);
-        List<SubDistrictDTO> subDistricts= subDistrictService.getAll();
-        model.addAttribute("subDistricts", subDistricts);
-        model.addAttribute("pageTopic","Edit User");
-        model.addAttribute("username",getLoggedUsername());
-        model.addAttribute("pageStatus", PageStatus.UPDATE);
-        model.addAttribute("pageStatus_tag", PageStatus.UPDATE_TAG);
-        return "adminPanel/user/create";
-        //  return  "user/create_user";
-    }
-
-
-    @PostMapping("update-user")
-    public String submitUpdateUserForm(@Valid @ModelAttribute("user") UserRequestDTO userRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        userValidator.validate(userRequestDTO, bindingResult);
+    @PostMapping("create-subscriptionPayment")
+    public String submitSubscriptionPaymentForm(@Valid @ModelAttribute("subscriptionPayment") SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
+            String username = getLoggedUsername();
+            UserDTO userDTO = userService.getByUsername(username);
+            List<GrantDTO> grants = grantService.getByUserId(userDTO.getId());
+            List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getByUserId(userDTO.getId());
+            GrantRequestDTO grantRequestDTO = new GrantRequestDTO();
 
-            List<SubDistrictDTO> subDistricts= subDistrictService.getAll();
-            model.addAttribute("subDistricts", subDistricts);
+            List<Integer> years = getLast7Years();
+            model.addAttribute("errorFrom","subscriptionPayment");
+            model.addAttribute("years", years);
+            model.addAttribute("user",userDTO);
+            model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
+            model.addAttribute("grant",grantRequestDTO);
+            model.addAttribute("grants",grants);
+            model.addAttribute("subscriptionPayments",subscriptionPayments);
+            model.addAttribute("pageTitle", "Dashboard Page");
 
-            model.addAttribute("pageTopic","Edit User");
             model.addAttribute("username",getLoggedUsername());
-            model.addAttribute("pageStatus", PageStatus.UPDATE);
-            model.addAttribute("pageStatus_tag", PageStatus.UPDATE_TAG);
-            return "adminPanel/user/create";
-            //   return  "user/create_user";
+
+            return "teacherPanel/dashboard";
         }
-        UserDTO userDTO= userRequestMapper.toUserDTO(userRequestDTO);
-        userService.update(userDTO);
-        redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
-        return "redirect:/users";
+        subscriptionPaymentService.add(subscriptionPaymentRequestMapper.toSubscriptionPaymentDTO(subscriptionPaymentRequestDTO));
+        redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
+        return "redirect:/user/dashboard";
     }
 
-    @GetMapping("view-user")
-    public String showViewUserForm( @RequestParam Long id , Model model) {
 
-        UserDTO userDTO = userService.get(id);
-        UserRequestDTO userRequestDTO = userRequestMapper.toUserRequestDTO(userDTO);
-        model.addAttribute("user",userRequestDTO);
-        List<SubDistrictDTO> subDistricts= subDistrictService.getAll();
-        model.addAttribute("subDistricts", subDistricts);
-        model.addAttribute("pageTopic","View User");
-        model.addAttribute("username",getLoggedUsername());
-        model.addAttribute("pageStatus", PageStatus.VIEW);
-        model.addAttribute("pageStatus_tag", PageStatus.VIEW_TAG);
-        return "adminPanel/user/create";
+    @PostMapping("create-grant")
+    public String submitGrantForm(@Valid @ModelAttribute("grant") GrantRequestDTO grantRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()){
+            String username = getLoggedUsername();
+            UserDTO userDTO = userService.getByUsername(username);
+            List<GrantDTO> grants = grantService.getByUserId(userDTO.getId());
+            List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getByUserId(userDTO.getId());
+            SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO = new SubscriptionPaymentRequestDTO();
 
-    }
-    @PostMapping("/reset-password")
-    public String resetPassword(@RequestParam("oldPassword") String username, @RequestParam("oldPassword") String oldPassword,
-                                @RequestParam("newPassword") String newPassword,
-                                Model model) {
-        try {
-            userService.resetPasswordWithOldPassword(username,oldPassword,newPassword);
-            return "redirect:/logout";
-        } catch (IncorrectPasswordException e) {
-            model.addAttribute("errorMessage", "Incorrect old password");
-            return "reset-password";
+            List<Integer> years = getLast7Years();
+            model.addAttribute("errorFrom","grant");
+            model.addAttribute("years", years);
+            model.addAttribute("user",userDTO);
+            model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
+            model.addAttribute("grant",grantRequestDTO);
+            model.addAttribute("grants",grants);
+            model.addAttribute("subscriptionPayments",subscriptionPayments);
+            model.addAttribute("pageTitle", "Dashboard Page");
+
+            model.addAttribute("username",getLoggedUsername());
+
+            return "teacherPanel/dashboard";
         }
+        grantRequestDTO.setStatus("Pending");
+        grantService.add(grantRequestMapper.toGrantDTO(grantRequestDTO));
+        redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
+        return "redirect:/user/dashboard";
     }
+
+    @GetMapping("delete-grant")
+    public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
+        grantService.delete(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
+        return "redirect:/grants";
+    }
+
     private String getLoggedUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
+    }
+    public List<Integer> getLast7Years() {
+        int currentYear = Year.now().getValue();
+        return IntStream.rangeClosed(currentYear - 6, currentYear)
+                .map(i -> currentYear - (i - (currentYear - 6))) // Reverse the order
+                .boxed()
+                .collect(Collectors.toList());
     }
 
 }

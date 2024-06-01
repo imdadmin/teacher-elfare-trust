@@ -4,7 +4,7 @@
 <head th:replace="~{common/fragments :: html_head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTopic}">Title</title>
+    <title th:text="${pageTopic}">টাইটেল</title>
 </head>
 <body>
  <section class="mt-24 overflow-hidden">
@@ -13,17 +13,17 @@
                 <nav class="fi-breadcrumbs mb-2 hidden sm:block">
                 <ol class="flex flex-wrap items-center gap-x-2">
                 <li class="flex gap-x-2">
-                        <a th:href="@{/grants}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Grant Requests</a>
+                        <a th:href="@{/grants}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">গ্র্যান্ট আবেদন   </a>
                 </li>
                 <li class="flex gap-x-2">
                 <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
                 </svg>
-                <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">Create</a>
+                <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">নতুন</a>
                 </li>
                 </ol>
                 </nav>
-                <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl pt-5" th:text="${pageTopic}">Title</h1>
+                <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl pt-5" th:text="${pageTopic}">টাইটেল</h1>
         </header>
         <form method="post" th:object="${grant}" class="bg-white">
         
@@ -34,11 +34,11 @@
                                 <!-- User -->
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{userId}"> <strong><span>User</span><span class="text-red-600 ml-1 " >*</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{userId}"> <strong><span>ব্যবহারকারী</span><span class="text-red-600 ml-1 " >*</span></strong></label>
 
                                                 <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
                                                         th:field="*{userId}"   th:disabled="${pageStatus == 3}">
-                                                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}">User Name</option>
+                                                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}">ব্যবহারকারীর নাম</option>
                                                 </select>
 
                                                 <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{userId}')}" th:errors="*{userId}" >Error</p>
@@ -49,13 +49,13 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
                                                 <label class="block font-medium text-sm text-gray-700"
-                                                th:for="*{status}"><strong><span>Status</span></strong></label>
+                                                th:for="*{status}"><strong><span>স্ট্যাটাস</span></strong></label>
                                                 <select
                                                 class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 " th:field="*{status}"
                                                 th:disabled="${pageStatus == 3}">
-                                                        <option value="Pending">Pending</option>
-                                                        <option value="Accepted">Accepted</option>
-                                                        <option value="Rejected">Rejected</option>
+                                                        <option value="Pending">বিচারাধীন</option>
+                                                        <option value="Accepted">গৃহীত</option>
+                                                        <option value="Rejected">প্রত্যাখ্যাত</option>
                                                 </select>
 
                                                 <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{status}')}" th:errors="*{status}" >Error</p>
@@ -72,8 +72,8 @@
                                                 <select
                                                 class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 " th:field="*{type}"
                                                 th:disabled="${pageStatus == 3}">
-                                                        <option value="Medical aid">Medical Aid</option>
-                                                        <option value="Scholarship">Scholarship</option>
+                                                        <option value="Medical aid">চিকিৎসা সেবা</option>
+                                                        <option value="Scholarship">বৃত্তি</option>
                                                 </select>
 
                                                 <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{type}')}" th:errors="*{type}" >Error</p>
@@ -84,7 +84,7 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{amount}"><strong> <span>Amount</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{amount}"><strong> <span>পরিমাণ</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                                                 <input
                                                 type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -101,7 +101,7 @@
                                         <div class="col-span-2 sm:col-span-1">
 
                                                 <label class="block font-medium text-sm text-gray-700"
-                                                th:for="*{requestedAmount}"><strong> <span>Requested Amount</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                                                th:for="*{requestedAmount}"><strong> <span> অনুরোধকৃত পরিমাণ</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                                                 <input
                                                 type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -117,7 +117,7 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{currentPayscale}"><strong> <span>Current Payscale</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{currentPayscale}"><strong> <span>বর্তমান পে-স্কেল</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                                                 <input
                                                 type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -133,7 +133,7 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{totalSalaryWithdraw}"><strong> <span>Total Salary Withdraw</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{totalSalaryWithdraw}"><strong> <span>মোট বেতন উত্তোলন</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                                                 <input
                                                 type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -147,7 +147,7 @@
                                 <!-- requestedForName -->
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{requestedForName}"><strong> <span>Requested For Name</span><span class="text-red">*</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{requestedForName}"><strong> <span>আবেদনকারির নাম</span><span class="text-red">*</span></strong></label>
 
                                                 <input
                                                 type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -162,7 +162,7 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700"  th:for="*{requestedForDateOfBirth}"><strong> <span>Requested for Date of Birth</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700"  th:for="*{requestedForDateOfBirth}"><strong> <span>আবেদনকারির জন্ম তারিখ</span><span class="text-red-600 ml-1 ">*</span></strong></label>
 
                                                 <input
                                                 type="date" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
@@ -178,7 +178,7 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{educationDetails}"><strong><span>Education Details</span> </strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{educationDetails}"><strong><span>শিক্ষা বিস্তারিত</span> </strong></label>
                                                 
                                                 <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                                 th:field="*{educationDetails}"
@@ -189,11 +189,26 @@
 
                                         </div>
                                 </fieldset>
+                                <!-- educationDetails2 -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{educationDetails2}"><strong><span>বিভিন্ন পরীক্ষার বিবরণ</span> </strong></label>
+
+                                                <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                          th:field="*{educationDetails2}"
+                                                          th:disabled="${pageStatus == 3}">
+                                                </textarea>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{educationDetails2}')}" th:errors="*{educationDetails2}" >Error</p>
+
+                                        </div>
+                                </fieldset>
 
                                 <!-- diseaseDetails -->
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{diseaseDetails}"><strong> <span>Disease Details</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{diseaseDetails}"><strong> <span>রোগের বিবরণ</span></strong></label>
                                                 
                                                 <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                                 th:field="*{diseaseDetails}"
@@ -207,7 +222,8 @@
                                 <!-- oldScholarshipDetails -->
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{oldScholarshipDetails}"><strong><span>Old Scholarship Details</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{oldScholarshipDetails}"><strong><span>পুরাতন বৃত্তি বিবরণ
+</span></strong></label>
 
                                                 <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                                 th:field="*{oldScholarshipDetails}"
@@ -223,7 +239,8 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{latestPaymentReceiptDetails}"><strong> <span>Latest Payment Receipt Details</span></strong> </label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{latestPaymentReceiptDetails}"><strong> <span>সর্বশেষ পেমেন্ট রসিদ বিবরণ
+</span></strong> </label>
 
                                                 <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                                 th:field="*{latestPaymentReceiptDetails}"
@@ -239,7 +256,7 @@
                                 <fieldset>
                                         <div class="col-span-2 sm:col-span-1">
 
-                                                <label class="block font-medium text-sm text-gray-700" th:for="*{details}"><strong><span>Details</span></strong></label>
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{details}"><strong><span>বিস্তারিত</span></strong></label>
 
                                                 <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                                 th:field="*{details}"
@@ -261,7 +278,7 @@
                                 th:text="${pageStatus == 2 ? 'Update' : 'Create'}" 
                                 th:if="${pageStatus != 3}"
                                 > 
-                                Submit 
+                                সাবমিট 
                         </button>
                         <a th:href="@{/grants}" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         Cancel
