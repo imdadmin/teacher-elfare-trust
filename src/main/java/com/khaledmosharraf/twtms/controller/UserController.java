@@ -47,6 +47,7 @@ public class UserController {
         model.addAttribute("pageTitle", "User Page");
         String username = getLoggedUsername();
         model.addAttribute("username",getLoggedUsername());
+        model.addAttribute("activePage","/users");
         model.addAttribute("totalPages",16);
 
         return "adminPanel/user/list";

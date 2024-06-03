@@ -1,13 +1,4 @@
-/* Sidebar */
-@media (min-width: 640px) {
-    #sidebar {
-        width: 20%;
-        display: block;
-    }
-    #main-content {
-        width: 80%;
-    }
-}
+
 /* Sidebar */
 
 @font-face {
@@ -57,7 +48,7 @@
     width: 180px;
     margin: 0;
     position: relative;
-    vertical-align: middle;
+   
 }
 .select2-container--default .select2-selection--single {
     background-color: #fff;
@@ -113,18 +104,34 @@
 }
 
 .dt-length{
-    position: relative;
-    top: 10px;
-    left: 3px;
+    display: flex;
+    justify-content: end;
 }
-.dt-info,.dt-paging {
+.dt-length .dt-input{
+    width: 70px;
+    text-align: justify;
+    border-radius: 5px;
+     cursor: pointer;
+}
+.dt-paging {
     position: relative;
-    top: -35px;
-    
+    top: 0px;
+    right: 30px;
 }
 
+.dt-info{
+    top: -25px;
+    position: relative;
+    left: 15px;
+}
 
-
+/* custom css */
+.bg-yellow-600{
+  background-color: #d97706;
+}
+.bg-yellow-700{
+  background-color:rgb(255, 162, 0);
+}
 /* Target descending sort icon specifically */
 
 
@@ -203,29 +210,14 @@
   line-height: 1.4;
   font-size: 16px;
 }
-.accept-btn {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-right: 5px;
+
+
+
+/* Own Custom css */
+.text-custom-yellow-600 {
+  color: rgb(216 119 6);
 }
 
-.deny-btn {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.accept-btn:hover {
-    background-color: darkgreen;
-}
-
-.deny-btn:hover {
-    background-color: darkred;
+.bg-custom-yellow-600 {
+  background-color: rgb(216 119 6);
 }

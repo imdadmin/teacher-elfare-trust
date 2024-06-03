@@ -67,7 +67,7 @@
 
                     <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="upazilaInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">উপজেলা</span> </label>
 
-                    <select id="upazilaInput" onchange="myDisupo()"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
+                    <select id="upazilaInput" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
                         <option value="">উপজেলা অনুসন্ধান</option>
                         <option th:each="subDistrict : ${subDistricts}" th:value="${subDistrict.eName}" th:text="${subDistrict.eName}">উপজেলার নাম</option>
                         <!-- Add more options as needed -->

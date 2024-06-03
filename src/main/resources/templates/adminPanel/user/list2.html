@@ -1,278 +1,270 @@
 <!DOCTYPE html>
 <html
-  lang="en"
-  xmlns:th="http://www.thymleaf.org"
-  th:replace="adminPanel/common/fragments::Layout(~{::section})"
+        lang="en"
+        xmlns:th="http://www.thymleaf.org"
+        th:replace="adminPanel/common/fragments::Layout(~{::section})"
 >
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      
-    </style>
-  </head>
-  <body>
-  <section class="mt-24 overflow-hidden">
-    
+</head>
+<body>
+<section class="mt-24 overflow-hidden">
     <!-- Page Title -->
     <header class="fi-header flex flex-col gap-4 pb-10  sm:flex-row sm:items-center sm:justify-between">
-
         <div>
             <nav class="fi-breadcrumbs mb-2 hidden sm:block">
-              <ol class="flex flex-wrap items-center gap-x-2">
-                <li class="flex gap-x-2">
-                    <a th:href="@{/users}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">Users</a>
-                </li>
-                <li class="flex gap-x-2">
-                  <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
-                  </svg>
-                  <a th:href="@{/users}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">List</a>
-                </li>
-              </ol>
+                <ol class="flex flex-wrap items-center gap-x-2">
+                    <li class="flex gap-x-2">
+                        <a th:href="@{/users}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">ইউজার</a>
+                    </li>
+                    <li class="flex gap-x-2">
+                        <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
+                        </svg>
+                        <a th:href="@{/users}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">তালিকা</a>
+                    </li>
+                </ol>
             </nav>
-            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">Users</h1>
+            <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">ইউজার</h1>
         </div>
-            
+
         <div class="fi-ac gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
             <a th:href="@{/create-user}" class="fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg fi-color-yellow fi-btn-color-primary fi-size-md fi-btn-size-md gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-yellow-600 text-white hover:bg-yellow-500 dark:bg-yellow-500 dark:hover:bg-yellow-400 focus-visible:ring-yellow-500/50 dark:focus-visible:ring-yellow-400/50 fi-ac-btn-action">
-                <span class="fi-btn-label">
-                    New user
-                </span>
+              <span class="fi-btn-label">
+                  নতুন ইউজার
+              </span>
             </a>
         </div>
     </header>
-   
+
 
     <!-- Page Title -->
     <!--Table  -->
     <div class="fi-ta-ctn divide-y divide-gray-200 overflow-hidden rounded bg-white shadow-sm ring-1 ring-gray-200  dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10 mb-2">
-      <!-- Filter and Reset -->
-      <div class="grid gap-y-4 px-4 py-4 sm:px-6">
-        <!-- Table Title -->
-        <div class="flex justify-between ">
-          <h4 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">Filters</h4>
-          <button class=" font-semibold  text-red-500 text-sm" onclick="location.reload()" >Reset</button>
-        </div>
-        <!-- Table Title -->
         <!-- Filter and Reset -->
-        <div class="flex">
-              <div class="mr-10">
+        <div class="grid gap-y-4 px-4 py-4 sm:px-6">
+            <!-- Table Title -->
+            <div class="flex justify-between ">
+                <h4 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">ফিলটার</h4>
+                <button class=" font-semibold  text-red-500 text-sm" onclick="location.reload()" >রিসেট</button>
+            </div>
+            <!-- Table Title -->
+            <!-- Filter and Reset -->
+            <div class="flex">
+                <div class="mr-10">
 
-                  <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="districtInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">District</span> </label>
+                    <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="districtInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">জেলা</span> </label>
 
-                  <select id="districtInput" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
-                      <option value="" >ALL</option>
-                      <option value="Dhaka">Dhaka</option>
-                      <option value="Chittagong">Chittagong</option>
-                      <!-- Add more options as needed -->
-                  </select>
+                    <select id="districtInput" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
+                        <option value="" >জেলা অনুসন্ধান</option>
+                        <option th:each="district : ${districts}" th:value="${district.eName}" th:text="${district.eName}">জেলার নাম</option>
+                    </select>
 
-              </div>
-              <div class="ml-5">
+                </div>
+                <div class="ml-5">
 
-                  <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="upazilaInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">Upazila</span> </label>
+                    <label class="fi-fo-field-wrp-label block items-center gap-x-3" for="upazilaInput"><span class="text-sm font-medium leading-6 text-gray-900 dark:text-white">উপজেলা</span> </label>
 
-                  <select id="upazilaInput" onchange="myDisupo()"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
-                      <option value="">ALL</option>
-                      <option value="Savar">Savar</option>
-                      <option value="Raozan">Raozan</option>
-                      <!-- Add more options as needed -->
-                  </select>
-                  
-              </div>
+                    <select id="upazilaInput" onchange="myDisupo()"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-200" >
+                        <option value="">উপজেলা অনুসন্ধান</option>
+                        <option th:each="subDistrict : ${subDistricts}" th:value="${subDistrict.eName}" th:text="${subDistrict.eName}">উপজেলার নাম</option>
+                        <!-- Add more options as needed -->
+                    </select>
+
+                </div>
+            </div>
+            <!-- Filter and Reset -->
         </div>
-        <!-- Filter and Reset -->
-      </div>
-
-      <!--  //Search  -->
-      <div class="fi-ta-header-toolbar flex items-center justify-between gap-x-4 px-4 py-3 sm:px-6">
-          <div></div>
-          <div class="ms-auto flex items-center gap-x-4">
-              <!-- //Search  -->
-              <div  class="fi-ta-search-field" >
-                  <label class="sr-only"> Search</label>
-                  <div class="fi-input-wrp flex rounded-lg shadow-sm transition duration-75 bg-white focus-within:ring-2 dark:bg-white/5 ring-gray-950/10 focus-within:ring-yellow-600 dark:ring-white/20 dark:focus-within:ring-yellow-600" style="box-shadow: 3px 0px 7px 1px #80808075;">
-                    <div class="items-center gap-x-3 ps-3 flex pe-2 px-2">
-                        <svg  class="fi-input-wrp-icon h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"></path>
-                        </svg>             
+        <!--  //Search  -->
+        <div class="fi-ta-header-toolbar flex items-center justify-between gap-x-4 px-4 py-3 sm:px-6">
+            <div></div>
+            <div class="ms-auto flex items-center gap-x-4">
+                <!-- //Search  -->
+                <div  class="fi-ta-search-field" >
+                    <label class="sr-only" > অনুসন্ধান</label>
+                    <div class="fi-input-wrp flex rounded-lg shadow-sm transition duration-75 bg-white focus-within:ring-2 dark:bg-white/5 ring-gray-950/10 focus-within:ring-yellow-600 dark:ring-white/20 dark:focus-within:ring-yellow-600" style="box-shadow: 3px 0px 7px 1px #80808075;">
+                        <div class="items-center gap-x-3 ps-3 flex pe-2 px-2">
+                            <svg  class="fi-input-wrp-icon h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <input class="leading-6 py-2 px-3 focus:outline-none" placeholder="Search" id="Customsearch">
+                        </div>
                     </div>
-                    <div class="min-w-0 flex-1">
-                        <input class="leading-6 py-2 px-3 focus:outline-none" placeholder="Search" id="Customsearch">
-                    </div>
-                  </div>
-              </div>
-              <!-- Search // -->
-          </div>
-      </div>
-      <!--  Search//  -->
+                </div>
+                <!-- Search // -->
+            </div>
+        </div>
+        <!--  Search//  -->
 
-      <!-- //TABLE -->
-      <div class="block text-sm">
-        <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
-          <thead class="bg-gray-50 dark:bg-white/5">
-            <tr class=" text-black">
-              <th class="px-4 py-2" data-orderable="false">
-                <div class="checkboxes__row">
-                    <div class="checkboxes__item">
-                      <label class="checkbox style-c">
-                        <input type="checkbox" id="checkAll"/>
-                        <div class="checkbox__checkmark"></div>
-                        <div class="checkbox__body">""</div>
-                      </label>
-                    </div>
-                  </div>
-              </th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Profile photo url</th>
-              <th class="px-4 py-2  whitespace-nowrap">District</th>
-              <th class="px-4 py-2  whitespace-nowrap">Upazila</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Name</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Uid</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Nid</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Phone</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Joining date</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Prl date</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Designation</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">School name</th>
-              <th class="px-4 py-2  whitespace-nowrap">Date of birth</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Payscale</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Total salary withdraw</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">Email</th>
-              <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class=" hover:bg-gray-50 py-1" th:each="user : ${userList}">
-                <td class=" px-4 py-2 text-center align-middle" >
-                  <div class="checkboxes__row">
-                    <div class="checkboxes__item">
-                      <label class="checkbox style-c">
-                        <input type="checkbox" class="rowCheckbox"/>
-                        <div class="checkbox__checkmark"></div>
-                        <div class="checkbox__body">""</div>
-                      </label>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-2">
-                  <img th:src="@{'https://ui-avatars.com/api/?name=' + ${user.getName()} + '&color=7F9CF5&background=EBF4FF'}" alt="Profile Photo" class="rounded-full"/>
-                </td>
-                <td class="px-4 py-2">District</td>
-                <td class="px-4 py-2">Upazila</td>
-                <td class="px-4 py-2" th:text="${user.name}">Name</td>
-                <td class="px-4 py-2" th:text="${user.uid}">Uid</td>
-                <td class="px-4 py-2" th:text="${user.nid}">Nid</td>
-                <td class="px-4 py-2" th:text="${user.phone}">Phone</td>
-                <td class="px-4 py-2" th:text="${user.joiningDate}">Joining date</td>
-                <td class="px-4 py-2" th:text="${user.prlDate}">Prl date</td>
-                <td class="px-4 py-2" th:text="${user.designation}">Designation</td>
-                <td class="px-4 py-2" th:text="${user.schoolName}">School name</td>
-                <td class="px-4 py-2" data-orderable="false" th:text="${user.dateOfBirth}">Date of birth</td>
-                <td class="px-4 py-2" th:text="${user.payscale}">Payscale</td>
-                <td class="px-4 py-2" th:text="${user.totalSalaryWithdraw}">Total salary withdraw</td>
-                <td class="px-4 py-2" th:text="${user.email}">Email</td>
-                <td class="px-4 py-2 ">
-                  <div class="flex gap-x-1 ">
-                    <a th:href="'view-user?id=1'" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">
-                    <svg class="fi-link-icon h-4 w-4 text-gray-600 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
-                      <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
-                    </svg>View
-                    </a>
+        <!-- //TABLE -->
+        <div class="block text-sm">
+            <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
+                <thead class="bg-gray-50 dark:bg-white/5">
+                <tr class=" text-black">
+                    <th class="px-4 py-2" data-orderable="false">
+                        <div class="checkboxes__row">
+                            <div class="checkboxes__item">
+                                <label class="checkbox style-c">
+                                    <input type="checkbox" id="checkAll"/>
+                                    <div class="checkbox__checkmark"></div>
+                                    <div class="checkbox__body">""</div>
+                                </label>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">প্রোফাইল ছবি</th>
+                    <th class="px-4 py-2  whitespace-nowrap">জেলা</th>
+                    <th class="px-4 py-2  whitespace-nowrap">উপজেলা</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">ইউজারনেম</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"> নাম</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"> ইউ আই ডি</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">এন আই ডি</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"> মোবাইল</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">যোগদানের তারিখ</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"> পি আর এল তারিখ</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">পদবি</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">বিদ্যালয়ের নাম</th>
+                    <th class="px-4 py-2  whitespace-nowrap">জন্ম তারিখ</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">পে-স্কেল</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">মোট বেতন উত্তোলন</th>
+                    <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
+                </tr>
+                </thead>
+                <tbody>
 
-                    <a th:href="'update-user?id=1'" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-600 fi-ac-link-action text-yellow-500">
-                      <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"></path>
-                      <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"></path>
-                    </svg>Edit
-                    </a>
-                  </div>
-                 
-                </td>
-            </tr>
-          </tbody>
-        </table>
+                <tr class=" hover:bg-gray-50 py-1" th:each="user : ${users}">
+                    <td class=" px-4 py-2 text-center align-middle" >
+                        <div class="checkboxes__row">
+                            <div class="checkboxes__item">
+                                <label class="checkbox style-c">
+                                    <input type="checkbox" class="rowCheckbox"/>
+                                    <div class="checkbox__checkmark"></div>
+                                    <div class="checkbox__body">""</div>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-2">
+                        <img th:src="@{'https://ui-avatars.com/api/?name=' + ${user.name} + '&color=7F9CF5&background=EBF4FF'}" alt="Profile Photo" class="rounded-full"/>
+                    </td>
+                    <td class="px-4 py-2" th:text="${user.subDistrict.district.eName}">জেলা</td>
+                    <td class="px-4 py-2" th:text="${user.subDistrict.eName}">উপজেলা</td>
+                    <td class="px-4 py-2" th:text="${user.username}">ইউজারনেম</td>
+                    <td class="px-4 py-2" th:text="${user.name}">নাম</td>
+                    <td class="px-4 py-2" th:text="${user.uniId}">ইউ আই ডি</td>
+                    <td class="px-4 py-2" th:text="${user.nid}">এন আই ডি</td>
+                    <td class="px-4 py-2" th:text="${user.phone}">মোবাইল</td>
+                    <td class="px-4 py-2" th:text="${user.joiningDate}">যোগদানের তারিখ</td>
+                    <td class="px-4 py-2" th:text="${user.prlDate}"> পি আর এল তারিখ</td>
+                    <td class="px-4 py-2" th:text="${user.designation}">পদবি</td>
+                    <td class="px-4 py-2" th:text="${user.schoolName}">বিদ্যালয়ের নাম</td>
+                    <td class="px-4 py-2" data-orderable="false" th:text="${user.dateOfBirth}">জন্ম তারিখ</td>
+                    <td class="px-4 py-2" th:text="${user.payscale}">পে-স্কেল</td>
+                    <td class="px-4 py-2" th:text="${user.totalSalaryWithdraw}">মোট বেতন উত্তোলন</td>
+                    <td class="px-4 py-2 ">
+                        <div class="flex gap-x-1 ">
+                            <a th:href="'view-user?id='+${user.id}" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">
+                                <svg class="fi-link-icon h-4 w-4 text-gray-600 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
+                                    <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                                </svg>দেখুন
+                            </a>
 
-      </div>
-       <!-- TABLE// -->
+                            <a th:href="'update-user?id='+${user.id}"  class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-600 fi-ac-link-action text-yellow-500">
+                                <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z"></path>
+                                    <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"></path>
+                                </svg>সংশোধন
+                            </a>
+                        </div>
+
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+        <!-- TABLE// -->
     </div>
     <!--Table  -->
-
     <!-- Script  -->
     <script >
-      $(document).ready(function() {
-          // Filter Initialization 
-          var districtInput =  $('#districtInput').select2();
-          var upazilaInput =   $('#upazilaInput').select2();
-          // DataTable Options
-          var table = $('#myDataTable').DataTable({
-            searching: true,
-            ordering: true,
-            info: true,
-            scrollX: true,
-            responsive: true,
-            serverSide: false,
-            pagingType: 'simple',
-            language: {
-                paginate: {
-                  previous: 'Previous', // Change to your desired label
-                  next: 'Next', // Change to your desired label
-                  },
-                  search: '_INPUT_', // Remove the label
-                  searchPlaceholder: 'Search...', // Add a placeholder
-                  lengthMenu: 'Show _MENU_ entries per page',
-            },
-            layout :{
-              topStart:null,
-              topEnd:null,
-              bottom:{ 
-                pageLength: {
-                  menu: [ 10, 25, 50, 100 ]
-                }
-                }
-            },
-        });
-        // Filter Option
-        function filterTable() {
-              var selectedDistrict = districtInput.val();
-              var selectedUpazila = upazilaInput.val();
+        $(document).ready(function() {
+            // Filter Initialization
+            var districtInput =  $('#districtInput').select2();
+            var upazilaInput =   $('#upazilaInput').select2();
+            // DataTable Options
+            var table = $('#myDataTable').DataTable({
+                searching: true,
+                ordering: true,
+                info: true,
+                scrollX: true,
+                responsive: true,
+                serverSide: false,
+                pagingType: 'simple',
+                language: {
+                    paginate: {
+                        previous: 'Previous', // Change to your desired label
+                        next: 'Next', // Change to your desired label
+                    },
+                    search: '_INPUT_', // Remove the label
+                    searchPlaceholder: 'Search...', // Add a placeholder
+                    lengthMenu: 'Show _MENU_ entries per page',
+                },
+                layout :{
+                    topStart:null,
+                    topEnd:null,
+                    bottom:{
+                        pageLength: {
+                            menu: [ 10, 25, 50, 100 ]
+                        }
+                    }
+                },
+            });
+            // Filter Option
+            function filterTable() {
+                var selectedDistrict = districtInput.val();
+                var selectedUpazila = upazilaInput.val();
 
-              // Filter logic based on selected values
-              table.column(0) // District column index (assuming 0)
-                .search(selectedDistrict)
-                .draw();
+                // Filter logic based on selected values
+                table.column(2) // District column index (assuming 0)
+                    .search(selectedDistrict)
+                    .draw();
 
-              if (selectedUpazila) { // Check if upazila is selected
-                table.column(1) // Upazila column index (assuming 1)
-                  .search(selectedUpazila)
-                  .draw();
-              } else {
-                // Reset upazila filter if no upazila selected
-                table.column(1).search("").draw();
+                if (selectedUpazila) { // Check if upazila is selected
+                    table.column(3) // Upazila column index (assuming 1)
+                        .search(selectedUpazila)
+                        .draw();
+                } else {
+                    // Reset upazila filter if no upazila selected
+                    table.column(3).search("").draw();
+                }
             }
-          }
-        districtInput.on('change', filterTable);
-        upazilaInput.on('change', filterTable);
-        // Filter Option//
-        // Custom Search
-          $('#Customsearch').on('keyup', function() {
-            table.search($(this).val()).draw();
-          });
-        // Custom Search//
-        // Check Box
-         $("#checkAll").click(function () {
-            if ($(this).is(":checked")) {
-                $(".rowCheckbox").prop("checked", true);
-            } else {
-                $(".rowCheckbox").prop("checked", false);
-            }
+            districtInput.on('change', filterTable);
+            upazilaInput.on('change', filterTable);
+            // Filter Option//
+            // Custom Search
+            $('#Customsearch').on('keyup', function() {
+                table.search($(this).val()).draw();
+            });
+            // Custom Search//
+            // Check Box
+            $("#checkAll").click(function () {
+                if ($(this).is(":checked")) {
+                    $(".rowCheckbox").prop("checked", true);
+                } else {
+                    $(".rowCheckbox").prop("checked", false);
+                }
+            });
+            // Check Box//
         });
-        // Check Box//
-      });
     </script>
     <!-- Script  -->
-  </section>
-  </body>
+</section>
+</body>
 </html>

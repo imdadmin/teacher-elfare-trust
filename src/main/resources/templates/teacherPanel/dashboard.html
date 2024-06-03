@@ -660,7 +660,7 @@
             exdata = {'name': name, 'gpa': gpa, 'year': year, 'board': board, 'result': result,}
             examData.push(exdata);
         }
-        var jsonString = SON.stringify(examData, null, 2);
+        var jsonString = JSON.stringify(examData, null, 2);
         educationDetails2.value = jsonString;
         console.log(jsonString);
     }
