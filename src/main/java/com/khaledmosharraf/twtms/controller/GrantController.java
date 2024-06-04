@@ -8,6 +8,7 @@ import com.khaledmosharraf.twtms.service.SubDistrictService;
 import com.khaledmosharraf.twtms.service.GrantService;
 import com.khaledmosharraf.twtms.service.UserService;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.utils.UrlConstants;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,7 +36,7 @@ public class GrantController {
     @Autowired
     DistrictService districtService;
 
-    @GetMapping("grants")
+    @GetMapping(UrlConstants.Grant.LIST)
     public String showGrantList(Model model){
         List<GrantDTO> grants = grantService.getAll();
         List<DistrictDTO> districts = districtService.getAll();
@@ -52,20 +53,7 @@ public class GrantController {
         return "adminPanel/grant/list";
         //   return  "grant/grant_list";
     }
-    @GetMapping("grants2")
-    public String showGrantList2(Model model){
-        List<GrantDTO> grants = grantService.getAll();
-        model.addAttribute("grants",grants);
-        model.addAttribute("pageTitle", "Grant Page");
-        String username = getLoggedUsername();
-        model.addAttribute("username",getLoggedUsername());
-        model.addAttribute("totalPages",16);
-
-        return "grant/grant_list";
-    }
-
-
-    @GetMapping("create-grant")
+    @GetMapping(UrlConstants.Grant.CREATE)
     public String showGrantForm(Model model ) {
         GrantRequestDTO grantRequestDTO  = new GrantRequestDTO();
         model.addAttribute("grant",grantRequestDTO);
@@ -81,7 +69,7 @@ public class GrantController {
         //  return  "grant/create_grant";
     }
 
-    @PostMapping("create-grant")
+    @PostMapping(UrlConstants.Grant.CREATE)
     public String submitGrantForm(@Valid @ModelAttribute("grant") GrantRequestDTO grantRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
 
@@ -96,15 +84,15 @@ public class GrantController {
         }
         grantService.add(grantRequestMapper.toGrantDTO(grantRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/grants";
+        return "redirect:"+UrlConstants.Grant.LIST;
     }
-    @GetMapping("delete-grant")
+    @GetMapping(UrlConstants.Grant.DELETE)
     public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
         grantService.delete(id);
         redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
-        return "redirect:/grants";
+        return "redirect:"+UrlConstants.Grant.LIST;
     }
-    @GetMapping("update-grant")
+    @GetMapping(UrlConstants.Grant.UPDATE)
     public String showUpdateGrantForm( @RequestParam Long id , Model model) {
 
         GrantDTO grantDTO = grantService.get(id);
@@ -121,7 +109,7 @@ public class GrantController {
     }
 
 
-    @PostMapping("update-grant")
+    @PostMapping(UrlConstants.Grant.UPDATE)
     public String submitUpdateGrantForm(@Valid @ModelAttribute("grant") GrantRequestDTO grantRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
        if(bindingResult.hasErrors()){
 
@@ -138,9 +126,9 @@ public class GrantController {
         GrantDTO grantDTO= grantRequestMapper.toGrantDTO(grantRequestDTO);
         grantService.update(grantDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
-        return "redirect:/grants";
+        return "redirect:"+UrlConstants.Grant.LIST;
     }
-    @GetMapping("view-grant")
+    @GetMapping(UrlConstants.Grant.VIEW)
     public String showViewGrantForm( @RequestParam Long id , Model model) {
 
         GrantDTO grantDTO = grantService.get(id);
@@ -156,20 +144,20 @@ public class GrantController {
 
     }
 
-    @PostMapping("grant/accept/{id}")
+    @PostMapping("admin/grant/accept/{id}")
     public String acceptItem(@PathVariable Long id) {
         GrantDTO grantDTO =  grantService.get(id);
         grantDTO.setStatus("Accepted");
         grantService.update(grantDTO);
-        return "redirect:/grants"; // Redirect to the home page to refresh the table
+        return "redirect:"+UrlConstants.Grant.LIST; // Redirect to the home page to refresh the table
     }
 
-    @PostMapping("grant/reject/{id}")
+    @PostMapping("admin/grant/reject/{id}")
     public String denyItem(@PathVariable Long id) {
         GrantDTO grantDTO =  grantService.get(id);
         grantDTO.setStatus("Rejected");
         grantService.update(grantDTO);
-        return "redirect:/grants"; // Redirect to the home page to refresh the table
+        return "redirect:"+UrlConstants.Grant.LIST; // Redirect to the home page to refresh the table
     }
     private String getLoggedUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

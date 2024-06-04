@@ -7,6 +7,7 @@ import com.khaledmosharraf.twtms.service.DistrictService;
 import com.khaledmosharraf.twtms.service.SubDistrictService;
 import com.khaledmosharraf.twtms.service.UserService;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.utils.UrlConstants;
 import com.khaledmosharraf.twtms.validations.UserValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class UserController {
     @Autowired
     DistrictService districtService;
 
-    @GetMapping("users")
+    @GetMapping(UrlConstants.User.LIST)
     public String showUserList(Model model){
         List<UserDTO> users = userService.getAll();
         List<DistrictDTO> districts = districtService.getAll();
@@ -53,20 +54,7 @@ public class UserController {
         return "adminPanel/user/list";
       //   return  "user/user_list";
     }
-    @GetMapping("users2")
-    public String showUserList2(Model model){
-        List<UserDTO> users = userService.getAll();
-        model.addAttribute("users",users);
-        model.addAttribute("pageTitle", "User Page");
-        String username = getLoggedUsername();
-        model.addAttribute("username",getLoggedUsername());
-        model.addAttribute("totalPages",16);
-
-        return "user/user_list";
-    }
-
-
-    @GetMapping("create-user")
+    @GetMapping(UrlConstants.User.CREATE)
     public String showUserForm(Model model ) {
         UserRequestDTO userRequestDTO  = new UserRequestDTO();
         model.addAttribute("user",userRequestDTO);
@@ -82,7 +70,7 @@ public class UserController {
       //  return  "user/create_user";
     }
 
-    @PostMapping("create-user")
+    @PostMapping(UrlConstants.User.CREATE)
     public String submitUserForm(@Valid @ModelAttribute("user") UserRequestDTO userRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         userValidator.validate(userRequestDTO, bindingResult);
         if(bindingResult.hasErrors()){
@@ -97,15 +85,15 @@ public class UserController {
         }
         userService.add(userRequestMapper.toUserDTO(userRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/users";
+        return "redirect:"+UrlConstants.User.LIST;
     }
-    @GetMapping("delete-user")
+    @GetMapping(UrlConstants.User.DELETE)
     public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
         userService.delete(id);
         redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
-        return "redirect:/users";
+        return "redirect:"+UrlConstants.User.LIST;
     }
-    @GetMapping("update-user")
+    @GetMapping(UrlConstants.User.UPDATE)
     public String showUpdateUserForm( @RequestParam Long id , Model model) {
 
         UserDTO userDTO = userService.get(id);
@@ -122,7 +110,7 @@ public class UserController {
     }
 
 
-    @PostMapping("update-user")
+    @PostMapping(UrlConstants.User.UPDATE)
     public String submitUpdateUserForm(@Valid @ModelAttribute("user") UserRequestDTO userRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         userValidator.validate(userRequestDTO, bindingResult);
         if(bindingResult.hasErrors()){
@@ -140,9 +128,9 @@ public class UserController {
         UserDTO userDTO= userRequestMapper.toUserDTO(userRequestDTO);
         userService.update(userDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
-        return "redirect:/users";
+        return "redirect:"+UrlConstants.User.LIST;
     }
-    @GetMapping("view-user")
+    @GetMapping(UrlConstants.User.VIEW)
     public String showViewUserForm( @RequestParam Long id , Model model) {
 
         UserDTO userDTO = userService.get(id);

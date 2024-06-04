@@ -8,6 +8,7 @@ import com.khaledmosharraf.twtms.service.SubDistrictService;
 import com.khaledmosharraf.twtms.service.SubscriptionPaymentService;
 import com.khaledmosharraf.twtms.service.UserService;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.utils.UrlConstants;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -38,7 +39,7 @@ public class SubscriptionPaymentController {
     @Autowired
     DistrictService districtService;
 
-    @GetMapping("subscriptionPayments")
+    @GetMapping(UrlConstants.SubscriptionPayment.LIST)
     public String showSubscriptionPaymentList(Model model){
         List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getAll();
         List<DistrictDTO> districts = districtService.getAll();
@@ -57,7 +58,7 @@ public class SubscriptionPaymentController {
     }
 
 
-    @GetMapping("create-subscriptionPayment")
+    @GetMapping(UrlConstants.SubscriptionPayment.CREATE)
     public String showSubscriptionPaymentForm(Model model ) {
         SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO  = new SubscriptionPaymentRequestDTO();
         model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
@@ -74,7 +75,7 @@ public class SubscriptionPaymentController {
 
     }
 
-    @PostMapping("create-subscriptionPayment")
+    @PostMapping(UrlConstants.SubscriptionPayment.CREATE)
     public String submitSubscriptionPaymentForm(@Valid @ModelAttribute("subscriptionPayment") SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
 
@@ -92,15 +93,15 @@ public class SubscriptionPaymentController {
         }
         subscriptionPaymentService.add(subscriptionPaymentRequestMapper.toSubscriptionPaymentDTO(subscriptionPaymentRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/subscriptionPayments";
+        return "redirect:"+UrlConstants.SubscriptionPayment.LIST;
     }
-    @GetMapping("delete-subscriptionPayment")
+    @GetMapping(UrlConstants.SubscriptionPayment.DELETE)
     public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
         subscriptionPaymentService.delete(id);
         redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
-        return "redirect:/subscriptionPayments";
+        return "redirect:"+UrlConstants.SubscriptionPayment.LIST;
     }
-    @GetMapping("update-subscriptionPayment")
+    @GetMapping(UrlConstants.SubscriptionPayment.UPDATE)
     public String showUpdateSubscriptionPaymentForm( @RequestParam Long id , Model model) {
 
         SubscriptionPaymentDTO subscriptionPaymentDTO = subscriptionPaymentService.get(id);
@@ -119,7 +120,7 @@ public class SubscriptionPaymentController {
     }
 
 
-    @PostMapping("update-subscriptionPayment")
+    @PostMapping(UrlConstants.SubscriptionPayment.UPDATE)
     public String submitUpdateSubscriptionPaymentForm(@Valid @ModelAttribute("subscriptionPayment") SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
 
@@ -138,9 +139,9 @@ public class SubscriptionPaymentController {
         SubscriptionPaymentDTO subscriptionPaymentDTO= subscriptionPaymentRequestMapper.toSubscriptionPaymentDTO(subscriptionPaymentRequestDTO);
         subscriptionPaymentService.update(subscriptionPaymentDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
-        return "redirect:/subscriptionPayments";
+        return "redirect:"+UrlConstants.SubscriptionPayment.LIST;
     }
-    @GetMapping("view-subscriptionPayment")
+    @GetMapping(UrlConstants.SubscriptionPayment.VIEW)
     public String showViewSubscriptionPaymentForm( @RequestParam Long id , Model model) {
 
         SubscriptionPaymentDTO subscriptionPaymentDTO = subscriptionPaymentService.get(id);

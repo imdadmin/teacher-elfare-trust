@@ -7,6 +7,7 @@ import com.khaledmosharraf.twtms.mapper.ExpenseRequestMapper;
 import com.khaledmosharraf.twtms.service.BankService;
 import com.khaledmosharraf.twtms.service.ExpenseService;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.utils.UrlConstants;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,7 +31,7 @@ public class ExpenseController {
     @Autowired
     BankService bankService;
 
-    @GetMapping("expenses")
+    @GetMapping(UrlConstants.Expense.LIST)
     public String showExpenseList(Model model){
         List<ExpenseDTO> expenses = expenseService.getAll();
         model.addAttribute("expenses",expenses);
@@ -42,20 +43,8 @@ public class ExpenseController {
         return "adminPanel/expense/list";
       //   return  "expense/expense_list";
     }
-    @GetMapping("expenses2")
-    public String showExpenseList2(Model model){
-        List<ExpenseDTO> expenses = expenseService.getAll();
-        model.addAttribute("expenses",expenses);
-        model.addAttribute("pageTitle", "Expense Page");
-        String username = getLoggedUsername();
-        model.addAttribute("username",getLoggedUsername());
-        model.addAttribute("totalPages",16);
 
-        return "expense/expense_list";
-    }
-
-
-    @GetMapping("create-expense")
+    @GetMapping(UrlConstants.Expense.CREATE)
     public String showExpenseForm(Model model ) {
         ExpenseRequestDTO expenseRequestDTO  = new ExpenseRequestDTO();
         model.addAttribute("expense",expenseRequestDTO);
@@ -71,7 +60,7 @@ public class ExpenseController {
       //  return  "expense/create_expense";
     }
 
-    @PostMapping("create-expense")
+    @PostMapping(UrlConstants.Expense.CREATE)
     public String submitExpenseForm(@Valid @ModelAttribute("expense") ExpenseRequestDTO expenseRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
             List<BankDTO> banks= bankService.getAll();
@@ -85,15 +74,15 @@ public class ExpenseController {
         }
         expenseService.add(expenseRequestMapper.toExpenseDTO(expenseRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/expenses";
+        return "redirect:"+UrlConstants.Expense.LIST;
     }
-    @GetMapping("delete-expense")
+    @GetMapping(UrlConstants.Expense.DELETE)
     public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
         expenseService.delete(id);
         redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
-        return "redirect:/expenses";
+        return "redirect:"+UrlConstants.Expense.LIST;
     }
-    @GetMapping("update-expense")
+    @GetMapping(UrlConstants.Expense.UPDATE)
     public String showUpdateExpenseForm( @RequestParam Long id , Model model) {
 
         ExpenseDTO expenseDTO = expenseService.get(id);
@@ -110,7 +99,7 @@ public class ExpenseController {
     }
 
 
-    @PostMapping("update-expense")
+    @PostMapping(UrlConstants.Expense.UPDATE)
     public String submitUpdateExpenseForm(@Valid @ModelAttribute("expense") ExpenseRequestDTO expenseRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
 
@@ -127,9 +116,9 @@ public class ExpenseController {
         ExpenseDTO expenseDTO= expenseRequestMapper.toExpenseDTO(expenseRequestDTO);
         expenseService.update(expenseDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
-        return "redirect:/expenses";
+        return "redirect:"+UrlConstants.Expense.LIST;
     }
-    @GetMapping("view-expense")
+    @GetMapping(UrlConstants.Expense.VIEW)
     public String showViewExpenseForm( @RequestParam Long id , Model model) {
 
         ExpenseDTO expenseDTO = expenseService.get(id);

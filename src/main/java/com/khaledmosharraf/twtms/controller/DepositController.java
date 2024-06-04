@@ -7,6 +7,7 @@ import com.khaledmosharraf.twtms.mapper.DepositRequestMapper;
 import com.khaledmosharraf.twtms.service.BankService;
 import com.khaledmosharraf.twtms.service.DepositService;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.utils.UrlConstants;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,7 +31,7 @@ public class DepositController {
     @Autowired
     BankService bankService;
 
-    @GetMapping("deposits")
+    @GetMapping(UrlConstants.Deposit.LIST)
     public String showDepositList(Model model){
         List<DepositDTO> deposits = depositService.getAll();
         model.addAttribute("deposits",deposits);
@@ -42,20 +43,8 @@ public class DepositController {
         return "adminPanel/deposit/list";
       //   return  "deposit/deposit_list";
     }
-    @GetMapping("deposits2")
-    public String showDepositList2(Model model){
-        List<DepositDTO> deposits = depositService.getAll();
-        model.addAttribute("deposits",deposits);
-        model.addAttribute("pageTitle", "Deposit Page");
-        String username = getLoggedUsername();
-        model.addAttribute("username",getLoggedUsername());
-        model.addAttribute("totalPages",16);
 
-        return "deposit/deposit_list";
-    }
-
-
-    @GetMapping("create-deposit")
+    @GetMapping(UrlConstants.Deposit.CREATE)
     public String showDepositForm(Model model ) {
         DepositRequestDTO depositRequestDTO  = new DepositRequestDTO();
         model.addAttribute("deposit",depositRequestDTO);
@@ -71,7 +60,7 @@ public class DepositController {
       //  return  "deposit/create_deposit";
     }
 
-    @PostMapping("create-deposit")
+    @PostMapping(UrlConstants.Deposit.CREATE)
     public String submitDepositForm(@Valid @ModelAttribute("deposit") DepositRequestDTO depositRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
             List<BankDTO> banks= bankService.getAll();
@@ -85,15 +74,15 @@ public class DepositController {
         }
         depositService.add(depositRequestMapper.toDepositDTO(depositRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/deposits";
+        return "redirect:"+UrlConstants.Deposit.LIST;
     }
-    @GetMapping("delete-deposit")
+    @GetMapping(UrlConstants.Deposit.DELETE)
     public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
         depositService.delete(id);
         redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
-        return "redirect:/deposits";
+        return "redirect:"+UrlConstants.Deposit.LIST;
     }
-    @GetMapping("update-deposit")
+    @GetMapping(UrlConstants.Deposit.UPDATE)
     public String showUpdateDepositForm( @RequestParam Long id , Model model) {
 
         DepositDTO depositDTO = depositService.get(id);
@@ -110,7 +99,7 @@ public class DepositController {
     }
 
 
-    @PostMapping("update-deposit")
+    @PostMapping(UrlConstants.Deposit.UPDATE)
     public String submitUpdateDepositForm(@Valid @ModelAttribute("deposit") DepositRequestDTO depositRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
 
@@ -127,9 +116,9 @@ public class DepositController {
         DepositDTO depositDTO= depositRequestMapper.toDepositDTO(depositRequestDTO);
         depositService.update(depositDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
-        return "redirect:/deposits";
+        return "redirect:"+UrlConstants.Deposit.LIST;
     }
-    @GetMapping("view-deposit")
+    @GetMapping(UrlConstants.Deposit.VIEW)
     public String showViewDepositForm( @RequestParam Long id , Model model) {
 
         DepositDTO depositDTO = depositService.get(id);

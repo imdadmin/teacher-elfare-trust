@@ -5,6 +5,7 @@ import com.khaledmosharraf.twtms.dto.DistrictRequestDTO;
 import com.khaledmosharraf.twtms.mapper.DistrictRequestMapper;
 import com.khaledmosharraf.twtms.service.DistrictService;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.utils.UrlConstants;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,7 @@ public class DistrictController {
     @Autowired
     DistrictService districtService;
 
-    @GetMapping("districts")
+    @GetMapping(UrlConstants.District.LIST)
     public String showDistrictList(Model model){
         List<DistrictDTO> districts = districtService.getAll();
         model.addAttribute("districts",districts);
@@ -38,20 +39,8 @@ public class DistrictController {
         return "adminPanel/district/list";
       //   return  "district/district_list";
     }
-    @GetMapping("districts2")
-    public String showDistrictList2(Model model){
-        List<DistrictDTO> districts = districtService.getAll();
-        model.addAttribute("districts",districts);
-        model.addAttribute("pageTitle", "District Page");
-        String username = getLoggedUsername();
-        model.addAttribute("username",getLoggedUsername());
-        model.addAttribute("totalPages",16);
 
-        return "district/district_list";
-    }
-
-
-    @GetMapping("create-district")
+    @GetMapping(UrlConstants.District.CREATE)
     public String showDistrictForm(Model model ) {
         DistrictDTO districtDTO  = new  DistrictDTO();
         model.addAttribute("district",districtDTO);
@@ -65,7 +54,7 @@ public class DistrictController {
       //  return  "district/create_district";
     }
 
-    @PostMapping("create-district")
+    @PostMapping(UrlConstants.District.CREATE)
     public String submitDistrictForm(@Valid @ModelAttribute("district") DistrictRequestDTO districtRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
             model.addAttribute("pageTopic","Create New District");
@@ -77,15 +66,15 @@ public class DistrictController {
         }
         districtService.add(districtRequestMapper.toDistrictDTO(districtRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/districts";
+        return "redirect:"+UrlConstants.District.LIST;
     }
-    @GetMapping("delete-district")
+    @GetMapping(UrlConstants.District.DELETE)
     public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
         districtService.delete(id);
         redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
-        return "redirect:/districts";
+        return "redirect:"+UrlConstants.District.LIST;
     }
-    @GetMapping("update-district")
+    @GetMapping(UrlConstants.District.UPDATE)
     public String showUpdateDistrictForm( @RequestParam Long id , Model model) {
 
         DistrictDTO districtDTO = districtService.get(id);
@@ -100,7 +89,7 @@ public class DistrictController {
     }
 
 
-    @PostMapping("update-district")
+    @PostMapping(UrlConstants.District.UPDATE)
     public String submitUpdateDistrictForm(@Valid @ModelAttribute("district") DistrictRequestDTO districtRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
             model.addAttribute("pageTopic","Edit District");
@@ -113,9 +102,9 @@ public class DistrictController {
         DistrictDTO districtDTO= districtRequestMapper.toDistrictDTO(districtRequestDTO);
         districtService.update(districtDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
-        return "redirect:/districts";
+        return "redirect:"+UrlConstants.District.LIST;
     }
-    @GetMapping("view-district")
+    @GetMapping(UrlConstants.District.VIEW)
     public String showViewDistrictForm( @RequestParam Long id , Model model) {
 
         DistrictDTO districtDTO = districtService.get(id);

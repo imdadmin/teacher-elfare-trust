@@ -21,7 +21,7 @@
             <!-- Dashboard -->
             <li th:class="'rounded-lg font-bold' + ${activePage == '/index' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
               <a
-                th:href="@{/index}"
+                th:href="@{${@urlConstants.common.USER_DASHBOARD}}"
                 class="flex items-center p-2 group"
               >
                   <svg class="w-5 h-5  " xmlns="http://www.w3.org/2000/svg"  fill="none"  viewBox="0 0 24 24"  stroke-width="1.5"  stroke="currentColor"  aria-hidden="true">
@@ -35,7 +35,7 @@
             <!-- Teachers List -->
             <li th:class="'rounded-lg font-bold' + ${activePage == '/users' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
               <a
-                th:href="@{/users}"
+                th:href="@{${@urlConstants.user.LIST}}"
                 class="flex items-center p-2 group"
               >
                 <svg class="w-5 h-5 "  xmlns="http://www.w3.org/2000/svg"  fill="none"  viewBox="0 0 24 24"  stroke-width="1.5"  stroke="currentColor" aria-hidden="true">
@@ -46,8 +46,7 @@
             </li>
             <!-- Payment -->
             <li th:class="'rounded-lg font-bold' + ${activePage == '/subscriptionPayments' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-              <a
-                th:href="@{/subscriptionPayments}"
+              <a th:href="@{${@urlConstants.subscriptionPayment.LIST}}"
                 class="flex items-center p-2 group"
               >
                 <svg  class="w-5 h-5 "  xmlns="http://www.w3.org/2000/svg"  fill="none"  viewBox="0 0 24 24"  stroke-width="1.5"  stroke="currentColor"  aria-hidden="true">
@@ -58,8 +57,7 @@
             </li>
             <!-- Grand -->
             <li th:class="'rounded-lg font-bold' + ${activePage == '/grants' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-              <a
-                th:href="@{grants}"
+              <a th:href="@{${@urlConstants.grant.LIST}}"
                 class="flex items-center p-2 group"
               >
                 <svg  class="w-5 h-5 "  xmlns="http://www.w3.org/2000/svg"  fill="none"  viewBox="0 0 24 24"  stroke-width="1.5"  stroke="currentColor"  aria-hidden="true">
@@ -70,7 +68,7 @@
             </li>
             <!-- Account -->
             <li>
-              <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 font-bold rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800" 
+              <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 font-bold rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
               aria-controls="dropdown-account" data-collapse-toggle="dropdown-account" id="account">
                   <svg  class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white "  xmlns="http://www.w3.org/2000/svg"  fill="none"  viewBox="0 0 24 24"  stroke-width="1.5"  stroke="currentColor"  aria-hidden="true">
                     <path  stroke-linecap="round"  stroke-linejoin="round"  d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -83,8 +81,7 @@
               <ul id="dropdown-account" class="py-2 space-y-2 ">
                   <!-- deposits -->
                   <li th:class="'rounded-lg font-bold' + ${activePage == '/deposits' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-                      <a
-                        th:href="@{/deposits}"
+                      <a th:href="@{${@urlConstants.deposit.LIST}}"
                         class=" relative flex items-center justify-center gap-x-3  px-2 py-2 text-sm outline-none"
                       >
                         <div class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
@@ -96,8 +93,7 @@
                   </li>
                   <!-- expenses -->
                   <li th:class="'rounded-lg font-bold' + ${activePage == '/expenses' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-                        <a
-                          th:href="@{/expenses}"
+                        <a th:href="@{${@urlConstants.expense.LIST}}"
                           class=" relative flex items-center justify-center gap-x-3  px-2 py-2 text-sm outline-none "
                         >
                           <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
@@ -148,7 +144,7 @@
                     </div>
                     <span  class=" flex-1">মেম্বার / শিক্ষক রিপোর্ট</span>
                   </a>
-                </li> 
+                </li>
                 <!-- /report/payment -->
                 <li th:class="'rounded-lg font-bold' + ${activePage == '/report/payment' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
                   <a
@@ -178,8 +174,7 @@
               <ul id="dropdown-setting" class=" py-2 space-y-2">
                 <!-- banks -->
                 <li th:class="'rounded-lg font-bold' + ${activePage == '/banks' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-                  <a
-                    th:href="@{/banks}"
+                  <a th:href="@{${@urlConstants.bank.LIST}}"
                     class="relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none "
                   >
                     <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
@@ -192,8 +187,7 @@
                 </li>
                 <!-- districts -->
                 <li th:class="'rounded-lg font-bold' + ${activePage == '/districts' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-                  <a
-                    th:href="@{/districts}"
+                  <a th:href="@{${@urlConstants.district.LIST}}"
                     class="relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none "
                   >
                     <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
@@ -205,8 +199,7 @@
                 </li>
                 <!-- upazilas -->
                 <li th:class="'rounded-lg font-bold' + ${activePage == '/upazilas' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-                  <a
-                    th:href="@{/upazilas}"
+                  <a th:href="@{${@urlConstants.upazila.LIST}}"
                     class="relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none "
                   >
                     <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">

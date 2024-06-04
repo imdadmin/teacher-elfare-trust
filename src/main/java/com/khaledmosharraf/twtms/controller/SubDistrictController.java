@@ -10,6 +10,7 @@ import com.khaledmosharraf.twtms.service.BankService;
 import com.khaledmosharraf.twtms.service.DistrictService;
 import com.khaledmosharraf.twtms.service.SubDistrictService;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.utils.UrlConstants;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -33,7 +34,7 @@ public class SubDistrictController {
     @Autowired
     DistrictService districtService;
 
-    @GetMapping("upazilas")
+    @GetMapping(UrlConstants.Upazila.LIST)
     public String showSubDistrictList(Model model){
         List<SubDistrictDTO> subDistricts = subDistrictService.getAll();
         model.addAttribute("subDistricts",subDistricts);
@@ -45,20 +46,8 @@ public class SubDistrictController {
         return "adminPanel/upazila/list";
       //   return  "upazila/upazila_list";
     }
-    @GetMapping("upazilas2")
-    public String showSubDistrictList2(Model model){
-        List<SubDistrictDTO> subDistricts = subDistrictService.getAll();
-        model.addAttribute("subDistricts",subDistricts);
-        model.addAttribute("pageTitle", "Upazila Page");
-        String username = getLoggedUsername();
-        model.addAttribute("username",getLoggedUsername());
-        model.addAttribute("totalPages",16);
 
-        return "upazila/upazila_list";
-    }
-
-
-    @GetMapping("create-upazila")
+    @GetMapping(UrlConstants.Upazila.CREATE)
     public String showSubDistrictForm(Model model ) {
         SubDistrictRequestDTO subDistrictRequestDTO  = new SubDistrictRequestDTO();
         model.addAttribute("subDistrict",subDistrictRequestDTO);
@@ -74,7 +63,7 @@ public class SubDistrictController {
       //  return  "upazila/create_upazila";
     }
 
-    @PostMapping("create-upazila")
+    @PostMapping(UrlConstants.Upazila.CREATE)
     public String submitSubDistrictForm(@Valid @ModelAttribute("subDistrict") SubDistrictRequestDTO subDistrictRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
             List<DistrictDTO> districts= districtService.getAll();
@@ -88,15 +77,15 @@ public class SubDistrictController {
         }
         subDistrictService.add(subDistrictRequestMapper.toSubDistrictDTO(subDistrictRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/upazilas";
+        return "redirect:"+UrlConstants.Upazila.LIST;
     }
-    @GetMapping("delete-upazila")
+    @GetMapping(UrlConstants.Upazila.DELETE)
     public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
         subDistrictService.delete(id);
         redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
-        return "redirect:/upazilas";
+        return "redirect:"+UrlConstants.Upazila.LIST;
     }
-    @GetMapping("update-upazila")
+    @GetMapping(UrlConstants.Upazila.UPDATE)
     public String showUpdateSubDistrictForm( @RequestParam Long id , Model model) {
 
         SubDistrictDTO subDistrictDTO = subDistrictService.get(id);
@@ -113,7 +102,7 @@ public class SubDistrictController {
     }
 
 
-    @PostMapping("update-upazila")
+    @PostMapping(UrlConstants.Upazila.UPDATE)
     public String submitUpdateSubDistrictForm(@Valid @ModelAttribute("subDistrict") SubDistrictRequestDTO subDistrictRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
 
@@ -130,9 +119,9 @@ public class SubDistrictController {
         SubDistrictDTO subDistrictDTO= subDistrictRequestMapper.toSubDistrictDTO(subDistrictRequestDTO);
         subDistrictService.update(subDistrictDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Updated Successfully. Thank You.");
-        return "redirect:/upazilas";
+        return "redirect:"+UrlConstants.Upazila.LIST;
     }
-    @GetMapping("view-upazila")
+    @GetMapping(UrlConstants.Upazila.VIEW)
     public String showViewSubDistrictForm( @RequestParam Long id , Model model) {
 
         SubDistrictDTO subDistrictDTO = subDistrictService.get(id);
