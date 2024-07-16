@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+</head>
+<style >
+    @page {
+        size: A4 landscape;
+        margin: 1cm;
+    }
+    /*@font-face {*/
+    /*    font-family: 'Nikosh';*/
+    /*    src: url('classpath:/static/fonts/Nikosh.ttf') format('truetype');*/
+    /*}*/
+    body {
+        font-family: 'Nikosh', sans-serif;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1px;
+        table-layout: fixed;
+        border: 1px solid black;
+        font-family: 'Nikosh', sans-serif;
+    }
+
+    th {
+        text-align: center;
+        padding: 1px;
+        font-weight: normal;
+        font-size: 15px;
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+        padding: 5px 2px 5px 12px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+
+    #maintable {
+        font-family: 'Nikosh', sans-serif;
+        table-layout: fixed;
+        width: 100%;
+        border: 0px solid black;
+    }
+
+    #maintable td {
+        text-align: left;
+        padding: 2px;
+        font-size: 12px;
+        border: 0px solid black;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 3px;
+        text-align: left;
+        word-wrap: break-word; /* Ensure text breaks within cell */
+        hyphens: auto; /* Allow hyphenation if needed */
+    }
+</style>
+
+<body>
+<table id="maintable">
+    <tr>
+        <td style="width:20%;">
+            <img style="width:95px;height:95px;" th:src="@{classpath:static/images/logo.png}" >
+        </td>
+        <td style="width:60%;text-align:center;">
+            <h1 style="font-size: 27px;" >Teachers Welfare Trust</h1>
+            <h2 style="font-size: 23px;font-weight:400;margin-top: -20px;">Government of the People's Republic of Bangladesh</h2>
+            <h2 style="font-size: 23px;font-weight:400;margin-top: -10px;" th:text="${reportTitle}">Report Title</h2>
+            <p style="text-decoration: underline;margin-top: -20px;" th:text="${reportFilteredBy}">Report Filtered By</p>
+        </td>
+
+        <td style="width:20%;text-align:right;">
+            <p th:text="'Date : ' + ${#dates.format(new java.util.Date(), 'dd-MM-yyyy')}"></p>
+        </td>
+    </tr>
+</table>
+
+<br>
+
+<table>
+    <thead>
+    <tr>
+        <th style="width: 3%">SL</th>
+        <th style="width: 7%">Member Id</th>
+        <th style="width: 10%">Name</th>
+        <th style="width: 8%">Designation</th>
+        <th style="width: 8%">District</th>
+        <th style="width: 8%">Upazila</th>
+
+        <th style="width: 8%">Type</th>
+        <th style="width: 8%">Requested
+        Amount</th>
+        <th style="width: 8%">Details</th>
+        <th style="width: 8%">Requested
+            For</th>
+        <th style="width: 8%">Relation</th>
+        <th style="width: 8%">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="grant, iterStat : ${grants}">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${grant.user.uniId}"></td>
+        <td th:text="${grant.user.name}"></td>
+        <td th:text="${grant.user.designation}"></td>
+        <td th:text="${grant.user.subDistrict?.district?.eName}"></td>
+        <td th:text="${grant.user.subDistrict.eName}"></td>
+        <td th:text="${grant.type}"></td>
+        <td th:text="${grant.requestedAmount}"></td>
+        <td th:text="${grant.details}"></td>
+        <td th:text="${grant.requestedForName}"></td>
+        <td th:text="${grant.relation}"></td>
+        <td>
+            <span th:if="${grant.status == 'Pending'}"
+                  style="font-weight: bold; color: black;">Pending</span>
+            <span th:if="${grant.status == 'Accepted'}"
+                  style="font-weight: bold; color: green;">Accepted</span>
+            <span th:if="${grant.status == 'Rejected'}"
+                  style="font-weight: bold; color: red;">Rejected</span>
+            <span th:unless="${grant.status == 'Pending' or grant.status == 'Accepted' or grant.status == 'Rejected'}"
+                  style="font-weight: normal; color: gray;">Unknown</span>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>

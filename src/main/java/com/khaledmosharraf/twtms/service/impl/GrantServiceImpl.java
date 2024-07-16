@@ -3,6 +3,7 @@ package com.khaledmosharraf.twtms.service.impl;
 import com.khaledmosharraf.twtms.dto.GrantDTO;
 import com.khaledmosharraf.twtms.mapper.GrantMapper;
 import com.khaledmosharraf.twtms.model.Grant;
+import com.khaledmosharraf.twtms.model.User;
 import com.khaledmosharraf.twtms.repository.GrantRepository;
 import com.khaledmosharraf.twtms.service.GrantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,33 @@ public class GrantServiceImpl extends IdCheckingService<Grant,Long> implements G
     @Override
     public List<GrantDTO> getByUsername(String username) {
         List<Grant> grants = grantRepository.findByUsername(username);
+        return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GrantDTO> getAllGrants() {
+        List<Grant> grants = grantRepository.findAllGrant();
+        return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GrantDTO> getByDistrictId(Long districtId) {
+
+        List<Grant> grants = grantRepository.findByDistrictId(districtId);
+        return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GrantDTO> getBySubDistrictId(Long subDistrictId) {
+
+        List<Grant> grants = grantRepository.findBySubDistrictId(subDistrictId);
+        return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GrantDTO> getByDistrictIdAndSubDistrictId(Long districtId, Long subDistrictId) {
+
+        List<Grant> grants = grantRepository.findByDistrictIdAndSubDistrictId(districtId,subDistrictId);
         return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
     }
 }

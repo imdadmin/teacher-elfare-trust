@@ -21,7 +21,7 @@
             <!-- Dashboard -->
             <li th:class="'rounded-lg font-bold' + ${activePage == '/index' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
               <a
-                th:href="@{${@urlConstants.common.USER_DASHBOARD}}"
+                th:href="@{${@urlConstants.common.ADMIN_DASHBOARD}}"
                 class="flex items-center p-2 group"
               >
                   <svg class="w-5 h-5  " xmlns="http://www.w3.org/2000/svg"  fill="none"  viewBox="0 0 24 24"  stroke-width="1.5"  stroke="currentColor"  aria-hidden="true">
@@ -121,8 +121,7 @@
               <ul id="dropdown-report" class=" py-2 space-y-2 ">
                 <!-- /report/grant -->
                 <li th:class="'rounded-lg font-bold' + ${activePage == '/report/grant' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-                  <a
-                    th:href="@{/report/grant}"
+                  <a th:href="@{${@urlConstants.report.GRANT}}"
                     class="relative flex items-center justify-center gap-x-3 px-2 py-2 text-sm outline-none "
                   >
                     <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
@@ -134,8 +133,7 @@
                 </li>
                 <!-- /report/member -->
                 <li  th:class="'rounded-lg font-bold' + ${activePage == '/report/member' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-                  <a
-                    th:href="@{/report/member}"
+                  <a th:href="@{${@urlConstants.report.MEMBER}}"
                     class="relative flex items-center justify-center gap-x-3 px-2 py-2 text-sm outline-none"
                   >
                     <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
@@ -147,8 +145,7 @@
                 </li>
                 <!-- /report/payment -->
                 <li th:class="'rounded-lg font-bold' + ${activePage == '/report/payment' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
-                  <a
-                    th:href="@{/report/payment}"
+                  <a th:href="@{${@urlConstants.report.PAYMENT}}"
                     class="relative flex items-center justify-center gap-x-3  px-2 py-2 text-sm outline-none "
                   >
                     <div class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">

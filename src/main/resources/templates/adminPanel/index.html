@@ -16,23 +16,9 @@
 
           <h2 class="text-3xl font-bold mb-4">ড্যাশবোর্ড</h2>
           <div
-            wire:poll.5s=""
             class="fi-wi-stats-overview-stats-ctn grid gap-6 md:grid-cols-3"
           >
-            <div
-              class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-6 shadow-sm border dark:bg-gray-900 dark:ring-white/10"
-            >
-              <div class="grid gap-y-2">
-                <div class="flex items-center gap-x-2">
-                  <span class="text-sm font-medium text-gray-500 dark:text-gray-400" >
-                    সর্বমোট জমা
-                  </span>
-                </div>
-                <div
-                  class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
-                >  0</div>
-              </div>
-            </div>
+
             <div
               class="fi-wi-stats-overview-stat relative rounded-xl bg-white p-6 shadow-sm border dark:bg-gray-900 dark:ring-white/10"
             >
@@ -48,7 +34,8 @@
                 <div
                   class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
                 >
-                  100
+
+                  <span th:text="${totalExpense}"></span>
                 </div>
 
                 <!--[if BLOCK]> <![endif]-->
@@ -67,7 +54,7 @@
                   </span>
                 </div>
                 <div class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
-                >1</div>
+                ><span th:text="${totaluser}"></span></div>
               </div>
             </div>
 
@@ -85,7 +72,7 @@
                 <div
                   class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
                 >
-                  0
+                  <span th:text="${totalGrants}"></span>
                 </div>
 
                 <!--[if BLOCK]> <![endif]-->
@@ -108,7 +95,7 @@
                 <div
                   class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
                 >
-                  64
+                  <span th:text="${acceptedGrants}"></span>
                 </div>
               </div>
             </div>
@@ -128,7 +115,7 @@
                 <div
                   class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
                 >
-                  494
+                  <span th:text="${rejectedGrants}"></span>
                 </div>
               </div>
 
@@ -151,7 +138,7 @@
                 <div
                   class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
                 >
-                  5
+                  <span th:text="${totalDistrict}"></span>
                 </div>
 
                 <!--[if BLOCK]> <![endif]-->
@@ -174,7 +161,7 @@
                 <div
                   class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
                 >
-                  4
+                  <span th:text="${totalSubDistrict}"></span>
                 </div>
               </div>
 
@@ -197,7 +184,7 @@
                 <div
                   class="text-3xl font-semibold tracking-tight text-gray-950 dark:text-white"
                 >
-                  10
+                  <span th:text="${totalsub}"></span>
                 </div>
               </div>
             </div>

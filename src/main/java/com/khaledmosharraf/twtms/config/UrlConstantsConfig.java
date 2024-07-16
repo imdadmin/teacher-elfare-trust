@@ -27,5 +27,6 @@ public class UrlConstantsConfig {
 
         public final UrlConstants.District district = new UrlConstants.District();
         public final UrlConstants.Upazila upazila = new UrlConstants.Upazila();
+        public final UrlConstants.Report report = new UrlConstants.Report();
     }
 }

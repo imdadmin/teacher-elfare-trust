@@ -4,6 +4,17 @@
     <meta name="viewport" charset="UTF-8">
     <title th:text="${pageTitle}">Title</title>
     <script th:src="@{https://cdn.tailwindcss.com}"></script>
+    <style>
+        .green {
+            color: green;
+        }
+        .yellow {
+            color: yellow;
+        }
+        .red {
+            color: red;
+        }
+    </style>
     <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css}" rel="stylesheet"/>
     <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js}"></script>
 </head>
@@ -65,14 +76,35 @@
 <!-- Header/ -->
 
 <div class="container px-5 sm:px-10 md:px-20 lg:px-25 gap-6 flex-wrap sm:flex mt-3">
+
     <div class="bg-slate-300 w-full rounded-md h-full min-h-screen px-5 sm:px-10 md:px-15 lg:px-20">
         <div id="errorFrom" th:attr="data-errorFrom=${errorFrom}" hidden>Flag to show Form that has Error</div>
-
+        <div th:if="${paymentInfo.lastPaymentYear == null}">
+            <p></p>
+            <p style="font-size: 27px; text-align: center;">
+                <span th:text=" 'No payment yet. Joining Date: '+${user.joiningDate}">
+            </span><br>
+                <span th:text=" 'Due Year(s): '+${paymentInfo.dueYears}"
+                      th:class="${paymentInfo.dueYears == 0} ? 'green' :
+                          (${paymentInfo.dueYears == 1} ? 'yellow' :
+                          (${paymentInfo.dueYears > 1} ? 'red')) ">
+            </span>
+        </div>
+        <div th:if="${paymentInfo.lastPaymentYear != null}">
+            <p style="font-size: 27px; text-align: center;">
+                Last Payment Date: <span th:text="${paymentInfo.lastPaymentYear}"></span><br>
+                <span th:text=" 'Due Year(s): '+${paymentInfo.dueYears}"
+                      th:class="${paymentInfo.dueYears == 0} ? 'green' :
+                          (${paymentInfo.dueYears == 1} ? 'yellow' :
+                          (${paymentInfo.dueYears > 1} ? 'red')) ">
+            </span>
+            </p>
+        </div>
         <div class="flex items-center justify-center h-32 gap-10 mb-4">
             <button class="px-3 py-2 bg-blue-400 rounded-md text-white" onclick="showPaymentForm()"> সাবস্ক্রিপশন
                 পেমেন্ট করুন
             </button>
-            <button class="px-3 py-2 bg-green-700 rounded-md text-white" onclick="showGrantForm()"> অনুদানের জন্য
+            <button th:if="${paymentInfo.dueYears < 2}" class="px-3 py-2 bg-green-700 rounded-md text-white" onclick="showGrantForm()"> অনুদানের জন্য
                 আবেদন করুন
             </button>
         </div>

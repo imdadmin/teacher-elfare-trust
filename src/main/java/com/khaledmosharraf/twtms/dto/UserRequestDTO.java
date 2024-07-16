@@ -55,7 +55,6 @@ public class UserRequestDTO {
 
     private Double totalSalaryWithdraw;
 
-    @Email(message = "Please provide a valid email address")
     private String email;
 
     private LocalDate emailVerifiedAt;

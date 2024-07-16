@@ -6,6 +6,9 @@ import com.khaledmosharraf.twtms.service.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +20,12 @@ public class AuthController {
     UserRepository userRepository;
 
     @GetMapping("login")
-    public String gotoLoginPage(Model model){
-        model.addAttribute("pageTitle","Login Page");
-        User user = userRepository.findByUsername("admin").orElse(new User());
-    //    logger.info("User found: {}", user);
-
-        return "auth/loginPage";
+    public String gotoLoginPage(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
+        return "auth/login";
     }
 
 }

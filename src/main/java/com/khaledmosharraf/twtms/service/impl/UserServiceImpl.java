@@ -2,6 +2,7 @@ package com.khaledmosharraf.twtms.service.impl;
 
 import com.khaledmosharraf.twtms.dto.UserDTO;
 import com.khaledmosharraf.twtms.exception.IncorrectPasswordException;
+import com.khaledmosharraf.twtms.exception.ResourceNotFoundException;
 import com.khaledmosharraf.twtms.mapper.UserMapper;
 import com.khaledmosharraf.twtms.model.District;
 import com.khaledmosharraf.twtms.model.SubDistrict;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,11 +65,49 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
 
     @Override
     public UserDTO update(UserDTO userDTO) {
-        User currentUser = getIfExistById(userDTO.getId());
-        Set<String>roles = currentUser.getRoles();
+        Optional<User> optionalUser = userRepository.findById(userDTO.getId());
+        if (!optionalUser.isPresent()) {
+            throw new ResourceNotFoundException("User not found with ID: " + userDTO.getId());
+        }
+
+        User existingUser = optionalUser.get();
+        Set<String>roles = existingUser.getRoles();
+
         User user = userMapper.toModel(userDTO);
         user.setRoles(roles);
-        user = userRepository.save(user);
+        existingUser.setSubDistrict(userDTO.getSubDistrict());
+        existingUser.setName(userDTO.getName());
+        existingUser.setUniId(userDTO.getUniId());
+        existingUser.setNid(userDTO.getNid());
+        existingUser.setBloodGroup(userDTO.getBloodGroup());
+        existingUser.setPhone(userDTO.getPhone());
+        existingUser.setFatherName(userDTO.getFatherName());
+        existingUser.setMotherName(userDTO.getMotherName());
+        existingUser.setSpouseName(userDTO.getSpouseName());
+        existingUser.setPresentAddress(userDTO.getPresentAddress());
+        existingUser.setPermanentAddress(userDTO.getPermanentAddress());
+        existingUser.setJoiningDate(userDTO.getJoiningDate());
+        existingUser.setPrlDate(userDTO.getPrlDate());
+        existingUser.setDesignation(userDTO.getDesignation());
+        existingUser.setSchoolName(userDTO.getSchoolName());
+        existingUser.setDateOfBirth(userDTO.getDateOfBirth());
+        existingUser.setPayscale(userDTO.getPayscale());
+        existingUser.setTotalSalaryWithdraw(userDTO.getTotalSalaryWithdraw());
+        existingUser.setEmail(userDTO.getEmail());
+        existingUser.setEmailVerifiedAt(userDTO.getEmailVerifiedAt());
+        if(userDTO.getPassword()==null){
+            String defaultPassword = userDTO.getUsername();
+            String encodedPassword = passwordEncoder.encode(defaultPassword);
+            existingUser.setPassword(encodedPassword);
+
+        }
+
+        existingUser.setCurrentTeamId(userDTO.getCurrentTeamId());
+        existingUser.setProfilePhotoPath(userDTO.getProfilePhotoPath());
+        existingUser.setCompleted(userDTO.getCompleted());
+
+        user = userRepository.save(existingUser);
+
         return userMapper.toDTO(user);
     }
 
@@ -108,6 +148,31 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
     public UserDTO getByUsername(String username){
         User user = userRepository.findByUsername(username).orElse(new User());
         return userMapper.toDTO(user);
+    }
+
+    @Override
+    public List<UserDTO> getAllTeacher() {
+
+        List<User> users = userRepository.findAllTeacher();
+        return users.stream().map(userMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> getByDistrictId(Long districtId) {
+        List<User> users = userRepository.findByDistrictId(districtId);
+        return users.stream().map(userMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> getBySubDistrictId(Long subDistrictId) {
+        List<User> users = userRepository.findBySubDistrictId(subDistrictId);
+        return users.stream().map(userMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> getByDistrictIdAndSubDistrictId(Long districtId, Long subDistrictId) {
+        List<User> users = userRepository.findByDistrictIdAndSubDistrictId(districtId,subDistrictId);
+        return users.stream().map(userMapper::toDTO).collect(Collectors.toList());
     }
 
 }

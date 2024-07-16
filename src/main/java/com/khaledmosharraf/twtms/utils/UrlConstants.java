@@ -76,6 +76,12 @@ public final class UrlConstants {
         public static final String DELETE = BASE + "/delete";
         public static final String VIEW = BASE + "/view";
     }
+    public static final class Report {
+        public static final String BASE = ADMIN_BASE+"/report";
+        public static final String GRANT = BASE + "/grant";
+        public static final String PAYMENT = BASE + "/payment";
+        public static final String MEMBER = BASE + "/member";
+    }
     // Create pages
     public static final String ABOUT = "/about";
 

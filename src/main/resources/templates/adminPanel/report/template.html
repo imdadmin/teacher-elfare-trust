@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"   xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>PDF Report</title>
+    <style>
+        @font-face {
+            font-family: 'Nikosh';
+            src: url('classpath:/static/fonts/Nikosh.ttf') format('truetype');
+        }
+        body {
+            font-family: 'Nikosh', sans-serif;
+        }
+    </style>
+</head>
+<body>
+<h1>PDF Report</h1>
+<h1 th:text="${title}">PDF Report</h1>
+<p>এটি একটি উদাহরণ পিডিএফ রিপোর্ট।</p>
+<h1 th:text="${title}">PDF Report</h1>
+<p th:text="${message}">This is the message content.</p>
+<ul>
+    <li th:each="item : ${items}" th:text="${item}">Item</li>
+</ul>
+</body>
+</html>

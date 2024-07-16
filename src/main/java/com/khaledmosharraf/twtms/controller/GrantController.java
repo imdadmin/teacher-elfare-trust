@@ -3,10 +3,7 @@ package com.khaledmosharraf.twtms.controller;
 import com.khaledmosharraf.twtms.dto.*;
 import com.khaledmosharraf.twtms.exception.IncorrectPasswordException;
 import com.khaledmosharraf.twtms.mapper.GrantRequestMapper;
-import com.khaledmosharraf.twtms.service.DistrictService;
-import com.khaledmosharraf.twtms.service.SubDistrictService;
-import com.khaledmosharraf.twtms.service.GrantService;
-import com.khaledmosharraf.twtms.service.UserService;
+import com.khaledmosharraf.twtms.service.*;
 import com.khaledmosharraf.twtms.utils.PageStatus;
 import com.khaledmosharraf.twtms.utils.UrlConstants;
 import jakarta.validation.Valid;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @SessionAttributes("username")
@@ -35,15 +33,19 @@ public class GrantController {
     UserService userService;
     @Autowired
     DistrictService districtService;
+    @Autowired
+    SubscriptionPaymentService subscriptionPaymentService;
 
     @GetMapping(UrlConstants.Grant.LIST)
     public String showGrantList(Model model){
         List<GrantDTO> grants = grantService.getAll();
         List<DistrictDTO> districts = districtService.getAll();
+        Map<Long,PaymentInfoDTO> userPaymentInfo =  subscriptionPaymentService.getLastPaymentsForUsers();
         model.addAttribute("districts",districts);
 
         List<SubDistrictDTO> subDistricts = subDistrictService.getAll();
         model.addAttribute("subDistricts",subDistricts);
+        model.addAttribute("userPaymentInfo",userPaymentInfo);
         model.addAttribute("grants",grants);
         model.addAttribute("pageTitle", "Grant Page");
         String username = getLoggedUsername();

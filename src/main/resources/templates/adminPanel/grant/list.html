@@ -123,6 +123,7 @@
                     <th class="px-4 py-2  whitespace-nowrap" >মোবাইল</th>
                     <th class="px-4 py-2  whitespace-nowrap" >পরিমাণ</th>
                     <th class="px-4 py-2  whitespace-nowrap" >অনুরোধ করা পরিমাণ</th>
+                    <th class="px-4 py-2  whitespace-nowrap" >বকেয়া (বছর) </th>
                     <th class="px-4 py-2  whitespace-nowrap" >স্ট্যাটাস</th>
                     <th class="px-4 py-2  whitespace-nowrap" >ধরন</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
@@ -149,16 +150,20 @@
                     <td class="px-4 py-2" th:text="${grant.user.phone}">মোবাইল</td>
                     <td class="px-4 py-2" th:text="${grant.amount}">পরিমাণ</td>
                     <td class="px-4 py-2" th:text="${grant.requestedAmount}">অনুরোধ করা পরিমাণ</td>
+                    <td th:text="${userPaymentInfo.get(grant.user.id).dueYears}" th:class=" ${userPaymentInfo.get(grant.user.id).dueYears == 0} ? 'green' :
+                          (${userPaymentInfo.get(grant.user.id).dueYears == 1} ? 'yellow' :
+                          (${userPaymentInfo.get(grant.user.id).dueYears > 1} ? 'red')) +' px-4 py-2' ">
+                    বকেয়া (বছর)</td>
                     <td class="px-4 py-2" th:text="${grant.status}">স্ট্যাটাস</td>
                     <td class="px-4 py-2" th:text="${grant.type}">ধরন</td>
                     <td class="px-4 py-2 ">
                         <div class="flex gap-x-1 ">
 
                             <form th:action="@{grant/accept/{id}(id=${grant.id})}" method="post" style="display:inline;">
-                                <button type="submit" class="btn accept-btn">গ্রহণ</button>
+                                <button th:if="${userPaymentInfo.get(grant.user.id).dueYears < 2}" type="submit" class="btn accept-btn green">গ্রহণ</button>
                             </form>
                             <form th:action="@{grant/reject/{id}(id=${grant.id})}" method="post" style="display:inline;">
-                                <button type="submit" class="btn deny-btn">প্রত্যাখ্যান</button>
+                                <button type="submit" class="btn deny-btn red">প্রত্যাখ্যান</button>
                             </form>
                             <a th:href="@{${@urlConstants.grant.VIEW+'?id='+grant.id} }" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">
                                 <svg class="fi-link-icon h-4 w-4 text-gray-600 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 public class SpringSecurityConfiguration {
@@ -23,10 +24,16 @@ public class SpringSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 auth -> auth
-                        .requestMatchers("/login", "/signup", "/home", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/login", "/signup", "/", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated()
         );
-        http.formLogin(Customizer.withDefaults());
+        http.formLogin(form -> form
+                .loginPage("/login")
+                .successHandler(customSuccessHandler())
+                .permitAll()
+        );
         http.csrf(AbstractHttpConfigurer::disable);
         http.headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 
@@ -40,6 +47,10 @@ public class SpringSecurityConfiguration {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+    @Bean
+    public AuthenticationSuccessHandler customSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
     }
 }
 

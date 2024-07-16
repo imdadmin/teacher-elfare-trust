@@ -43,7 +43,7 @@
         <nav class="fi-breadcrumbs mb-2 hidden sm:block">
             <ol class="flex flex-wrap items-center gap-x-2">
                 <li class="flex gap-x-2">
-                    <a th:href="@{${@urlConstants.deposit.LIST}}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">উপজেলা</a>
+                    <a th:href="@{${@urlConstants.deposit.LIST}}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">জমা</a>
                 </li>
                 <li class="flex gap-x-2">
                     <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -75,7 +75,7 @@
                         class=" text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                         type="button"
                         th:if="${pageStatus == 2}"
-                > বাতিল</button>
+                > ডিলেট</button>
             </div>
         </div>
 
@@ -132,13 +132,14 @@
             <button
                     type="submit"
                     class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-sm text-white  tracking-widest hover:bg-yellow-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 "
-                    th:text="${pageStatus == 2 ? 'Update' : 'Create'}"
+                    th:text="${pageStatus == 2 ? 'আপডেট
+' : 'নতুন'}"
                     th:if="${pageStatus != 3}"
             >
                 সাবমিট
             </button>
             <a th:href="@{${@urlConstants.deposit.LIST}}" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                Cancel
+                বাতিল
             </a>
         </div>
     </form>

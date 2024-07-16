@@ -57,9 +57,12 @@ public class TeacherDashboardController {
         GrantRequestDTO grantRequestDTO = new GrantRequestDTO();
 
         List<Integer> years = getLast7Years();
+        Integer lastPaymentYear = subscriptionPaymentService.getLastPaymentYear(userDTO.getId());
+        PaymentInfoDTO paymentInfo = subscriptionPaymentService.getPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
 
         model.addAttribute("errorFrom","no");
         model.addAttribute("years", years);
+        model.addAttribute("paymentInfo", paymentInfo);
         model.addAttribute("user",userDTO);
         model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
         model.addAttribute("grant",grantRequestDTO);

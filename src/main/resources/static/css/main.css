@@ -35,3 +35,12 @@ body {
     border: 1px solid red;
     /* Add any other styling to indicate the error */
 }
+.green {
+    color: green;
+}
+.yellow {
+    color: yellow;
+}
+.red {
+    color: red;
+}

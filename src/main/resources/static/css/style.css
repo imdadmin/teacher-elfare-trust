@@ -221,3 +221,12 @@
 .bg-custom-yellow-600 {
   background-color: rgb(216 119 6);
 }
+ .green {
+     color: green;
+ }
+.yellow {
+    color: #F6BE00;
+}
+.red {
+    color: red;
+}

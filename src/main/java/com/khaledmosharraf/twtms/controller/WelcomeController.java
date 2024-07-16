@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class WelcomeController {
     Logger logger = LoggerFactory.getLogger(getClass());
 
-    @GetMapping("/")
-     public String gotoWelcomePage(Model model){
+    @GetMapping({"/","/home"})
+    public String ShowLangdingPage(Model model){
         model.addAttribute("pageTitle","Welcome Page");
         model.addAttribute("username", getLoggedUsername());
-        return "welcome/welcomePage";
+        return "teacherPanel/home";
     }
+    @GetMapping("/test")
+    public String test(Model model){
+        return "adminPanel/report/template";
+    }
+
     private String getLoggedUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();

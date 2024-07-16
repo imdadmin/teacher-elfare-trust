@@ -24,7 +24,7 @@ public class SubDistrictServiceImpl extends IdCheckingService<SubDistrict,Long> 
 
     @Override
     public List<SubDistrictDTO> getAll() {
-        List<SubDistrict> subDistricts = subDistrictRepository.findAll();
+        List<SubDistrict> subDistricts = subDistrictRepository.findAllOrderedByEName();
         return subDistricts.stream().map(subDistrictMapper::toDTO).collect(Collectors.toList());
     }
 

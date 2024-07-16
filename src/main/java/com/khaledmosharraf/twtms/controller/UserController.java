@@ -10,6 +10,9 @@ import com.khaledmosharraf.twtms.utils.PageStatus;
 import com.khaledmosharraf.twtms.utils.UrlConstants;
 import com.khaledmosharraf.twtms.validations.UserValidator;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +38,7 @@ public class UserController {
     SubDistrictService subDistrictService;
     @Autowired
     DistrictService districtService;
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping(UrlConstants.User.LIST)
     public String showUserList(Model model){
@@ -112,12 +116,14 @@ public class UserController {
 
     @PostMapping(UrlConstants.User.UPDATE)
     public String submitUpdateUserForm(@Valid @ModelAttribute("user") UserRequestDTO userRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        userValidator.validate(userRequestDTO, bindingResult);
-        if(bindingResult.hasErrors()){
 
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(error -> {
+                logger.error("Validation error: {}", error.getDefaultMessage());
+            });
+            model.addAttribute("user",userRequestDTO);
             List<SubDistrictDTO> subDistricts= subDistrictService.getAll();
             model.addAttribute("subDistricts", subDistricts);
-
             model.addAttribute("pageTopic","Edit User");
             model.addAttribute("username",getLoggedUsername());
             model.addAttribute("pageStatus", PageStatus.UPDATE);
