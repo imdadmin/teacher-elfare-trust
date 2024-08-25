@@ -1,5 +1,6 @@
 package com.khaledmosharraf.twtms.controller.TeacherPanel;
 
+import com.khaledmosharraf.twtms.commerz.TransactionInitiator;
 import com.khaledmosharraf.twtms.dto.*;
 import com.khaledmosharraf.twtms.exception.IncorrectPasswordException;
 import com.khaledmosharraf.twtms.mapper.GrantRequestMapper;
@@ -18,9 +19,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.Year;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -46,6 +49,29 @@ public class TeacherDashboardController {
     SubscriptionPaymentService subscriptionPaymentService;
 
 
+    @GetMapping("pay")
+    public RedirectView initiatePayment(@RequestParam double amount) throws Exception {
+        TransactionInitiator transactionInitiator = new TransactionInitiator();
+        String str = transactionInitiator.initTrnxnRequest(amount);
+        return new RedirectView(str);
+    }
+    @GetMapping("success")
+    public String paymentSuccess(@RequestParam Map<String, String> params) {
+        // Validate and handle the successful payment response here
+        return "Payment Successful: ";
+    }
+
+    @GetMapping("fail")
+    public String paymentFail(@RequestParam Map<String, String> params) {
+        // Handle the failed payment response here
+        return "teacherPanel/dashboard";
+    }
+
+    @GetMapping("cancel")
+    public String paymentCancel(@RequestParam Map<String, String> params) {
+        // Handle the canceled payment response here
+        return "teacherPanel/dashboard";
+    }
     @GetMapping("dashboard")
     public String showUserDashboard(Model model){
         String username = getLoggedUsername();
@@ -98,9 +124,11 @@ public class TeacherDashboardController {
 
             return "teacherPanel/dashboard";
         }
+        TransactionInitiator transactionInitiator = new TransactionInitiator();
+        String str = transactionInitiator.initTrnxnRequest(subscriptionPaymentRequestDTO.getAmount());
         subscriptionPaymentService.add(subscriptionPaymentRequestMapper.toSubscriptionPaymentDTO(subscriptionPaymentRequestDTO));
         redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/user/dashboard";
+        return "redirect:/user/pay?amount="+subscriptionPaymentRequestDTO.getAmount();
     }
 
 

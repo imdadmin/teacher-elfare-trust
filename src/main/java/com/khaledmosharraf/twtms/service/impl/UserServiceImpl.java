@@ -10,6 +10,8 @@ import com.khaledmosharraf.twtms.model.User;
 import com.khaledmosharraf.twtms.repository.UserRepository;
 import com.khaledmosharraf.twtms.service.UserService;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,10 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +31,7 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
     UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     public UserServiceImpl(UserRepository userRepository) {
         super(userRepository);
     }
@@ -52,6 +51,10 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
     @Override
     public UserDTO add(UserDTO userDTO) {
         // Encode the default password
+        Optional<User> optionalUser = userRepository.findByUsername(userDTO.getUsername());
+        if (optionalUser.isPresent()) {
+            throw new ResourceNotFoundException("User found with username: " + userDTO.getUsername());
+        }
         Set<String> roles = new HashSet<>();
         roles.add("USER");
         userDTO.setRoles(roles);
@@ -60,8 +63,44 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
         userDTO.setPassword(encodedPassword);
         User user = userMapper.toModel(userDTO);
         user = userRepository.save(user);
+        logger.debug("User {} added successfully.",userDTO.getUsername());
         return userMapper.toDTO(user);
     }
+
+    @Override
+    public void addAll(List<UserDTO> userDTOList) {
+        List<User> users = new ArrayList<>();
+
+        for (UserDTO userDTO : userDTOList) {
+            // Check if the user already exists
+            Optional<User> optionalUser = userRepository.findByUsername(userDTO.getUsername());
+            if (optionalUser.isPresent()) {
+                continue;
+            }
+
+            // Set default roles and encode password
+            Set<String> roles = new HashSet<>();
+            roles.add("USER");
+            userDTO.setRoles(roles);
+            String defaultPassword = userDTO.getUsername();
+            String encodedPassword = passwordEncoder.encode(defaultPassword);
+            userDTO.setPassword(encodedPassword);
+
+            // Convert to entity and add to the list
+            User user = userMapper.toModel(userDTO);
+            users.add(user);
+        }
+
+        // Save all users at once
+        List<User> savedUsers = userRepository.saveAll(users);
+
+        // Log the successful addition of users
+        for (UserDTO userDTO : userDTOList) {
+            logger.debug("User {} added successfully.", userDTO.getUsername());
+        }
+
+    }
+
 
     @Override
     public UserDTO update(UserDTO userDTO) {

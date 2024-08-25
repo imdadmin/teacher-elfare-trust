@@ -201,7 +201,7 @@
                         <fieldset>
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700"
-                                       th:for="*{currentPayscale}"><span>বর্তমান পে-স্কেল</span></label>
+                                       th:for="*{currentPayscale}"><span>মূল বেতন</span></label>
                                 <input
                                         class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                         type="number" required placeholder="Enter Current Payscale"
@@ -210,6 +210,7 @@
                                 <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{currentPayscale}')}"
                                    th:errors="*{currentPayscale}">Error</p>
                             </div>
+
                         </fieldset>
 
                         <!-- Applying For -->
@@ -285,7 +286,7 @@
 
                         <!--// Medical Aid -->
 
-                        <div class="hidden" id="medicalAidOption1">
+                        <div id="medicalAidOption1">
                             <fieldset>
                                 <!-- Name of Disease -->
                                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -301,6 +302,21 @@
                                         Error</p>
                                 </div>
                             </fieldset>
+                            <fieldset>
+                                <!-- Surgery Required -->
+                                <div class="w-full px-3 mb-6 md:mb-0" style="padding: 10px;">
+
+                                    <input class="form-check-input" type="checkbox" value="yes" th:field="*{surgery}">
+                                    <label class="form-check-label" th:for="*{surgery}">
+                                        সার্জারি প্রয়োজন
+                                    </label>
+                                    <p class="mt-2 text-sm text-red-600"
+                                       th:if="${#fields.hasErrors('*{surgery}')}" th:errors="*{surgery}">
+                                        Error
+                                    </p>
+                                </div>
+                            </fieldset>
+
 
                             <fieldset>
                                 <!-- Requested Amount / requestedAmount -->
@@ -374,9 +390,6 @@
                         <!-- //Scholarship -->
                         <!-- Various Exam details -->
 
-                        <fieldset>
-                            <input type="text" th:field="*{educationDetails2}" >
-                        </fieldset>
 
                         <div class="col-span-full hidden" id="scholarshipOption2" >
                             <h2>বিভিন্ন পরীক্ষার বিবরণ</h2>
@@ -402,6 +415,21 @@
 
                         <!-- Scholarship// -->
 
+                        <fieldset>
+                            <!-- Name of Disease -->
+                            <div class="w-full px-3 mb-6 md:mb-0 ">
+                                <label class="block font-medium text-sm text-gray-700"
+                                       th:for="*{application}"><span>
+আবেদন পত্র</span></label>
+                                <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                       type="file"
+                                       th:field="*{application}"
+                                >
+                                <p class="mt-2 text-sm text-red-600"
+                                   th:if="${#fields.hasErrors('*{application}')}" th:errors="*{application}">
+                                    Error</p>
+                            </div>
+                        </fieldset>
                         <fieldset>
                             <!-- Documents Attachment / educationDetails-->
                             <div class="w-full px-3 mb-6 md:mb-0">

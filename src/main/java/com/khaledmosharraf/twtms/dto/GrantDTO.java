@@ -30,6 +30,8 @@ public class GrantDTO {
     private String educationDetails;
     private String educationDetails2;
     private String diseaseDetails;
+    private String surgery;
+    private String application;
     private String oldScholarshipDetails;
     private String latestPaymentReceiptDetails;
 
