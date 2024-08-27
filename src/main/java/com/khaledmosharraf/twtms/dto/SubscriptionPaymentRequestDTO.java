@@ -18,6 +18,10 @@ public class SubscriptionPaymentRequestDTO {
     private Integer year;
     private Double amount;
     private String details;
-    @NotNull
     private LocalDate paymentDate;
+
+    private String tranDate;
+    private String tranId;
+    private String bankTranId;
+    private String status;
 }

@@ -11,7 +11,7 @@ import java.util.Map;
  * Its method initTrnxnRequest returns JSON list or String with Session key which then used to select payment option
  */
 public class TransactionInitiator {
-    public String initTrnxnRequest(double amount) {
+    public String initTrnxnRequest(String tran_id, double amount, String username) {
         String response = "";
         try {
             /**
@@ -26,6 +26,8 @@ public class TransactionInitiator {
              */
 
             postData.put("total_amount", amount+"");
+            postData.put("tran_id", tran_id);
+            postData.put("cus_name", username);
             SSLCommerz sslcz = new SSLCommerz("autom66bab9691a49f", "autom66bab9691a49f@ssl", true);
 
             /**

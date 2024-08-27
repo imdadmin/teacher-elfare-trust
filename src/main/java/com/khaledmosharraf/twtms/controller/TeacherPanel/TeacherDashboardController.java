@@ -1,5 +1,8 @@
 package com.khaledmosharraf.twtms.controller.TeacherPanel;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.khaledmosharraf.twtms.commerz.PaymentResponse;
+import com.khaledmosharraf.twtms.commerz.TransactionIdGenerator;
 import com.khaledmosharraf.twtms.commerz.TransactionInitiator;
 import com.khaledmosharraf.twtms.dto.*;
 import com.khaledmosharraf.twtms.exception.IncorrectPasswordException;
@@ -9,8 +12,12 @@ import com.khaledmosharraf.twtms.mapper.UserRequestMapper;
 import com.khaledmosharraf.twtms.model.User;
 import com.khaledmosharraf.twtms.service.*;
 import com.khaledmosharraf.twtms.utils.PageStatus;
+import com.khaledmosharraf.twtms.utils.PaymentStatus;
 import com.khaledmosharraf.twtms.validations.UserValidator;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +40,9 @@ import java.util.stream.IntStream;
 @SessionAttributes("username")
 @RequestMapping("user/")
 public class TeacherDashboardController {
+    private final TransactionIdGenerator idGenerator = new TransactionIdGenerator();
 
-
+    Logger logger = LoggerFactory.getLogger(TeacherDashboardController.class);
     @Autowired
     GrantRequestMapper grantRequestMapper;
     @Autowired
@@ -50,27 +60,12 @@ public class TeacherDashboardController {
 
 
     @GetMapping("pay")
-    public RedirectView initiatePayment(@RequestParam double amount) throws Exception {
+    public RedirectView initiatePayment(@RequestParam double amount ,@RequestParam String tran_id) throws Exception {
+        String username = getLoggedUsername();
         TransactionInitiator transactionInitiator = new TransactionInitiator();
-        String str = transactionInitiator.initTrnxnRequest(amount);
+        String str = transactionInitiator.initTrnxnRequest(tran_id,amount,username);
+        logger.debug("From Pay: "+str);
         return new RedirectView(str);
-    }
-    @GetMapping("success")
-    public String paymentSuccess(@RequestParam Map<String, String> params) {
-        // Validate and handle the successful payment response here
-        return "Payment Successful: ";
-    }
-
-    @GetMapping("fail")
-    public String paymentFail(@RequestParam Map<String, String> params) {
-        // Handle the failed payment response here
-        return "teacherPanel/dashboard";
-    }
-
-    @GetMapping("cancel")
-    public String paymentCancel(@RequestParam Map<String, String> params) {
-        // Handle the canceled payment response here
-        return "teacherPanel/dashboard";
     }
     @GetMapping("dashboard")
     public String showUserDashboard(Model model){
@@ -124,12 +119,18 @@ public class TeacherDashboardController {
 
             return "teacherPanel/dashboard";
         }
-        TransactionInitiator transactionInitiator = new TransactionInitiator();
-        String str = transactionInitiator.initTrnxnRequest(subscriptionPaymentRequestDTO.getAmount());
+        LocalDate currentDate = LocalDate.now();
+        subscriptionPaymentRequestDTO.setPaymentDate(currentDate);
+
+        subscriptionPaymentRequestDTO.setTranDate("");
+        subscriptionPaymentRequestDTO.setStatus(PaymentStatus.PENDING);
+        String tranId = idGenerator.generateTransactionId();
+        subscriptionPaymentRequestDTO.setTranId(tranId);
+        subscriptionPaymentRequestDTO.setBankTranId("");
         subscriptionPaymentService.add(subscriptionPaymentRequestMapper.toSubscriptionPaymentDTO(subscriptionPaymentRequestDTO));
-        redirectAttributes.addFlashAttribute("successMessage", "Added Successfully. Thank You.");
-        return "redirect:/user/pay?amount="+subscriptionPaymentRequestDTO.getAmount();
+        return "redirect:/user/pay?amount="+subscriptionPaymentRequestDTO.getAmount()+"&tran_id="+tranId;
     }
+
 
 
     @PostMapping("create-grant")

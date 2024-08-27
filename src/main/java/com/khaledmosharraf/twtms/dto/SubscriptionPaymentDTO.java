@@ -21,4 +21,9 @@ public class SubscriptionPaymentDTO {
     private String details;
     private LocalDate paymentDate;
 
+    private String tranDate;
+    private String tranId;
+    private String bankTranId;
+    private String status;
+
 }

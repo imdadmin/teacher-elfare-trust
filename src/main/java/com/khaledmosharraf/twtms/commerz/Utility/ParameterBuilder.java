@@ -31,14 +31,14 @@ public class ParameterBuilder {
 
     public static Map<String, String> constructRequestParameters() {
         // CREATING LIST OF POST DATA
-        String baseUrl = "http://www.testdomain.com:8080/";//Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/";
+        String baseUrl = "https://mydomain.local:8080/";//Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/";
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("total_amount", "2000.00");
         postData.put("tran_id", "TESTASPNET1234");
         postData.put("currency", "BDT");
-        postData.put("success_url", baseUrl + "user/success");
-        postData.put("fail_url", baseUrl+"user/fail");
-        postData.put("cancel_url", baseUrl+"user/cancel");
+        postData.put("success_url", baseUrl + "pay/response/success");
+        postData.put("fail_url", baseUrl+"pay/response/fail");
+        postData.put("cancel_url", baseUrl+"pay/response/cancel");
         postData.put("version", "3.00");
         postData.put("cus_name", "Khaled Mosharraf");
         postData.put("cus_email", "khaled@mail.co");

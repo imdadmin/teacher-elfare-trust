@@ -4,7 +4,6 @@ import com.khaledmosharraf.twtms.dto.UserAuthRequestDTO;
 import com.khaledmosharraf.twtms.dto.UserDTO;
 import com.khaledmosharraf.twtms.dto.UserRequestDTO;
 import com.khaledmosharraf.twtms.mapper.UserRequestMapper;
-import com.khaledmosharraf.twtms.security.CustomUsernamePasswordAuthenticationFilter;
 import com.khaledmosharraf.twtms.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ public class UserAuthService {
     UserService userService;
     @Autowired
     UserRequestMapper userRequestMapper;
-    private static final Logger logger = LoggerFactory.getLogger(CustomUsernamePasswordAuthenticationFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserAuthService.class);
 
     public String verify(UserAuthRequestDTO user) {
         String token = null;

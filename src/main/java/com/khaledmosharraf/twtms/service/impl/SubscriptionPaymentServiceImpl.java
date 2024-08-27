@@ -66,7 +66,7 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
 
     @Override
     public List<SubscriptionPaymentDTO> getByUserId(Long id) {
-        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findByUserIdOrderByYearDesc(id);
+        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findByUserIdOrderByPaymentDateDesc(id);
         return subscriptionPayments.stream().map(subscriptionPaymentMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -74,6 +74,12 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
     public List<SubscriptionPaymentDTO> getByUsername(String username) {
         List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findByUsername(username);
         return subscriptionPayments.stream().map(subscriptionPaymentMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public SubscriptionPaymentDTO getByTranId(String tranId) {
+        SubscriptionPayment subscriptionPayment =  subscriptionPaymentRepository.findFirstByTranId(tranId);
+        return subscriptionPaymentMapper.toDTO(subscriptionPayment);
     }
 
     @Override

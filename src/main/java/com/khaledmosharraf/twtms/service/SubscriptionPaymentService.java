@@ -10,6 +10,8 @@ import java.util.Map;
 public interface SubscriptionPaymentService extends CrudService<SubscriptionPaymentDTO,Long> {
     public List<SubscriptionPaymentDTO> getByUserId(Long id);
     public List<SubscriptionPaymentDTO> getByUsername(String username);
+
+    public SubscriptionPaymentDTO getByTranId(String tranId);
     public Integer getLastPaymentYear( Long userId);
     public PaymentInfoDTO getPaymentInfo( Integer lastPaymentYear, Integer joiningYear );
     public Map<Long, PaymentInfoDTO> getLastPaymentsForUsers();
