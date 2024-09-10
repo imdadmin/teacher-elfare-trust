@@ -1,0 +1,127 @@
+.
+├── main
+│   ├── java
+│   │   └── com
+│   │       └── khaledmosharraf
+│   │           ├── project_structure.txt
+│   │           └── twtms
+│   └── resources
+│       ├── application.properties
+│       ├── fonts
+│       │   └── xyzregular.ttf
+│       ├── keystore.p12
+│       ├── messages.properties
+│       ├── static
+│       │   ├── css
+│       │   │   ├── bootstrap-datepicker.min.css
+│       │   │   ├── bootstrap.min.css
+│       │   │   ├── main.css
+│       │   │   ├── report_style.css
+│       │   │   └── style.css
+│       │   ├── documents
+│       │   │   ├── 31.pdf
+│       │   │   └── 32.pdf
+│       │   ├── fonts
+│       │   │   ├── Mitra.ttf
+│       │   │   ├── Mukti-Book.ttf
+│       │   │   ├── Nikosh-Regular.ttf
+│       │   │   ├── Nikosh.ttf
+│       │   │   ├── NotoSansBengali-Regular.ttf
+│       │   │   ├── NotoSansBengali.ttf
+│       │   │   ├── SiyamRupali.eot
+│       │   │   ├── SiyamRupali.woff
+│       │   │   ├── SiyamRupaliRegular.ttf
+│       │   │   ├── Siyamrupali.ttf
+│       │   │   ├── SolaimanLipi_20-04-07.ttf
+│       │   │   ├── SutonnyMJRegular.ttf
+│       │   │   ├── TiroBangla-Regular.ttf
+│       │   │   ├── akaashnormal.ttf
+│       │   │   ├── arial.ttf
+│       │   │   ├── fontone.ttf
+│       │   │   ├── georgia.ttf
+│       │   │   ├── kalpurush.ttf
+│       │   │   └── xyzregular.ttf
+│       │   ├── images
+│       │   │   ├── 1.jpg
+│       │   │   ├── 11.jpg
+│       │   │   ├── 111.png
+│       │   │   ├── 14.jpg
+│       │   │   ├── 2.jpg
+│       │   │   ├── 25.jpg
+│       │   │   ├── 3.jpg
+│       │   │   ├── 4.jpg
+│       │   │   ├── 4a.jpg
+│       │   │   ├── g1.jpg
+│       │   │   ├── g2.jpg
+│       │   │   ├── g3.webp
+│       │   │   ├── g4.jpg
+│       │   │   ├── g5.jpg
+│       │   │   ├── g6.webp
+│       │   │   ├── logo-sm.png
+│       │   │   └── logo.png
+│       │   └── js
+│       │       ├── actions.js
+│       │       ├── bootstrap-datepicker.min.js
+│       │       ├── bootstrap.min.js
+│       │       ├── jquery-3.6.0.min.js
+│       │       └── main.js
+│       └── templates
+│           ├── adminPanel
+│           │   ├── bank
+│           │   ├── common
+│           │   ├── deposit
+│           │   ├── district
+│           │   ├── expense
+│           │   ├── grant
+│           │   ├── index.html
+│           │   ├── report
+│           │   ├── subscriptionPayment
+│           │   ├── upazila
+│           │   └── user
+│           ├── adminPanel2
+│           │   ├── bank
+│           │   ├── common
+│           │   ├── deposit
+│           │   ├── district
+│           │   ├── expense
+│           │   ├── grant
+│           │   ├── index.html
+│           │   ├── report
+│           │   ├── subscriptionPayment
+│           │   ├── upazila
+│           │   └── user
+│           ├── auth
+│           │   ├── login.html
+│           │   └── login_old.html
+│           ├── common
+│           │   └── fragments.html
+│           ├── district
+│           │   ├── create_district.html
+│           │   └── district_list.html
+│           ├── teacherPanel
+│           │   ├── dashboard.html
+│           │   ├── footer.html
+│           │   ├── header.html
+│           │   ├── home.html
+│           │   ├── layout.html
+│           │   └── toast.html
+│           ├── teacherPanel2
+│           │   ├── dashboard.html
+│           │   ├── footer.html
+│           │   ├── header.html
+│           │   ├── home.html
+│           │   ├── home_backup.html
+│           │   └── layout.html
+│           ├── todo
+│           │   ├── createTodoPage.html
+│           │   └── todoPage.html
+│           └── welcome
+│               └── welcomePage.html
+├── project_structure.txt
+└── test
+    └── java
+        └── com
+            └── khaledmosharraf
+                └── twtms
+
+49 directories, 76 files

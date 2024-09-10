@@ -409,7 +409,7 @@
                                        th:for="*{application}"><span>
 আবেদন পত্র</span></label>
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                       type="file"
+                                       type="file" accept="application/pdf" required
                                        th:field="*{application}"
                                 >
                                 <p class="mt-2 text-sm text-red-600"
@@ -422,7 +422,7 @@
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700" th:for="*{attachment}"><span>নথি সংযুক্তি</span></label>
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full bg-white border-gray-300 rounded-lg border"
-                                       type="file"
+                                       type="file"  accept="application/pdf" required
                                        th:field="*{attachment}"
                                 >
                                 <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{attachment}')}"
