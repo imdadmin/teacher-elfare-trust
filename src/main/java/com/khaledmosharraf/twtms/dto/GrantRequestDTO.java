@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -34,9 +35,8 @@ public class GrantRequestDTO {
     private String educationDetails2;
     private String diseaseDetails;
     private String surgery;
-    private String application;
+    private MultipartFile application;
     private String oldScholarshipDetails;
     private String latestPaymentReceiptDetails;
-
-    private String attachment;
+    private MultipartFile attachment;
 }

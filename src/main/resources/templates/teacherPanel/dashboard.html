@@ -48,10 +48,10 @@
                 <div id="dropdown"
                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                        <li>
-                            <a th:href="@{/profile}"
+                        <!--<li>
+                            <a th:href="#"
                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
-                        </li>
+                        </li>-->
 
 
                         <li>
@@ -76,7 +76,7 @@
 </header>
 <!-- Header/ -->
 
-<div class="container px-5 sm:px-10 md:px-20 lg:px-25 gap-6 flex-wrap sm:flex mt-3">
+<div>
 
     <div class="bg-slate-300 w-full rounded-md h-full min-h-screen px-5 sm:px-10 md:px-15 lg:px-20">
         <div id="errorFrom" th:attr="data-errorFrom=${errorFrom}" hidden>Flag to show Form that has Error</div>
@@ -102,10 +102,10 @@
             </p>
         </div>
         <div class="flex items-center justify-center h-32 gap-10 mb-4">
-            <button class="px-3 py-2 bg-blue-400 rounded-md text-white" onclick="showPaymentForm()"> সাবস্ক্রিপশন
-                পেমেন্ট করুন
+            <button class="px-3 py-2 bg-blue-400 rounded-md text-white" onclick="showPaymentForm()"> কন্ট্রিবিউশন
+                প্রদান করুন
             </button>
-            <button th:if="${paymentInfo.dueYears < 2}" class="px-3 py-2 bg-green-700 rounded-md text-white" onclick="showGrantForm()"> অনুদানের জন্য
+            <button th:if="${paymentInfo.dueYears < 1}" class="px-3 py-2 bg-green-700 rounded-md text-white" onclick="showGrantForm()"> অনুদানের জন্য
                 আবেদন করুন
             </button>
         </div>
@@ -160,7 +160,7 @@
         <!--  Grant Form -->
         <div class="py-4 px-5 sm:px-15 md:px-20 hidden" id="grantForm">
 
-            <form method="post" th:object="${grant}" th:action="@{create-grant}">
+            <form method="post" th:object="${grant}" th:action="@{create-grant}" enctype="multipart/form-data" >
                 <div class="w-full bg-gray-50 px-3 py-2 rounded-lg shadow-md">
                     <h1 class="text-2xl text-center">
                         অনুদানের জন্য আবেদন ফর্ম</h1>
@@ -520,7 +520,7 @@
                             <td class="px-6 py-4" th:text="${payment.year}">
                                 2024
                             </td>
-                            <td class="px-6 py-4" th:text="${payment.tranId}">
+                            <td class="px-6 py-4" th:text="${payment.bankTranId}">
                                 2000
                             </td>
                             <td class="px-6 py-4" th:text="${payment.amount}">
@@ -530,10 +530,11 @@
                                 PANDING
                             </td>
                             <td class="px-6 py-4">
-                                <button
-                                        class="bg-green-600 text-white px-3 py-2 rounded-lg"
-                                        >Receipt
-                                </button>
+                                <a th:href="@{'https://voucher.sblesheba.com:8877/Receipt/' + ${payment.bankTranId}}" target="_blank">
+                                    <button class="bg-green-600 text-white px-3 py-2 rounded-lg">
+                                        Receipt
+                                    </button>
+                                </a>
                             </td>
                         </tr>
                         </tbody>

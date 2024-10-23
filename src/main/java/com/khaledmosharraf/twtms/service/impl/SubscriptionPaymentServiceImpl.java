@@ -81,6 +81,11 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
         SubscriptionPayment subscriptionPayment =  subscriptionPaymentRepository.findFirstByTranId(tranId);
         return subscriptionPaymentMapper.toDTO(subscriptionPayment);
     }
+    @Override
+    public SubscriptionPaymentDTO getByToken(String token) {
+        SubscriptionPayment subscriptionPayment =  subscriptionPaymentRepository.findFirstByToken(token);
+        return subscriptionPaymentMapper.toDTO(subscriptionPayment);
+    }
 
     @Override
     public Integer getLastPaymentYear( Long userId ) {

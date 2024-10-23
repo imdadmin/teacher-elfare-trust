@@ -20,4 +20,5 @@ public interface SubscriptionPaymentRepository extends JpaRepository<Subscriptio
     @Query("SELECT sp FROM SubscriptionPayment sp JOIN sp.user u WHERE u.username = :username order by sp.paymentDate desc ")
     List<SubscriptionPayment> findByTranId(@Param("username") String username);
     SubscriptionPayment findFirstByTranId(String tranId);
+    SubscriptionPayment findFirstByToken(String token);
 }

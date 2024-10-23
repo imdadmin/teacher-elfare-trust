@@ -12,6 +12,7 @@ public interface SubscriptionPaymentService extends CrudService<SubscriptionPaym
     public List<SubscriptionPaymentDTO> getByUsername(String username);
 
     public SubscriptionPaymentDTO getByTranId(String tranId);
+    public SubscriptionPaymentDTO getByToken(String token);
     public Integer getLastPaymentYear( Long userId);
     public PaymentInfoDTO getPaymentInfo( Integer lastPaymentYear, Integer joiningYear );
     public Map<Long, PaymentInfoDTO> getLastPaymentsForUsers();

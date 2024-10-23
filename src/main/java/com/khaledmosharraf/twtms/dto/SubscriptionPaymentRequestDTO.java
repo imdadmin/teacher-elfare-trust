@@ -20,6 +20,9 @@ public class SubscriptionPaymentRequestDTO {
     private String details;
     private LocalDate paymentDate;
 
+    private String invoiceNo;
+    private String invoiceDate;
+    private String token;
     private String tranDate;
     private String tranId;
     private String bankTranId;
