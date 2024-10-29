@@ -9,6 +9,11 @@ import com.khaledmosharraf.twtms.service.GrantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,6 +72,12 @@ public class GrantServiceImpl extends IdCheckingService<Grant,Long> implements G
         List<Grant> grants = grantRepository.findByUsername(username);
         return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
     }
+    @Override
+    public List<GrantDTO> getByUsernameOnlyAccepted(String username) {
+
+        List<Grant> grants = grantRepository.findByUsernameOnlyAccepted(username);
+        return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
+    }
 
     @Override
     public List<GrantDTO> getAllGrants() {
@@ -94,4 +105,27 @@ public class GrantServiceImpl extends IdCheckingService<Grant,Long> implements G
         List<Grant> grants = grantRepository.findByDistrictIdAndSubDistrictId(districtId,subDistrictId);
         return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
     }
+
+
+    public List<GrantDTO> getAllGrantsByDates(LocalDateTime fromDate, LocalDateTime toDate) {
+        return grantRepository.findAllGrantsByDates(fromDate, toDate)
+                .stream().map(grantMapper::toDTO).toList();
+    }
+
+    public List<GrantDTO> getByDistrictIdByDates(Long districtId, LocalDateTime fromDate, LocalDateTime toDate) {
+        return grantRepository.findByDistrictIdByDates(districtId, fromDate, toDate)
+                .stream().map(grantMapper::toDTO).toList();
+    }
+
+    public List<GrantDTO> getBySubDistrictIdByDates(Long subDistrictId, LocalDateTime fromDate, LocalDateTime toDate) {
+        return grantRepository.findBySubDistrictIdByDates(subDistrictId, fromDate, toDate)
+                .stream().map(grantMapper::toDTO).toList();
+    }
+
+    public List<GrantDTO> getByDistrictIdAndSubDistrictIdByDates(Long districtId, Long subDistrictId, LocalDateTime fromDate, LocalDateTime toDate) {
+        return grantRepository.findByDistrictIdAndSubDistrictIdByDates(districtId, subDistrictId, fromDate, toDate)
+                .stream().map(grantMapper::toDTO).toList();
+    }
+
+
 }

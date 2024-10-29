@@ -230,3 +230,21 @@
 .red {
     color: red;
 }
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.accept-btn.green {
+    background-color: #28a745; /* Green */
+    color: white;
+}
+
+.deny-btn.red {
+    background-color: #dc3545; /* Red */
+    color: white;
+}

@@ -105,22 +105,14 @@
             <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
                 <thead class="bg-gray-50 dark:bg-white/5">
                 <tr class=" text-black">
-                    <th class="px-4 py-2" data-orderable="false">
-                        <div class="checkboxes__row">
-                            <div class="checkboxes__item">
-                                <label class="checkbox style-c">
-                                    <input type="checkbox" id="checkAll"/>
-                                    <div class="checkbox__checkmark"></div>
-                                    <div class="checkbox__body">""</div>
-                                </label>
-                            </div>
-                        </div>
-                    </th>
+
+                    <th class="px-4 py-2  whitespace-nowrap">ক্রমিক</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">মেম্বার</th>
                     <th class="px-4 py-2  whitespace-nowrap" >মেম্বার আই ডি</th>
                     <th class="px-4 py-2  whitespace-nowrap" >জেলা</th>
                     <th class="px-4 py-2  whitespace-nowrap" >উপজেলা</th>
                     <th class="px-4 py-2  whitespace-nowrap" >মোবাইল</th>
+                    <th class="px-4 py-2  whitespace-nowrap" >আবেদনের তারিখ</th>
                     <th class="px-4 py-2  whitespace-nowrap" >পরিমাণ</th>
                     <th class="px-4 py-2  whitespace-nowrap" >অনুরোধ করা পরিমাণ</th>
                     <th class="px-4 py-2  whitespace-nowrap" >বকেয়া (বছর) </th>
@@ -131,40 +123,42 @@
                 </thead>
                 <tbody>
 
-                <tr class=" hover:bg-gray-50 py-1" th:each="grant : ${grants}">
-                    <td class=" px-4 py-2 text-center align-middle" >
-                        <div class="checkboxes__row">
-                            <div class="checkboxes__item">
-                                <label class="checkbox style-c">
-                                    <input type="checkbox" class="rowCheckbox"/>
-                                    <div class="checkbox__checkmark"></div>
-                                    <div class="checkbox__body">""</div>
-                                </label>
-                            </div>
-                        </div>
+                <tr class=" hover:bg-gray-50 py-1" th:each="grant,iterStat : ${grants}">
+                    <td class="px-4 py-2" th:text="${iterStat.index + 1}">
+                        1
                     </td>
                     <td class="px-4 py-2" th:text="${grant.user.name}">নাম</td>
                     <td class="px-4 py-2" th:text="${grant.user.uniId}">ইউ আই ডি</td>
                     <td class="px-4 py-2" th:text="${grant.user.subDistrict.district.eName}">জেলা</td>
                     <td class="px-4 py-2" th:text="${grant.user.subDistrict.eName}">উপজেলা</td>
                     <td class="px-4 py-2" th:text="${grant.user.phone}">মোবাইল</td>
+                    <td class="px-4 py-2" th:text="${grant.applicationDate}">আবেদনের তারিখ</td>
                     <td class="px-4 py-2" th:text="${grant.amount}">পরিমাণ</td>
                     <td class="px-4 py-2" th:text="${grant.requestedAmount}">অনুরোধ করা পরিমাণ</td>
                     <td th:text="${userPaymentInfo.get(grant.user.id).dueYears}" th:class=" ${userPaymentInfo.get(grant.user.id).dueYears == 0} ? 'green' :
                           (${userPaymentInfo.get(grant.user.id).dueYears == 1} ? 'yellow' :
                           (${userPaymentInfo.get(grant.user.id).dueYears > 1} ? 'red')) +' px-4 py-2' ">
                     বকেয়া (বছর)</td>
-                    <td class="px-4 py-2" th:text="${grant.status}">স্ট্যাটাস</td>
+                    <td th:text="${grant.status}"
+                        th:class="${grant.status == 'Accepted'} ? 'px-4 py-2 green font-bold' : (${grant.status == 'Rejected'} ? 'px-4 py-2 red font-bold' : 'px-4 py-2 font-bold')">স্ট্যাটাস
+                    </td>
                     <td class="px-4 py-2" th:text="${grant.type}">ধরন</td>
                     <td class="px-4 py-2 ">
                         <div class="flex gap-x-1 ">
 
                             <form th:action="@{grant/accept/{id}(id=${grant.id})}" method="post" style="display:inline;">
-                                <button th:if="${userPaymentInfo.get(grant.user.id).dueYears < 2}" type="submit" class="btn accept-btn green">গ্রহণ</button>
+                                <button th:if="${userPaymentInfo.get(grant.user.id).dueYears < 2}" type="submit"
+                                        class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-700">
+                                    গ্রহণ করুন
+                                </button>
                             </form>
                             <form th:action="@{grant/reject/{id}(id=${grant.id})}" method="post" style="display:inline;">
-                                <button type="submit" class="btn deny-btn red">প্রত্যাখ্যান</button>
+                                <button type="submit"
+                                        class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700">
+                                    প্রত্যাখ্যান করুন
+                                </button>
                             </form>
+
                             <a th:href="@{${@urlConstants.grant.VIEW+'?id='+grant.id} }" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">
                                 <svg class="fi-link-icon h-4 w-4 text-gray-600 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
@@ -178,6 +172,17 @@
                                     <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"></path>
                                 </svg>সংশোধন
                             </a>
+                            <a th:href="@{/application/grant/pdf(id=${grant.id})}"  target="_blank" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-600 fi-ac-link-action text-blue-600">
+                                <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <!-- Document shape -->
+                                    <path d="M6 2a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8.586a2 2 0 00-.586-1.414l-4.586-4.586A2 2 0 0013.414 2H6zm7 2.414L17.586 9H14a1 1 0 01-1-1V4.414z"></path>
+                                    <!-- Download arrow -->
+                                    <path d="M12 11a.75.75 0 01.75.75V15.25h1.97a.75.75 0 010 1.5h-4.44a.75.75 0 010-1.5h1.97V11.75A.75.75 0 0112 11z"></path>
+                                    <!-- Base line for the arrow -->
+                                    <path d="M6.75 19a.75.75 0 00.75.75h9a.75.75 0 000-1.5h-9a.75.75 0 00-.75.75z"></path>
+                                </svg>PDF
+                            </a>
+
                         </div>
 
                     </td>

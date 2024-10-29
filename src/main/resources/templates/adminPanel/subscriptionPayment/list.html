@@ -105,42 +105,26 @@
             <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
                 <thead class="bg-gray-50 dark:bg-white/5">
                 <tr class=" text-black">
-                    <th class="px-4 py-2" data-orderable="false">
-                        <div class="checkboxes__row">
-                            <div class="checkboxes__item">
-                                <label class="checkbox style-c">
-                                    <input type="checkbox" id="checkAll"/>
-                                    <div class="checkbox__checkmark"></div>
-                                    <div class="checkbox__body">""</div>
-                                </label>
-                            </div>
-                        </div>
-                    </th>
+                    <th class="px-4 py-2  whitespace-nowrap" >ক্রমিক.</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">মেম্বার</th>
                     <th class="px-4 py-2  whitespace-nowrap" >মেম্বার আই ডি</th>
                     <th class="px-4 py-2  whitespace-nowrap" >জেলা</th>
                     <th class="px-4 py-2  whitespace-nowrap" >উপজেলা</th>
                     <th class="px-4 py-2  whitespace-nowrap" >মোবাইল</th>
                     <th class="px-4 py-2  whitespace-nowrap" > বছর</th>
+                    <th class="px-4 py-2  whitespace-nowrap" >টোকেন</th>
+                    <th class="px-4 py-2  whitespace-nowrap" >ট্রানজেকশন আইডি</th>
                     <th class="px-4 py-2  whitespace-nowrap" >পরিমাণ</th>
+                    <th class="px-4 py-2  whitespace-nowrap" >স্ট্যাটাস</th>
                     <th class="px-4 py-2  whitespace-nowrap" >পেমেন্ট তারিখ</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
                 </tr>
                 </thead>
 
                 <tbody>
-
-                <tr class=" hover:bg-gray-50 py-1" th:each="subscriptionPayment : ${subscriptionPayments}">
-                    <td class=" px-4 py-2 text-center align-middle" >
-                        <div class="checkboxes__row">
-                            <div class="checkboxes__item">
-                                <label class="checkbox style-c">
-                                    <input type="checkbox" class="rowCheckbox"/>
-                                    <div class="checkbox__checkmark"></div>
-                                    <div class="checkbox__body">""</div>
-                                </label>
-                            </div>
-                        </div>
+                <tr class=" hover:bg-gray-50 py-1" th:each="subscriptionPayment,iterStat : ${subscriptionPayments}">
+                    <td class="px-4 py-2" th:text="${iterStat.index + 1}">
+                        1
                     </td>
                     <td class="px-4 py-2" th:text="${subscriptionPayment.user.name}">নাম</td>
                     <td class="px-4 py-2" th:text="${subscriptionPayment.user.uniId}">ইউ আই ডি</td>
@@ -148,7 +132,10 @@
                     <td class="px-4 py-2" th:text="${subscriptionPayment.user.subDistrict.eName}">উপজেলা</td>
                     <td class="px-4 py-2" th:text="${subscriptionPayment.user.phone}">মোবাইল</td>
                     <td class="px-4 py-2" th:text="${subscriptionPayment.year}"> বছর</td>
+                    <td class="px-4 py-2" th:text="${subscriptionPayment.token}"> টোকেন</td>
+                    <td class="px-4 py-2" th:text="${subscriptionPayment.bankTranId}"> ট্রানজেকশন আইডি</td>
                     <td class="px-4 py-2" th:text="${subscriptionPayment.amount}">পরিমাণ</td>
+                    <td class="px-4 py-2" th:text="${subscriptionPayment.status}">স্ট্যাটাস</td>
                     <td class="px-4 py-2" th:text="${subscriptionPayment.paymentDate}">পেমেন্ট তারিখ</td>
                     <td class="px-4 py-2 ">
                         <div class="flex gap-x-1 ">

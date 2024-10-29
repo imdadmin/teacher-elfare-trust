@@ -93,41 +93,41 @@
     <tr>
         <th style="width: 3%">SL</th>
         <th style="width: 7%">Member Id</th>
-        <th style="width: 10%">Name</th>
+        <th style="width: 8%">Name</th>
         <th style="width: 8%">Designation</th>
         <th style="width: 8%">District</th>
         <th style="width: 8%">Upazila</th>
+        <th style="width: 8%">Mobile</th>
+        <th style="width: 4%">Year</th>
 
-        <th style="width: 8%">Type</th>
-        <th style="width: 8%">Requested
-        Amount</th>
-        <th style="width: 8%">Requested
-            For</th>
-        <th style="width: 8%">Relation</th>
+        <th style="width: 8%">Transaction ID</th>
+        <th style="width: 5%">Amount</th>
+        <th style="width: 8%">Payment Date</th>
         <th style="width: 8%">Status</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="grant, iterStat : ${grants}">
+    <tr th:each="payment, iterStat : ${subscriptionPayments}">
         <td th:text="${iterStat.count}"></td>
-        <td th:text="${grant.user.uniId}"></td>
-        <td th:text="${grant.user.name}"></td>
-        <td th:text="${grant.user.designation}"></td>
-        <td th:text="${grant.user.subDistrict?.district?.eName}"></td>
-        <td th:text="${grant.user.subDistrict.eName}"></td>
-        <td th:text="${grant.type}"></td>
-        <td th:text="${grant.requestedAmount}"></td>
-        <td th:text="${grant.requestedForName}"></td>
-        <td th:text="${grant.relation}"></td>
+        <td th:text="${payment.user.uniId}"></td>
+        <td th:text="${payment.user.name}"></td>
+        <td th:text="${payment.user.designation}"></td>
+        <td th:text="${payment.user.subDistrict?.district?.eName}"></td>
+        <td th:text="${payment.user.subDistrict.eName}"></td>
+        <td th:text="${payment.user.phone}"></td>
+        <td th:text="${payment.year}"></td>
+        <td th:text="${payment.bankTranId}"></td>
+        <td th:text="${payment.amount}"></td>
+        <td th:text="${payment.paymentDate}"></td>
         <td>
-            <span th:if="${grant.status == 'Pending'}"
-                  style="font-weight: bold; color: black;">Pending</span>
-            <span th:if="${grant.status == 'Accepted'}"
-                  style="font-weight: bold; color: green;">Accepted</span>
-            <span th:if="${grant.status == 'Rejected'}"
-                  style="font-weight: bold; color: red;">Rejected</span>
-            <span th:unless="${grant.status == 'Pending' or grant.status == 'Accepted' or grant.status == 'Rejected'}"
-                  style="font-weight: normal; color: gray;">Unknown</span>
+            <span th:if="${payment.status == 'PENDING'}"
+                  style="font-weight: bold; color: black;">PENDING</span>
+            <span th:if="${payment.status == 'SUCCESS'}"
+                  style="font-weight: bold; color: green;">SUCCESS</span>
+            <span th:if="${payment.status == 'FAILED'}"
+                  style="font-weight: bold; color: red;">FAILED</span>
+            <span th:if="${payment.status == 'CANCELED'}"
+                  style="font-weight: bold; color: red;">CANCELED</span>
         </td>
     </tr>
 

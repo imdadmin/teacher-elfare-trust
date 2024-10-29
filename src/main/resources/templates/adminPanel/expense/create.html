@@ -180,6 +180,22 @@
         <div class="px-4 py-5 sm:p-6">
           <div class="grid grid-cols-2 gap-6">
             <input th:field="*{id}" hidden />
+            <fieldset>
+              <div class="col-span-2 sm:col-span-1">
+
+                <label class="block font-medium text-sm text-gray-700" th:for="*{transactionDate}"><strong> <span>ট্রানজেকশন তারিখ</span><span class="text-red-600 ml-1 ">*</span></strong></label>
+
+                <input
+                        type="date"
+                        class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                        th:field="*{transactionDate}"
+                        th:disabled="${pageStatus == 3}"
+                >
+
+                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{transactionDate}')}" th:errors="*{transactionDate}" >Error</p>
+
+              </div>
+            </fieldset>
             <!-- Bank -->
             <fieldset>
               <div class="col-span-2 sm:col-span-1">
@@ -244,6 +260,110 @@
                 </p>
               </div>
             </fieldset>
+            <fieldset>
+              <div class="col-span-2 sm:col-span-1">
+
+                <input
+                        type="radio"
+                        id="cash" name="transactionType" value="Cash" onclick="handletransactionType('Cash')" th:checked="${expense.transactionType != 'Cheque'}"
+                        th:disabled="${pageStatus == 3}"
+                >
+                <label class="font-medium text-sm text-gray-700" for="cash"><strong> <span>ক্যাশ</span></strong></label>
+                <input
+                        type="radio"
+                        id="cheque" name="transactionType" value="Cheque" onclick="handletransactionType('Cheque')" th:checked="${expense.transactionType == 'Cheque'}"
+                        th:disabled="${pageStatus == 3}"
+                >
+                <label class="font-medium text-sm text-gray-700" for="cheque"><strong> <span>চেক</span></strong></label>
+
+                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{transactionType}')}" th:errors="*{transactionType}" >Error</p>
+
+              </div>
+            </fieldset>
+            <div  class="col-span-2" id="divCheckDetails" th:style="${expense.transactionType == 'Cheque'} ? 'display: block;' : 'display: none;'">
+              <h1>চেক বিবরণ: </h1>
+              <fieldset>
+                <div class="col-span-2 sm:col-span-1">
+
+                  <label class="block font-medium text-sm text-gray-700" th:for="*{chequeNo}"><strong> <span>চেক নং</span></strong></label>
+
+                  <input
+                          type="text"
+                          class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                          th:field="*{chequeNo}"
+                          th:disabled="${pageStatus == 3}"
+                  >
+
+                  <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{chequeNo}')}" th:errors="*{chequeNo}" >Error</p>
+
+                </div>
+              </fieldset>
+              <fieldset>
+                <div class="col-span-2 sm:col-span-1">
+
+                  <label class="block font-medium text-sm text-gray-700" th:for="*{chequeBank}"><strong> <span>চেক ব্যাংক</span></strong></label>
+
+                  <input
+                          type="text"
+                          class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                          th:field="*{chequeBank}"
+                          th:disabled="${pageStatus == 3}"
+                  >
+
+                  <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{chequeBank}')}" th:errors="*{chequeBank}" >Error</p>
+
+                </div>
+              </fieldset>
+              <fieldset>
+                <div class="col-span-2 sm:col-span-1">
+
+                  <label class="block font-medium text-sm text-gray-700" th:for="*{chequeDate}"><strong> <span>চেক তারিখ</span></strong></label>
+
+                  <input
+                          type="date"
+                          class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                          th:field="*{chequeDate}"
+                          th:disabled="${pageStatus == 3}"
+                  >
+
+                  <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{chequeDate}')}" th:errors="*{chequeDate}" >Error</p>
+
+                </div>
+              </fieldset>
+            </div>
+            <fieldset>
+              <div class="col-span-2 sm:col-span-1">
+
+                <label class="block font-medium text-sm text-gray-700" th:for="*{heading}"><strong> <span>উৎস</span></strong></label>
+
+                <input
+                        type="text"
+                        class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                        th:field="*{heading}"
+                        th:disabled="${pageStatus == 3}"
+                >
+
+                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{heading}')}" th:errors="*{heading}" >Error</p>
+
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="col-span-2 sm:col-span-1">
+
+                <label class="block font-medium text-sm text-gray-700" th:for="*{comments}"><strong> <span>মন্তব্য</span></strong></label>
+
+                <input
+                        type="text"
+                        class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full "
+                        th:field="*{comments}"
+                        th:disabled="${pageStatus == 3}"
+                >
+
+                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{comments}')}" th:errors="*{comments}" >Error</p>
+
+              </div>
+            </fieldset>
+
           </div>
         </div>
 
@@ -264,6 +384,25 @@
           </a>
         </div>
       </form>
+
+      <script>
+        window.onload = function() {
+          var divCheckDetails = document.getElementById("divCheckDetails");
+
+          function handletransactionType(option) {
+            console.log("Selected Option:", option);
+
+            if (option === 'Cash') {
+              divCheckDetails.style.display = "none";
+            } else if (option === 'Cheque') {
+              divCheckDetails.style.display = "block";
+            }
+          }
+
+          // Attach the function to the global scope
+          window.handletransactionType = handletransactionType;
+        };
+      </script>
     </section>
   </body>
 </html>

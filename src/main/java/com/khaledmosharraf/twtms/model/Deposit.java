@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -24,4 +26,24 @@ public class Deposit extends Autditable {
 
     @Column(name = "amount", nullable = false)
     private Double amount;
+
+    @Column(name = "transaction_type", nullable = false)
+    private String transactionType;
+
+    @Column(name = "cheque_no", nullable = true)
+    private String chequeNo;
+    @Column(name = "cheque_bank", nullable = true)
+    private String chequeBank;
+    @Column(name = "cheque_date", nullable = true)
+    private String chequeDate;
+
+    @Column(name = "transaction_date", nullable = false)
+    private LocalDate transactionDate;
+
+    @Column(name = "heading", nullable = false)
+    private String heading;
+    @Column(name = "comments", nullable = true)
+    private String comments;
+
+
 }

@@ -29,6 +29,7 @@ public class GrantDTO {
     private String relation;
     private String educationDetails;
     private String educationDetails2;
+    private String diseaseName;
     private String diseaseDetails;
     private String surgery;
     private String application;
@@ -36,4 +37,7 @@ public class GrantDTO {
     private String latestPaymentReceiptDetails;
 
     private String attachment;
+
+    private String remarks;
+    private LocalDate applicationDate;
 }

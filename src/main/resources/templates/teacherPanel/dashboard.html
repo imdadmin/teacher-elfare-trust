@@ -70,6 +70,9 @@
         <h1 class="text-xl text-gray-800 leading-tight">Welcome
             <span class="font-semibold" th:text="${user.name}">Jahangir Alam</span>
         </h1>
+
+        <p class="text-sm" th:text="${user.designation}">Teacher</p>
+        <p class="text-sm" th:text="${user.schoolName}">xyz school</p>
         <p class="text-sm" th:text="${user.email}">xyz@gmail.com</p>
     </div>
 
@@ -123,7 +126,7 @@
                         <fieldset>
 
                                 <label class="block font-medium text-sm text-gray-700 mt-5"
-                                       th:for="year"><span> বছর</span></label>
+                                       th:for="year"><span> বছর</span><span class="red">*</span></label>
                                 <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                 th:field="*{year}" >
                                     <option class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" th:each="year : ${years}" th:value="${year}" th:text="${year}">বছর</option>
@@ -134,7 +137,7 @@
                         <!-- Amount -->
                         <fieldset>
                             <label class="block font-medium text-sm text-gray-700 mt-5"
-                                   th:for="amount"><span> পরিমাণ</span></label>
+                                   th:for="amount"><span> পরিমাণ</span><span class="red">*</span></label>
                             <input
                                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                     type="number" required
@@ -170,7 +173,7 @@
                         <!-- Fund Requeest  -->
                         <div class="w-full">
                             <label class="block font-medium text-sm text-gray-700"
-                                   th:for="type"> তহবিলের অনুরোধের ধরন </label>
+                                   th:for="type"> তহবিলের অনুরোধের ধরন <span class="red">*</span></label>
                             <div class="relative space-y-5">
                                 <div class="flex gap-2 items-center">
                                     <input type="radio" id="medicalAid" name="type" value="Medical Aid" onclick="handleGrant('Medical Aid')" checked>
@@ -188,7 +191,7 @@
                         <fieldset>
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700"
-                                       th:for="*{currentPayscale}"><span>মূল বেতন</span></label>
+                                       th:for="*{currentPayscale}"><span>মূল বেতন</span><span class="red">*</span></label>
                                 <input
                                         class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                         type="number" required placeholder="Enter Current Payscale"
@@ -209,7 +212,7 @@
                         <fieldset>
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700"
-                                       th:for="requestedForName"><span>নাম</span></label>
+                                       th:for="requestedForName"><span>নাম</span><span class="red">*</span></label>
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                        id="requested_for_name" type="text" required
                                        placeholder="Enter Applying for Name"
@@ -226,7 +229,7 @@
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700"
                                        th:for="*{requestedForDateOfBirth}">
-                                    <span>জন্ম তারিখ</span></label>
+                                    <span>জন্ম তারিখ</span><span class="red">*</span></label>
                                 <input
                                         class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                         type="date" required
@@ -242,7 +245,7 @@
                         <fieldset>
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700" th:for="*{relation}"><span>
-সদস্যের সাথে সম্পর্ক</span></label>
+সদস্যের সাথে সম্পর্ক</span><span class="red">*</span></label>
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                        type="text" required placeholder="Enter relation with applying for"
                                        th:field="*{relation}">
@@ -259,7 +262,7 @@
                             <!-- Name of institution studying -->
                             <div class="w-full px-3 mb-6 md:mb-0 hidden" id="scholarshipOption1">
                                 <label class="block font-medium text-sm text-gray-700"
-                                       th:for="educationDetails" > <span>অধ্যয়নরত প্রতিষ্ঠানের নাম এবং শ্রেনী</span></label>
+                                       th:for="educationDetails" > <span>অধ্যয়নরত প্রতিষ্ঠানের নাম এবং শ্রেনী</span><span class="red">*</span></label>
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                        type="text"  placeholder="Enter Name of the institute and class"
                                        th:field="*{educationDetails}"
@@ -273,20 +276,38 @@
 
                         <!--// Medical Aid -->
 
-                        <div id="medicalAidOption1">
+                        <div id="medicalAidOption1"  class="col-span-2">
                             <fieldset>
                                 <!-- Name of Disease -->
                                 <div class="w-full px-3 mb-6 md:mb-0">
                                     <label class="block font-medium text-sm text-gray-700"
-                                           th:for="*{diseaseDetails}"><span>
-রোগের নাম</span></label>
+                                           th:for="*{diseaseName}"><span>
+রোগের নাম</span><span class="red">*</span></label>
                                     <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                            type="text"
-                                           th:field="*{diseaseDetails}"
+                                           th:field="*{diseaseName}"
                                     >
                                     <p class="mt-2 text-sm text-red-600"
-                                       th:if="${#fields.hasErrors('*{diseaseDetails}')}" th:errors="*{diseaseDetails}">
+                                       th:if="${#fields.hasErrors('*{diseaseName}')}" th:errors="*{diseaseName}">
                                         Error</p>
+                                </div>
+                            </fieldset>
+
+                            <fieldset >
+                                <!-- Details of Disease -->
+                                <div class="w-full px-3 mb-6 md:mb-0  col-span-2">
+                                    <label class="block font-medium text-sm text-gray-700" th:for="*{diseaseDetails}">
+                                        <span>রোগের বিবরণ</span><span class="red">*</span>
+                                    </label>
+                                    <textarea class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                              th:field="*{diseaseDetails}"
+                                              rows="4"
+                                    placeholder="Enter the details of the disease here..."
+                                    ></textarea>
+                                    <p class="mt-2 text-sm text-red-600"
+                                       th:if="${#fields.hasErrors('*{diseaseDetails}')}" th:errors="*{diseaseDetails}">
+                                        Error
+                                    </p>
                                 </div>
                             </fieldset>
                             <fieldset>
@@ -309,7 +330,7 @@
                                 <!-- Requested Amount / requestedAmount -->
                                 <div class="w-full px-3 mb-6 md:mb-0">
                                     <label class="block font-medium text-sm text-gray-700"
-                                           th:for="*{requestedAmount}"><span>অনুরোধকৃত পরিমাণ</span></label>
+                                           th:for="*{requestedAmount}"><span>অনুরোধকৃত টাকার পরিমাণ</span><span class="red">*</span></label>
                                     <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                            type="number" placeholder="Enter Amount"
                                            th:field="*{requestedAmount}"
@@ -325,8 +346,8 @@
 
                         <!-- Medical Aid //-->
 
-                        <fieldset>
-                            <!-- Previous Medical Aid Details -->
+<!--                        <fieldset>
+                            &lt;!&ndash; Previous Medical Aid Details &ndash;&gt;
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700"
                                        th:for="*{oldScholarshipDetails}"><span>
@@ -339,10 +360,10 @@
                                    th:if="${#fields.hasErrors('*{oldScholarshipDetails}')}"
                                    th:errors="*{oldScholarshipDetails}">Error</p>
                             </div>
-                        </fieldset>
+                        </fieldset>-->
 
-                        <fieldset>
-                            <!-- Latest Pay slip number / latestPaymentReceiptDetails -->
+                      <!--  <fieldset>
+                            &lt;!&ndash; Latest Pay slip number / latestPaymentReceiptDetails &ndash;&gt;
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700"
                                        th:for="*{latestPaymentReceiptDetails}"><span>সর্বশেষ পে স্লিপ নম্বর এবং তারিখ </span></label>
@@ -354,14 +375,14 @@
                                    th:if="${#fields.hasErrors('*{latestPaymentReceiptDetails}')}"
                                    th:errors="*{latestPaymentReceiptDetails}">Error</p>
                             </div>
-                        </fieldset>
+                        </fieldset>-->
 
 
-                        <fieldset>
-                            <!-- Total Salary Withdrawn / totalSalaryWithdraw -->
+                       <!-- <fieldset>
+                            &lt;!&ndash; Total Salary Withdrawn / totalSalaryWithdraw &ndash;&gt;
                             <div class="w-full px-3 mb-6 md:mb-0">
                                 <label class="block font-medium text-sm text-gray-700"
-                                       th:for="*{totalSalaryWithdraw}"><span>মোট বেতন উত্তোলন</span></label>
+                                       th:for="*{totalSalaryWithdraw}"><span>মোট বেতন উত্তোলন</span><span class="red">*</span></label>
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                        type="number" required placeholder="Enter Total Salary withdrawn" onchange="getExam()"
                                        th:field="*{totalSalaryWithdraw}"
@@ -371,7 +392,7 @@
                                    th:errors="*{totalSalaryWithdraw}">Error</p>
 
                             </div>
-                        </fieldset>
+                        </fieldset>-->
 
 
                         <!-- //Scholarship -->
@@ -379,7 +400,7 @@
 
 
                         <div class="col-span-full hidden" id="scholarshipOption2" >
-                            <h2>বিভিন্ন পরীক্ষার বিবরণ</h2>
+                            <h2>বিভিন্ন পরীক্ষার বিবরণ<span class="red">*</span></h2>
 
                             <table id="employee-table" class="w-full rounded-s-lg text-center">
                                 <tr>
@@ -407,7 +428,7 @@
                             <div class="w-full px-3 mb-6 md:mb-0 ">
                                 <label class="block font-medium text-sm text-gray-700"
                                        th:for="*{application}"><span>
-আবেদন পত্র</span></label>
+আবেদন পত্র</span><span class="red">*</span></label>
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                        type="file" accept="application/pdf" required
                                        th:field="*{application}"
@@ -420,7 +441,7 @@
                         <fieldset>
                             <!-- Documents Attachment / educationDetails-->
                             <div class="w-full px-3 mb-6 md:mb-0">
-                                <label class="block font-medium text-sm text-gray-700" th:for="*{attachment}"><span>নথি সংযুক্তি</span></label>
+                                <label class="block font-medium text-sm text-gray-700" th:for="*{attachment}"><span>নথি সংযুক্তি</span><span class="red">*</span></label>
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full bg-white border-gray-300 rounded-lg border"
                                        type="file"  accept="application/pdf" required
                                        th:field="*{attachment}"
@@ -492,7 +513,6 @@
                             <th scope="col" class="px-6 py-3">
                                 ট্রানজেকশন আইডি
                             </th>
-
                             <th scope="col" class="px-6 py-3">
                                 পরিমাণ
                             </th>
@@ -530,7 +550,7 @@
                                 PANDING
                             </td>
                             <td class="px-6 py-4">
-                                <a th:href="@{'https://voucher.sblesheba.com:8877/Receipt/' + ${payment.bankTranId}}" target="_blank">
+                                <a  th:if="${payment.status == 'SUCCESS'}" th:href="@{'https://voucher.sblesheba.com:8877/Receipt/' + ${payment.bankTranId}}" target="_blank">
                                     <button class="bg-green-600 text-white px-3 py-2 rounded-lg">
                                         Receipt
                                     </button>
@@ -548,21 +568,15 @@
                     <table class="w-full -mt-3 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">
-                                ক্রমিক
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                DATE
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                STATUS
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                AMOUNT
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                REQUESTED AMOUNT
-                            </th>
+                            <th scope="col" class="px-6 py-3">ক্রমিক</th>
+                            <th scope="col" class="px-6 py-3">আবেদনের তারিখ</th>
+                            <th scope="col" class="px-6 py-3">গৃইিত টাকার পরিমাণ</th>
+                            <th scope="col" class="px-6 py-3">অনুরোধ করা পরিমাণ</th>
+                            <th scope="col" class="px-6 py-3">ধরন</th>
+                            <th scope="col" class="px-6 py-3">স্ট্যাটাস</th>
+                            <th scope="col" class="px-6 py-3">মন্তব্য</th>
+                            <th scope="col" class="px-6 py-3">অ্যাকশন</th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -570,24 +584,34 @@
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                                 th:each="grant_tmp, iterStat : ${grants}"
                         >
-                            <td class="px-6 py-4" th:text="${iterStat.index + 1}">
-                               1
-                            </td>
-                            <td class="px-6 py-4" th:text="${grant_tmp.type}">
+                            <td class="px-6 py-4" th:text="${iterStat.index + 1}">1</td>
+                            <td class="px-6 py-4" th:text="${grant_tmp.applicationDate}"></td>
+                            <td class="px-6 py-4" th:text="${grant_tmp.amount}"></td>
+                            <td class="px-6 py-4" th:text="${grant_tmp.requestedAmount}"></td>
+                            <td class="px-6 py-4" th:text="${grant_tmp.type}"></td>
+                            <td>
+                                <span th:if="${grant_tmp.status == 'Pending'}"
+                                    style="font-weight: bold; color: black;">Pending</span>
+                                    <span th:if="${grant_tmp.status == 'Accepted'}"
+                                          style="font-weight: bold; color: green;">Accepted</span>
+                                    <span th:if="${grant_tmp.status == 'Rejected'}"
+                                          style="font-weight: bold; color: red;">Rejected</span>
+                                    <span th:unless="${grant_tmp.status == 'Pending' or grant_tmp.status == 'Accepted' or grant_tmp.status == 'Rejected'}"
+                                          style="font-weight: normal; color: gray;">Unknown</span>
+                                </td>
 
-                            </td>
-                            <td th:class="'px-6 py-4 ' +
-                         (grant_tmp.status == 'Accepted' ? 'text-green-500' :
-                         (grant_tmp.status == 'Pending' ? 'text-yellow-600' :
-                         (grant_tmp.status == 'Rejected' ? 'text-red-500' :'text-blue-500' )) )">
-                                <span th:text="${grant_tmp.status}">Pending</span>
-                            </td>
-
-                            <td class="px-6 py-4" th:text="${grant_tmp.amount}">
-                                2000
-                            </td>
-                            <td class="px-6 py-4" th:text="${grant_tmp.requestedAmount}">
-                                1000
+                            <td class="px-6 py-4" th:text="${grant_tmp.remarks}">1000</td>
+                            <td>
+                                <a th:href="@{/application/grant/pdf(id=${grant_tmp.id})}"  target="_blank" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-custom text-custom-600 dark:text-custom-600 fi-ac-link-action text-blue-600">
+                                    <svg class="fi-link-icon h-4 w-4 text-custom-600 dark:text-custom-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <!-- Document shape -->
+                                        <path d="M6 2a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8.586a2 2 0 00-.586-1.414l-4.586-4.586A2 2 0 0013.414 2H6zm7 2.414L17.586 9H14a1 1 0 01-1-1V4.414z"></path>
+                                        <!-- Download arrow -->
+                                        <path d="M12 11a.75.75 0 01.75.75V15.25h1.97a.75.75 0 010 1.5h-4.44a.75.75 0 010-1.5h1.97V11.75A.75.75 0 0112 11z"></path>
+                                        <!-- Base line for the arrow -->
+                                        <path d="M6.75 19a.75.75 0 00.75.75h9a.75.75 0 000-1.5h-9a.75.75 0 00-.75.75z"></path>
+                                    </svg>PDF
+                                </a>
                             </td>
                         </tr>
 

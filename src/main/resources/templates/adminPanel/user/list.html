@@ -105,17 +105,8 @@
             <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
                 <thead class="bg-gray-50 dark:bg-white/5">
                 <tr class=" text-black">
-                    <th class="px-4 py-2" data-orderable="false">
-                        <div class="checkboxes__row">
-                            <div class="checkboxes__item">
-                                <label class="checkbox style-c">
-                                    <input type="checkbox" id="checkAll"/>
-                                    <div class="checkbox__checkmark"></div>
-                                    <div class="checkbox__body">""</div>
-                                </label>
-                            </div>
-                        </div>
-                    </th>
+
+                    <th class="px-4 py-2  whitespace-nowrap" >ক্রমিক.</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false">প্রোফাইল ছবি</th>
                     <th class="px-4 py-2  whitespace-nowrap">জেলা</th>
                     <th class="px-4 py-2  whitespace-nowrap">উপজেলা</th>
@@ -136,17 +127,9 @@
                 </thead>
                 <tbody>
 
-                <tr class=" hover:bg-gray-50 py-1" th:each="user : ${users}">
-                    <td class=" px-4 py-2 text-center align-middle" >
-                        <div class="checkboxes__row">
-                            <div class="checkboxes__item">
-                                <label class="checkbox style-c">
-                                    <input type="checkbox" class="rowCheckbox"/>
-                                    <div class="checkbox__checkmark"></div>
-                                    <div class="checkbox__body">""</div>
-                                </label>
-                            </div>
-                        </div>
+                <tr class=" hover:bg-gray-50 py-1" th:each="user,iterStat : ${users}">
+                    <td class="px-4 py-2" th:text="${iterStat.index + 1}">
+                        1
                     </td>
                     <td class="px-4 py-2">
                         <img th:src="@{'https://ui-avatars.com/api/?name=' + ${user.name} + '&color=7F9CF5&background=EBF4FF'}" alt="Profile Photo" class="rounded-full"/>

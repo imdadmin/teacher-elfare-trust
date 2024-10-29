@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,4 +22,15 @@ public class DepositRequestDTO {
     @NotNull
     @DecimalMin(value = "0.0", message = "{validation.amount}")
     private Double amount;
+
+    @NotBlank
+    private String transactionType;
+    private String chequeNo;
+    private String chequeBank;
+    private String chequeDate;
+    @NotNull
+    private LocalDate transactionDate;
+    private String heading;
+    private String comments;
+
 }

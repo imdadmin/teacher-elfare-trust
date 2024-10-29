@@ -1,5 +1,6 @@
 package com.khaledmosharraf.twtms.service.impl;
 
+import com.khaledmosharraf.twtms.dto.GrantDTO;
 import com.khaledmosharraf.twtms.dto.PaymentInfoDTO;
 import com.khaledmosharraf.twtms.dto.SubscriptionPaymentDTO;
 import com.khaledmosharraf.twtms.mapper.SubscriptionPaymentMapper;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,6 +119,27 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
             paymentInfoMap.put(user.getId(), paymentInfo);
         }
         return paymentInfoMap;
+    }
+
+
+    public List<SubscriptionPaymentDTO> getAllSubscriptionPaymentsByDates(LocalDateTime fromDate, LocalDateTime toDate) {
+        return subscriptionPaymentRepository.findAllSubscriptionPaymentsByDates(fromDate, toDate)
+                .stream().map(subscriptionPaymentMapper::toDTO).toList();
+    }
+
+    public List<SubscriptionPaymentDTO> getByDistrictIdByDates(Long districtId, LocalDateTime fromDate, LocalDateTime toDate) {
+        return subscriptionPaymentRepository.findByDistrictIdByDates(districtId, fromDate, toDate)
+                .stream().map(subscriptionPaymentMapper::toDTO).toList();
+    }
+
+    public List<SubscriptionPaymentDTO> getBySubDistrictIdByDates(Long subDistrictId, LocalDateTime fromDate, LocalDateTime toDate) {
+        return subscriptionPaymentRepository.findBySubDistrictIdByDates(subDistrictId, fromDate, toDate)
+                .stream().map(subscriptionPaymentMapper::toDTO).toList();
+    }
+
+    public List<SubscriptionPaymentDTO> getByDistrictIdAndSubDistrictIdByDates(Long districtId, Long subDistrictId, LocalDateTime fromDate, LocalDateTime toDate) {
+        return subscriptionPaymentRepository.findByDistrictIdAndSubDistrictIdByDates(districtId, subDistrictId, fromDate, toDate)
+                .stream().map(subscriptionPaymentMapper::toDTO).toList();
     }
 
 }

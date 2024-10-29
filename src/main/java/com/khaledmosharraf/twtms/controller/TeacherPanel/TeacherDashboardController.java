@@ -114,8 +114,12 @@ public class TeacherDashboardController {
             GrantRequestDTO grantRequestDTO = new GrantRequestDTO();
 
             List<Integer> years = getLast7Years();
+            Integer lastPaymentYear = subscriptionPaymentService.getLastPaymentYear(userDTO.getId());
+            PaymentInfoDTO paymentInfo = subscriptionPaymentService.getPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
+
             model.addAttribute("errorFrom","subscriptionPayment");
             model.addAttribute("years", years);
+            model.addAttribute("paymentInfo", paymentInfo);
             model.addAttribute("user",userDTO);
             model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
             model.addAttribute("grant",grantRequestDTO);
@@ -185,8 +189,12 @@ public class TeacherDashboardController {
             SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO = new SubscriptionPaymentRequestDTO();
 
             List<Integer> years = getLast7Years();
+            Integer lastPaymentYear = subscriptionPaymentService.getLastPaymentYear(userDTO.getId());
+            PaymentInfoDTO paymentInfo = subscriptionPaymentService.getPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
+
             model.addAttribute("errorFrom","grant");
             model.addAttribute("years", years);
+            model.addAttribute("paymentInfo", paymentInfo);
             model.addAttribute("user",userDTO);
             model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
             model.addAttribute("grant",grantRequestDTO);
@@ -202,7 +210,7 @@ public class TeacherDashboardController {
         String applicationFilePath = "#";
         String attachmentFilePath = "#";
         try {
-            File directory = new File(UPLOAD_DIR);
+           /* File directory = new File(UPLOAD_DIR);
 
             if (!directory.exists()) {
                 directory.mkdirs(); // Create the directory
@@ -235,7 +243,10 @@ public class TeacherDashboardController {
                 System.out.println("path: "+path.toString());
            //     Files.write(path, grantRequestDTO.getApplication().getBytes());
                 Files.copy(grantRequestDTO.getApplication().getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
-            }
+            }*/
+
+            LocalDate currentDate = LocalDate.now();
+            grantRequestDTO.setApplicationDate(currentDate);
             GrantDTO grantDTO = grantRequestMapper.toGrantDTO(grantRequestDTO);
             grantDTO.setAttachment(attachmentFilePath);
             grantDTO.setApplication(applicationFilePath);

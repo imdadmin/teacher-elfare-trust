@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Form</title>
+</head>
+<style>
+    @page {
+        size: A4 portrait;
+        margin: 1cm;
+    }
+    /*@font-face {*/
+    /*    font-family: 'Nikosh';*/
+    /*    src: url('classpath:/static/fonts/Nikosh.ttf') format('truetype');*/
+    /*}*/
+    body {
+        font-family: 'Nikosh', sans-serif;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1px;
+        table-layout: fixed;
+        border: 1px solid black;
+        font-family: 'Nikosh', sans-serif;
+    }
+
+    th {
+        text-align: center;
+        padding: 1px;
+        font-weight: normal;
+        font-size: 15px;
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+        padding: 5px 2px 5px 12px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+
+    #maintable {
+        font-family: 'Nikosh', sans-serif;
+        table-layout: fixed;
+        width: 100%;
+        border: 0px solid black;
+    }
+
+    #maintable td {
+        text-align: left;
+        padding: 2px;
+        font-size: 12px;
+        border: 0px solid black;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 3px;
+        text-align: left;
+        word-wrap: break-word; /* Ensure text breaks within cell */
+        hyphens: auto; /* Allow hyphenation if needed */
+    }
+    .section-header {
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #f0f0f0;
+        padding: 5px;
+        margin-top: 20px;
+    }
+    .section-content {
+        padding: 10px;
+    }
+</style>
+<body>
+
+<table id="maintable">
+    <tr>
+        <td style="width:20%;">
+            <img style="width:95px;height:95px;" th:src="@{classpath:static/images/logo.png}" >
+        </td>
+        <td style="width:60%;text-align:center;">
+            <h1 style="font-size: 27px;" >Teachers Welfare Trust</h1>
+            <h2 style="font-size: 23px;font-weight:400;margin-top: -20px;">Government of the People's Republic of Bangladesh</h2>
+            <h2 style="font-size: 23px;font-weight:400;margin-top: -10px;" th:text="${reportTitle}">Report Title</h2>
+            <p style="text-decoration: underline;margin-top: -20px;" th:text="${reportFilteredBy}">Report Filtered By</p>
+        </td>
+
+        <td style="width:20%;text-align:right;">
+            <p th:text="'Date : ' + ${#dates.format(new java.util.Date(), 'yyyy-MM-dd')}"></p>
+        </td>
+    </tr>
+</table>
+
+<br>
+
+<!-- Applicant Information Section -->
+<div class="section-header">Applicant Information</div>
+<div class="section-content">
+    <p><strong>Name:</strong> <span th:text="${grant.user.name}"></span></p>
+    <p><strong>Member ID:</strong> <span th:text="${grant.user.uniId}"></span></p>
+    <p><strong>District:</strong> <span th:text="${grant.user.subDistrict.district.eName}"></span></p>
+    <p><strong>Upazila:</strong> <span th:text="${grant.user.subDistrict.eName}"></span></p>
+    <p><strong>Phone:</strong> <span th:text="${grant.user.phone}"></span></p>
+    <p><strong>School Name:</strong> <span th:text="${grant.user.schoolName}"></span></p>
+    <p><strong>designation:</strong> <span th:text="${grant.user.designation}"></span></p>
+    <p><strong>Joining Date:</strong> <span th:text="${grant.user.joiningDate}"></span></p>
+    <p><strong>Current Payscale:</strong> <span th:text="${grant.user.payscale}"></span></p>
+
+</div>
+
+<!-- Application Specific Section -->
+<div th:if="${grant.type == 'Medical Aid'}">
+    <div class="section-header">Medical Aid Details</div>
+    <div class="section-content">
+        <p><strong>Requested For:</strong> <span th:text="${grant.requestedForName}"></span></p>
+        <p><strong>Date of Birth:</strong> <span th:text="${grant.requestedForDateOfBirth}"></span></p>
+        <p><strong>Relation:</strong> <span th:text="${grant.relation}"></span></p>
+        <p><strong>Disease Name:</strong> <span th:text="${grant.diseaseName}"></span></p>
+        <p><strong>Disease Details:</strong> <span th:text="${grant.diseaseDetails}"></span></p>
+        <p><strong>Surgery Required:</strong> <span th:text="${grant.surgery}"></span></p>
+        <p><strong>Requested Amount:</strong> <span th:text="${grant.requestedAmount}"></span></p>
+    </div>
+</div>
+
+<div th:if="${grant.type == 'Scholarship'}">
+    <div class="section-header">Scholarship Details</div>
+    <div class="section-content">
+        <p><strong>Requested For:</strong> <span th:text="${grant.requestedForName}"></span></p>
+        <p><strong>Date of Birth:</strong> <span th:text="${grant.requestedForDateOfBirth}"></span></p>
+        <p><strong>Relation:</strong> <span th:text="${grant.relation}"></span></p>
+        <p><strong>School Name and Class :</strong> <span th:text="${grant.educationDetails}"></span></p>
+        <p><strong>Academic Result Details:</strong> <span th:text="${grant.educationDetails2}"></span></p>
+        <p><strong>Requested Amount:</strong> <span th:text="${grant.requestedAmount}"></span></p>
+    </div>
+</div>
+
+
+<!-- Previous Accepted Grants Section -->
+<div class="section-header">Previous Accepted Grants</div>
+<table>
+    <thead>
+    <tr>
+        <th style="width: 5%;">SL</th>
+        <th style="width: 15%;">Grant Type</th>
+        <th style="width: 15%;">Requested Amount</th>
+        <th style="width: 15%;">Approved Amount</th>
+        <th style="width: 20%;">Date</th>
+        <th style="width: 20%;">Status</th>
+        <th style="width: 30%;">Remarks</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${previousAcceptedGrants.isEmpty()}">
+        <td colspan="6" style="text-align: center; font-weight: bold; color: gray;">
+            No previous accepted grants available for this applicant.
+        </td>
+    </tr>
+    <tr th:each="prevGrant, iterStat : ${previousAcceptedGrants}">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${prevGrant.type}"></td>
+        <td th:text="${prevGrant.requestedAmount}"></td>
+        <td th:text="${prevGrant.amount}"></td>
+        <td th:text="${prevGrant.applicationDate}"></td>
+        <td>
+            <span th:if="${prevGrant.status == 'Pending'}"
+                  style="font-weight: bold; color: black;">Pending</span>
+            <span th:if="${prevGrant.status == 'Accepted'}"
+                  style="font-weight: bold; color: green;">Accepted</span>
+            <span th:if="${prevGrant.status == 'Rejected'}"
+                  style="font-weight: bold; color: red;">Rejected</span>
+            <span th:unless="${prevGrant.status == 'Pending' or prevGrant.status == 'Accepted' or prevGrant.status == 'Rejected'}"
+                  style="font-weight: normal; color: gray;">Unknown</span>
+        </td>
+        <td th:text="${prevGrant.remarks}"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>

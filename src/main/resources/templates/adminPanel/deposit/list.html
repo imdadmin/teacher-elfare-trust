@@ -72,39 +72,29 @@
             <table class="table-auto w-full round-sm overflow-hidden px-2 w-full table-auto divide-y divide-gray-200 text-start dark:divide-white/5" id="myDataTable" >
                 <thead class="bg-gray-50 dark:bg-white/5">
                 <tr class=" text-black">
-                    <th class="px-4 py-2" data-orderable="false">
-                        <div class="checkboxes__row">
-                            <div class="checkboxes__item">
-                                <label class="checkbox style-c">
-                                    <input type="checkbox" id="checkAll"/>
-                                    <div class="checkbox__checkmark"></div>
-                                    <div class="checkbox__body">""</div>
-                                </label>
-                            </div>
-                        </div>
-                    </th>
+
+                    <th class="px-4 py-2  whitespace-nowrap">ক্রমিক</th>
                     <th class="px-4 py-2  whitespace-nowrap">ব্যাংক</th>
                     <th class="px-4 py-2  whitespace-nowrap">এক্যাউন্ট নং</th>
+                    <th class="px-4 py-2  whitespace-nowrap">উৎস</th>
                     <th class="px-4 py-2  whitespace-nowrap">পরিমাণ</th>
+                    <th class="px-4 py-2  whitespace-nowrap">ট্রানজেকশন ধরণ</th>
+                    <th class="px-4 py-2  whitespace-nowrap">চেক নং</th>
                     <th class="px-4 py-2  whitespace-nowrap" data-orderable="false"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="hover:bg-gray-50 py-1" th:each="deposit : ${deposits}">
-                    <td class="border px-4 py-2 text-center ">
-                        <div class="checkboxes__row">
-                            <div class="checkboxes__item">
-                                <label class="checkbox style-c">
-                                    <input type="checkbox" class="rowCheckbox"/>
-                                    <div class="checkbox__checkmark"></div>
-                                    <div class="checkbox__body">""</div>
-                                </label>
-                            </div>
-                        </div>
+                <tr class="hover:bg-gray-50 py-1" th:each="deposit,iterStat : ${deposits}">
+                    <td class="px-4 py-2" th:text="${iterStat.index + 1}">
+                        1
                     </td>
                     <td class="px-4 py-2" th:text="${deposit.bank.name}">ব্যাংকের নাম</td>
                     <td class="px-4 py-2" th:text="${deposit.bank.accountNo}">ব্যাংক এক্যাউন্ট</td>
+                    <td class="px-4 py-2" th:text="${deposit.heading}">উৎস</td>
                     <td class="px-4 py-2" th:text="${deposit.amount}">পরিমাণ</td>
+                    <td class="px-4 py-2" th:text="${deposit.transactionType}">ট্রানজেকশন ধরণ</td>
+                    <td class="px-4 py-2" th:text="${deposit.chequeNo}">চেক নং</td>
+
                     <td class="px-4 py-2 ">
                         <div class="flex gap-x-1 ">
                             <a th:href="@{${@urlConstants.deposit.VIEW+'?id='+deposit.id} }" class="fi-link relative inline-flex items-center justify-center font-semibold outline-none transition duration-75 hover:underline focus-visible:underline fi-size-sm fi-link-size-sm gap-1 text-sm fi-color-gray text-gray-700 dark:text-gray-200 fi-ac-link-action mx-2">

@@ -42,6 +42,7 @@ public class Grant extends Autditable {
     @Column(length = 500)
     private String educationDetails2;
 
+    private String diseaseName;
     @Column(length = 500)
     private String diseaseDetails;
     private String surgery;
@@ -50,5 +51,7 @@ public class Grant extends Autditable {
     private String oldScholarshipDetails;
     private String latestPaymentReceiptDetails;
     private String attachment;
+    private String remarks;
+    private LocalDate applicationDate;
 
 }
