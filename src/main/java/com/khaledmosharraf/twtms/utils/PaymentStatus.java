@@ -7,4 +7,5 @@ public final class PaymentStatus {
     public static final String CANCELED = "CANCELED";
     public static final String SUCCESS = "SUCCESS";
     public static final String REFUNDED = "REFUNDED";
+
 }

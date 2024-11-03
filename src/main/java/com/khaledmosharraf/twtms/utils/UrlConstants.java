@@ -28,6 +28,16 @@ public final class UrlConstants {
         public static final String DELETE = BASE + "/delete";
         public static final String VIEW = BASE + "/view";
     }
+    public static final class Yearlyfee {
+
+        //TODO IMPORTANT: you must update config/UrlConstantsConfig.java class when adding new method.
+        public static final String BASE = ADMIN_BASE+"/yearlyfee";
+        public static final String LIST = ADMIN_BASE+"/yearlyfees";
+        public static final String CREATE = BASE + "/create";
+        public static final String UPDATE = BASE + "/update";
+        public static final String DELETE = BASE + "/delete";
+        public static final String VIEW = BASE + "/view";
+    }
     public static final class Grant {
         public static final String BASE = ADMIN_BASE+"/grant";
         public static final String LIST = ADMIN_BASE+"/grants";

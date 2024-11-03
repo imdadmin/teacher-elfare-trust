@@ -108,14 +108,14 @@ public class PdfController {
         // Convert the HTML to PDF and write to the response output stream
         HtmlConverter.convertToPdf(htmlContent, response.getOutputStream());
     }
-    @GetMapping("/application/grant/pdf")
-    public void generateGrantApplicationPdf(@RequestParam(required = true) Long id, HttpServletResponse response, Model model) throws IOException, ParseException {
+    @GetMapping("/application/grant")
+    public String generateGrantApplicationPdf(@RequestParam(required = true) Long applicationId, HttpServletResponse response, Model model) throws IOException, ParseException {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=output.pdf");
         // Prepare Thymeleaf context
         Context context = new Context();
         List<GrantDTO> previousGrantDTOS = new ArrayList<>();
-        GrantDTO grantDTO = grantService.get(id);
+        GrantDTO grantDTO = grantService.get(applicationId);
         previousGrantDTOS = grantService.getByUsernameOnlyAccepted(grantDTO.getUser().getUsername());
 
 
@@ -127,13 +127,15 @@ public class PdfController {
         model.addAttribute("reportFilteredBy",reportFilteredBy);
         model.addAttribute("grant",grantDTO);
         model.addAttribute("previousAcceptedGrants",previousGrantDTOS);
-
+        return "adminPanel/report/grantApplicationforPDF";
+/*
         model.asMap().forEach(context::setVariable);
         // Render Thymeleaf template to HTML
         String htmlContent = templateEngine.process("adminPanel/report/grantApplication", context);
         logger.debug("grant application: "+htmlContent);
         // Convert the HTML to PDF and write to the response output stream
-        HtmlConverter.convertToPdf(htmlContent, response.getOutputStream());
+        HtmlConverter.convertToPdf(htmlContent, response.getOutputStream());*/
+
     }
 
     @GetMapping("/admin/member/pdf")

@@ -19,8 +19,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You do not have the required permissions.");
-
+        // Redirect to the login page
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 }
 

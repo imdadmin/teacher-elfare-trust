@@ -7,6 +7,8 @@ import com.khaledmosharraf.twtms.mapper.GrantRequestMapper;
 import com.khaledmosharraf.twtms.repository.*;
 import com.khaledmosharraf.twtms.service.*;
 import com.khaledmosharraf.twtms.utils.UrlConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @SessionAttributes("username")
@@ -43,10 +46,13 @@ public class DashboardController {
     DistrictRepository districtRepository;
     @Autowired
     SubDistrictRepository subDistrictRepository;
-
+    Logger logger = LoggerFactory.getLogger(DashboardController.class);
     @GetMapping(UrlConstants.Common.ADMIN_DASHBOARD)
     public String showGrantList(Model model){
 
+        String requestId = UUID.randomUUID().toString(); // Generate if not present
+        logger.debug("Controller request ID: "+ requestId);
+        logger.debug("request count: ");
         Long totalDistrict = districtRepository.count();
         Long totalSubDistrict = subDistrictRepository.count();
         Double totalExpense = expenseRepository.getTotalExpenseAmount();
@@ -64,13 +70,13 @@ public class DashboardController {
         model.addAttribute("totaluser", totaluser);
         model.addAttribute("totalsub", totalsub);
         model.addAttribute("pageTitle", "Dashboard Page");
-        String username = getLoggedUsername();
         model.addAttribute("username",getLoggedUsername());
         return "adminPanel/index";
     }
 
     private String getLoggedUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        logger.debug("admin dashboard login details : "+authentication);
         return authentication.getName();
     }
 }

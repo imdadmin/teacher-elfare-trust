@@ -5,6 +5,7 @@ import com.khaledmosharraf.twtms.mapper.BankMapper;
 import com.khaledmosharraf.twtms.model.Bank;
 import com.khaledmosharraf.twtms.repository.BankRepository;
 import com.khaledmosharraf.twtms.service.BankService;
+import com.khaledmosharraf.twtms.utils.DatabaseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class BankServiceImpl extends IdCheckingService<Bank,Long> implements Ban
 
     @Override
     public List<BankDTO> getAll() {
-        List<Bank> banks = bankRepository.findAll();
+        List<Bank> banks = bankRepository.findAll(DatabaseConstants.sortById_ASC);
         return banks.stream().map(bankMapper::toDTO).collect(Collectors.toList());
     }
 

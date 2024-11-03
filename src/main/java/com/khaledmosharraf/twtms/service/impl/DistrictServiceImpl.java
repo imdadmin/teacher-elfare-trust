@@ -7,6 +7,7 @@ import com.khaledmosharraf.twtms.mapper.DistrictwithSubDistrictListMapper;
 import com.khaledmosharraf.twtms.model.District;
 import com.khaledmosharraf.twtms.repository.DistrictRepository;
 import com.khaledmosharraf.twtms.service.DistrictService;
+import com.khaledmosharraf.twtms.utils.DatabaseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class DistrictServiceImpl extends IdCheckingService<District,Long> implem
     }
     @Override
     public List<DistrictwithSubDistrictListDTO> getAllwithSubDistrictList() {
-        List<District> districts = districtRepository.findAll();
+        List<District> districts = districtRepository.findAll(DatabaseConstants.sortById_ASC);
         return districts.stream().map(districtwithSubDistrictListMapper::toDTO).collect(Collectors.toList());
     }
 

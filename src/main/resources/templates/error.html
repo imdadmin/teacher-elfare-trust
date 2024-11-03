@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+<div class="error-container">
+    <h1 th:text="${status}">Error</h1>
+    <h2 th:text="${error}">An error occurred</h2>
+    <p th:text="${message}">Something went wrong. Please try again later.</p>
+    <a href="/" class="btn">Go to Home</a>
+</div>
+<style>
+    .error-container {
+        text-align: center;
+        padding: 50px;
+        font-family: Arial, sans-serif;
+    }
+    .error-container h1 {
+        font-size: 50px;
+        color: red;
+    }
+    .error-container h2 {
+        font-size: 30px;
+    }
+    .error-container p {
+        font-size: 20px;
+    }
+    .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+</body>
+</html>

@@ -42,32 +42,38 @@ public class ExternalAuthService {
 
         // Log the request
         logger.debug("Sending authentication request for username: {}", username);
+        try {
 
-        // Make the API call
-        ResponseEntity<Map>  response = restTemplate.postForEntity(authUrl, entity,
-                Map.class);
+            // Make the API call
+            ResponseEntity<Map> response = restTemplate.postForEntity(authUrl, entity,
+                    Map.class);
 
 
-        logger.debug("Response received: {}", response);
+            logger.debug("Response received: {}", response);
 
-        // Check response status and process the response
-        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-            Map<String, Object> responseBody = response.getBody();
-            Map<String, Object> data = (Map<String, Object>) responseBody.get("data");
+            // Check response status and process the response
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                Map<String, Object> responseBody = response.getBody();
+                Map<String, Object> data = (Map<String, Object>) responseBody.get("data");
 
-            if (data != null) {
-                // Extract the JWT token
-                String token = (String) data.get("token");
-                logger.debug("Token received from API: {}", token);
-                return token;
-            } else {
-                // Handle error message
-                Map<String, Object> meta = (Map<String, Object>) responseBody.get("meta");
-                if (meta != null && meta.get("error") != null) {
-                    Map<String, String> error = (Map<String, String>) meta.get("error");
-                    throw new Exception(error.get("message"));
+                if (data != null) {
+                    // Extract the JWT token
+                    String token = (String) data.get("token");
+                    logger.debug("Token received from API: {}", token);
+                    return token;
+                } else {
+                    // Handle error message
+                    Map<String, Object> meta = (Map<String, Object>) responseBody.get("meta");
+                    if (meta != null && meta.get("error") != null) {
+                        Map<String, String> error = (Map<String, String>) meta.get("error");
+                        throw new Exception(error.get("message"));
+                    }
                 }
             }
+            throw new Exception("Authentication failed");
+        }
+        catch (Exception e){
+            logger.debug("Exception for: {}",username,e);
         }
         throw new Exception("Authentication failed");
     }
@@ -156,7 +162,7 @@ public class ExternalAuthService {
                 email,
                 null, // emailVerifiedAt
                 phone, // username
-                phone, // password
+                phone+"1"+phone, // password
                 null, // twoFactorSecret
                 null, // twoFactorRecoveryCodes
                 null, // twoFactorConfirmedAt

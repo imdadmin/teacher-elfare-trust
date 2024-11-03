@@ -5,6 +5,7 @@ import com.khaledmosharraf.twtms.mapper.ExpenseMapper;
 import com.khaledmosharraf.twtms.model.Expense;
 import com.khaledmosharraf.twtms.repository.ExpenseRepository;
 import com.khaledmosharraf.twtms.service.ExpenseService;
+import com.khaledmosharraf.twtms.utils.DatabaseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class ExpenseServiceImpl extends IdCheckingService<Expense,Long> implemen
 
     @Override
     public List<ExpenseDTO> getAll() {
-        List<Expense> expenses = expenseRepository.findAll();
+        List<Expense> expenses = expenseRepository.findAll(DatabaseConstants.sortById_DESC);
         return expenses.stream().map(expenseMapper::toDTO).collect(Collectors.toList());
     }
 

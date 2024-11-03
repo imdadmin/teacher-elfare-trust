@@ -12,41 +12,42 @@ import java.util.Date;
 import java.util.List;
 
 public interface GrantRepository extends JpaRepository<Grant,Long> {
-    List<Grant> findByUserId(Long userId);
+    @Query("SELECT sp FROM Grant sp JOIN sp.user u WHERE u.id = :id  ORDER BY sp.id DESC ")
+    List<Grant> findByUserId(@Param("id") Long userId);
 
     // Find payments by username (requires a join with the User entity)
-    @Query("SELECT sp FROM Grant sp JOIN sp.user u WHERE u.username = :username  ORDER BY sp.applicationDate ASC ")
+    @Query("SELECT sp FROM Grant sp JOIN sp.user u WHERE u.username = :username  ORDER BY sp.id DESC ")
     List<Grant> findByUsername(@Param("username") String username);
-    @Query("SELECT sp FROM Grant sp JOIN sp.user u WHERE u.username = :username AND sp.status='Accepted' ORDER BY sp.applicationDate ASC ")
+    @Query("SELECT sp FROM Grant sp JOIN sp.user u WHERE u.username = :username AND sp.status='Accepted' ORDER BY sp.id DESC ")
     List<Grant> findByUsernameOnlyAccepted(@Param("username") String username);
 
-    @Query("SELECT g FROM Grant g ORDER BY g.createdDate ASC")
+    @Query("SELECT g FROM Grant g ORDER BY g.id DESC")
     List<Grant> findAllGrant();
-    @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.district.id = :districtId  ORDER BY u.createdDate ASC")
+    @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.district.id = :districtId  ORDER BY u.id DESC")
     List<Grant> findByDistrictId(@Param("districtId") Long districtId);
-    @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.id = :subDistrictId  ORDER BY u.createdDate ASC")
+    @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.id = :subDistrictId  ORDER BY u.id DESC")
     List<Grant> findBySubDistrictId(@Param("subDistrictId") Long subDistrictId);
-    @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.district.id = :districtId AND u.user.subDistrict.id = :subDistrictId  ORDER BY u.createdDate ASC ")
+    @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.district.id = :districtId AND u.user.subDistrict.id = :subDistrictId  ORDER BY u.id DESC ")
     List<Grant> findByDistrictIdAndSubDistrictId(@Param("districtId") Long districtId, @Param("subDistrictId") Long subDistrictId);
 
-    @Query("SELECT g FROM Grant g WHERE g.createdDate BETWEEN :fromDate AND :toDate ORDER BY g.createdDate ASC")
+    @Query("SELECT g FROM Grant g WHERE g.createdDate BETWEEN :fromDate AND :toDate ORDER BY g.id DESC")
     List<Grant> findAllGrantsByDates(@Param("fromDate") LocalDateTime fromDate, @Param("toDate") LocalDateTime toDate);
 
     @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.district.id = :districtId " +
-            "AND u.createdDate BETWEEN :fromDate AND :toDate ORDER BY u.createdDate ASC")
+            "AND u.createdDate BETWEEN :fromDate AND :toDate ORDER BY u.id DESC")
     List<Grant> findByDistrictIdByDates(@Param("districtId") Long districtId,
                                         @Param("fromDate") LocalDateTime fromDate,
                                         @Param("toDate") LocalDateTime toDate);
 
     @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.id = :subDistrictId " +
-            "AND u.createdDate BETWEEN :fromDate AND :toDate ORDER BY u.createdDate ASC")
+            "AND u.createdDate BETWEEN :fromDate AND :toDate ORDER BY u.id DESC")
     List<Grant> findBySubDistrictIdByDates(@Param("subDistrictId") Long subDistrictId,
                                            @Param("fromDate") LocalDateTime fromDate,
                                            @Param("toDate") LocalDateTime toDate);
 
     @Query("SELECT u FROM Grant u WHERE u.user.subDistrict.district.id = :districtId " +
             "AND u.user.subDistrict.id = :subDistrictId " +
-            "AND u.createdDate BETWEEN :fromDate AND :toDate ORDER BY u.createdDate ASC")
+            "AND u.createdDate BETWEEN :fromDate AND :toDate ORDER BY u.id DESC")
     List<Grant> findByDistrictIdAndSubDistrictIdByDates(@Param("districtId") Long districtId,
                                                         @Param("subDistrictId") Long subDistrictId,
                                                         @Param("fromDate") LocalDateTime fromDate,

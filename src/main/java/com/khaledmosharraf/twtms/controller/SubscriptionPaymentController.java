@@ -7,6 +7,7 @@ import com.khaledmosharraf.twtms.service.DistrictService;
 import com.khaledmosharraf.twtms.service.SubDistrictService;
 import com.khaledmosharraf.twtms.service.SubscriptionPaymentService;
 import com.khaledmosharraf.twtms.service.UserService;
+import com.khaledmosharraf.twtms.utils.CommonMethod;
 import com.khaledmosharraf.twtms.utils.PageStatus;
 import com.khaledmosharraf.twtms.utils.UrlConstants;
 import jakarta.validation.Valid;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -64,7 +66,7 @@ public class SubscriptionPaymentController {
         model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
         List<UserDTO> users= userService.getAll();
         model.addAttribute("users", users);
-        List<Integer> years = getLast7Years();
+        List<Integer> years = CommonMethod.getLastFewYears();
         model.addAttribute("years", years);
         model.addAttribute("pageTopic","Create New SubscriptionPayment");
         model.addAttribute("username",getLoggedUsername());
@@ -81,7 +83,7 @@ public class SubscriptionPaymentController {
 
             List<UserDTO> users= userService.getAll();
             model.addAttribute("users", users);
-            List<Integer> years = getLast7Years();
+            List<Integer> years = CommonMethod.getLastFewYears();
             model.addAttribute("years", years);
 
             model.addAttribute("pageTopic","Create New SubscriptionPayment");
@@ -109,7 +111,7 @@ public class SubscriptionPaymentController {
         model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
         List<UserDTO> users= userService.getAll();
         model.addAttribute("users", users);
-        List<Integer> years = getLast7Years();
+        List<Integer> years = CommonMethod.getLastFewYears();
         model.addAttribute("years", years);
         model.addAttribute("pageTopic","Edit SubscriptionPayment");
         model.addAttribute("username",getLoggedUsername());
@@ -126,7 +128,7 @@ public class SubscriptionPaymentController {
 
             List<UserDTO> users= userService.getAll();
             model.addAttribute("users", users);
-            List<Integer> years = getLast7Years();
+            List<Integer> years = CommonMethod.getLastFewYears();
             model.addAttribute("years", years);
 
             model.addAttribute("pageTopic","Edit SubscriptionPayment");
@@ -149,7 +151,7 @@ public class SubscriptionPaymentController {
         model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
         List<UserDTO> users= userService.getAll();
         model.addAttribute("users", users);
-        List<Integer> years = getLast7Years();
+        List<Integer> years = CommonMethod.getLastFewYears();
         model.addAttribute("years", years);
         model.addAttribute("pageTopic","View SubscriptionPayment");
         model.addAttribute("username",getLoggedUsername());
@@ -161,13 +163,6 @@ public class SubscriptionPaymentController {
     private String getLoggedUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
-    }
-    public List<Integer> getLast7Years() {
-        int currentYear = Year.now().getValue();
-        return IntStream.rangeClosed(currentYear - 6, currentYear)
-                .map(i -> currentYear - (i - (currentYear - 6))) // Reverse the order
-                .boxed()
-                .collect(Collectors.toList());
     }
 
 }

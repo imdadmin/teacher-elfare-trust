@@ -151,6 +151,7 @@ public class GrantController {
     @PostMapping("admin/grant/accept/{id}")
     public String acceptItem(@PathVariable Long id) {
         GrantDTO grantDTO =  grantService.get(id);
+        grantDTO.setAmount(grantDTO.getRequestedAmount());
         grantDTO.setStatus("Accepted");
         grantService.update(grantDTO);
         return "redirect:"+UrlConstants.Grant.LIST; // Redirect to the home page to refresh the table

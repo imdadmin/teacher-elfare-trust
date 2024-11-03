@@ -6,6 +6,7 @@ import com.khaledmosharraf.twtms.model.Grant;
 import com.khaledmosharraf.twtms.model.User;
 import com.khaledmosharraf.twtms.repository.GrantRepository;
 import com.khaledmosharraf.twtms.service.GrantService;
+import com.khaledmosharraf.twtms.utils.DatabaseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class GrantServiceImpl extends IdCheckingService<Grant,Long> implements G
 
     @Override
     public List<GrantDTO> getAll() {
-        List<Grant> grants = grantRepository.findAll();
+        List<Grant> grants = grantRepository.findAll(DatabaseConstants.sortById_DESC);
         return grants.stream().map(grantMapper::toDTO).collect(Collectors.toList());
     }
 

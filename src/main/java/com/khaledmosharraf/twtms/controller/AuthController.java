@@ -33,7 +33,7 @@ import java.io.IOException;
 
 @Controller
 public class AuthController {
-    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -68,25 +68,27 @@ public class AuthController {
         userAuthRequestDTO.setUsername(username);
         userAuthRequestDTO.setPassword(password);
         try {
-            String jwt = userAuthService.verify(userAuthRequestDTO);
-            Cookie cookie = new Cookie("jwt", jwt);
-            cookie.setHttpOnly(true);
-            cookie.setSecure(true); // Use Secure flag in production
-            cookie.setPath("/");
-            cookie.setMaxAge(2*60 * 60); // 2 hour expiry
-            response.addCookie(cookie);
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
-                return onAuthenticationSuccess(request,response,authentication);
+            Authentication authentication = userAuthService.verify(userAuthRequestDTO, response);
+            if(authentication == null){
+                return "redirect:/login?error=true";
             }
-            return "redirect:/login";
+           // SecurityContextHolder.getContext().setAuthentication(authentication);
+            logger.debug("Authentication: "+authentication);
+            if (authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+               return onAuthenticationSuccess(request,response,authentication);
+            }
+            return "redirect:/error";
         } catch (Exception e) {
-            logger.error("Login failed"+ e);
+            logger.debug("Login failed"+ e);
             return "redirect:/login?error=true";
         }
     }
     public String onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String redirectURL = request.getContextPath();
+
+        logger.debug("Auth Before Security context "+authentication);
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        logger.debug("Auth After Security context "+authentication);
         if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
             redirectURL = "/admin/dashboard";
         } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {

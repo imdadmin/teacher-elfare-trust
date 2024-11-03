@@ -2,6 +2,7 @@ package com.khaledmosharraf.twtms.security.config;
 
 import com.khaledmosharraf.twtms.security.CustomAuthenticationEntryPoint;
 import com.khaledmosharraf.twtms.security.CustomAuthenticationSuccessHandler;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,16 +35,19 @@ public class SecurityConfig {
 
         return http.csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/login", "/signup", "/", "/css/**", "/js/**", "/images/**","/api/excel/**","/api/**","/pay/response/**","/uploads/**","/application/**").permitAll()
+                                .requestMatchers("/login", "/signup", "/", "/css/**", "/js/**", "/images/**","/api/excel/**","/error/**","/api/**","/pay/response/**","/uploads/**","/application/**").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                               // .requestMatchers("/user/**").hasAuthority("ROLE_USER")
-                                .requestMatchers("/user/**").permitAll()
+                                .requestMatchers("/user/**").hasAuthority("ROLE_USER")
+                                //.requestMatchers("/user/**").permitAll()
                                 .anyRequest().authenticated()
                         )
                         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                        .addFilterAt(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                         .exceptionHandling(exception -> exception
                                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint()) // Handle unauthorized access
+                                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this resource."); // Send 403 error
+                                })
                         )
                         .logout(logout -> logout
                                 .logoutUrl("/logout")
@@ -52,6 +56,7 @@ public class SecurityConfig {
                                 .deleteCookies("JSESSIONID","jwt")
                 )
                 .build();
+
     }
 
     @Bean
@@ -67,10 +72,10 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
 
     }
-    @Bean
+   /* @Bean
     public AuthenticationSuccessHandler customSuccessHandler() {
         return new CustomAuthenticationSuccessHandler();
-    }
+    }*/
 
 
 }

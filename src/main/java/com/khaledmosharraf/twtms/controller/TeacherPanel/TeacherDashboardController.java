@@ -9,6 +9,7 @@ import com.khaledmosharraf.twtms.sbl.model.InvoiceRequest;
 import com.khaledmosharraf.twtms.sbl.model.InvoiceResponse;
 import com.khaledmosharraf.twtms.sbl.service.SblApiService;
 import com.khaledmosharraf.twtms.service.*;
+import com.khaledmosharraf.twtms.utils.CommonMethod;
 import com.khaledmosharraf.twtms.utils.PaymentStatus;
 import jakarta.servlet.ServletContext;
 import jakarta.validation.Valid;
@@ -61,6 +62,8 @@ public class TeacherDashboardController {
     @Autowired
     SubscriptionPaymentService subscriptionPaymentService;
     @Autowired
+    YearlyfeeService yearlyfeeService;
+    @Autowired
     SblApiService sblApiService;
     private static final String UPLOAD_DIR = "/uploads/";
 
@@ -77,21 +80,27 @@ public class TeacherDashboardController {
     }
     @GetMapping("dashboard")
     public String showUserDashboard(Model model){
+
+        logger.debug("Logged in user dashboard: "+getLoggedUsername());
+
         String username = getLoggedUsername();
         UserDTO userDTO = userService.getByUsername(username);
         List<GrantDTO> grants = grantService.getByUserId(userDTO.getId());
         List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getByUserId(userDTO.getId());
-
         SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO  = new SubscriptionPaymentRequestDTO();
         GrantRequestDTO grantRequestDTO = new GrantRequestDTO();
 
-        List<Integer> years = getLast7Years();
+        List<Integer> years = CommonMethod.getLastFewYears();
         Integer lastPaymentYear = subscriptionPaymentService.getLastPaymentYear(userDTO.getId());
         PaymentInfoDTO paymentInfo = subscriptionPaymentService.getPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
-
+        NextPaymentDTO nextPaymentDTO = yearlyfeeService.getNextPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
+        subscriptionPaymentRequestDTO.setYear(nextPaymentDTO.getNextPaymentYear());
+        subscriptionPaymentRequestDTO.setAmount(nextPaymentDTO.getNextPaymentAmount());
+        logger.debug("nextPayment :"+nextPaymentDTO);
         model.addAttribute("errorFrom","no");
         model.addAttribute("years", years);
         model.addAttribute("paymentInfo", paymentInfo);
+        model.addAttribute("nextPayment", nextPaymentDTO);
         model.addAttribute("user",userDTO);
         model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
         model.addAttribute("grant",grantRequestDTO);
@@ -107,19 +116,20 @@ public class TeacherDashboardController {
     @PostMapping("create-subscriptionPayment")
     public String submitSubscriptionPaymentForm(@Valid @ModelAttribute("subscriptionPayment") SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
+
             String username = getLoggedUsername();
             UserDTO userDTO = userService.getByUsername(username);
             List<GrantDTO> grants = grantService.getByUserId(userDTO.getId());
             List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getByUserId(userDTO.getId());
             GrantRequestDTO grantRequestDTO = new GrantRequestDTO();
-
-            List<Integer> years = getLast7Years();
+            List<Integer> years = CommonMethod.getLastFewYears();
             Integer lastPaymentYear = subscriptionPaymentService.getLastPaymentYear(userDTO.getId());
             PaymentInfoDTO paymentInfo = subscriptionPaymentService.getPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
-
+            NextPaymentDTO nextPaymentDTO = yearlyfeeService.getNextPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
             model.addAttribute("errorFrom","subscriptionPayment");
             model.addAttribute("years", years);
             model.addAttribute("paymentInfo", paymentInfo);
+            model.addAttribute("nextPayment", nextPaymentDTO);
             model.addAttribute("user",userDTO);
             model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
             model.addAttribute("grant",grantRequestDTO);
@@ -188,13 +198,14 @@ public class TeacherDashboardController {
             List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getByUserId(userDTO.getId());
             SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO = new SubscriptionPaymentRequestDTO();
 
-            List<Integer> years = getLast7Years();
+            List<Integer> years = CommonMethod.getLastFewYears();
             Integer lastPaymentYear = subscriptionPaymentService.getLastPaymentYear(userDTO.getId());
             PaymentInfoDTO paymentInfo = subscriptionPaymentService.getPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
-
+            NextPaymentDTO nextPaymentDTO = yearlyfeeService.getNextPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
             model.addAttribute("errorFrom","grant");
             model.addAttribute("years", years);
             model.addAttribute("paymentInfo", paymentInfo);
+            model.addAttribute("nextPayment", nextPaymentDTO);
             model.addAttribute("user",userDTO);
             model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
             model.addAttribute("grant",grantRequestDTO);
@@ -272,14 +283,9 @@ public class TeacherDashboardController {
 
     private String getLoggedUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        logger.debug("User dashboard login details : "+authentication);
         return authentication.getName();
     }
-    public List<Integer> getLast7Years() {
-        int currentYear = Year.now().getValue();
-        return IntStream.rangeClosed(currentYear - 6, currentYear)
-                .map(i -> currentYear - (i - (currentYear - 6))) // Reverse the order
-                .boxed()
-                .collect(Collectors.toList());
-    }
+
 
 }

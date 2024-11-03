@@ -20,14 +20,14 @@ import java.util.function.Function;
 public class JWTService {
 
 
-    private String secretkey = "";
+    private String secretkey = "3ed39dd9718607743d65b8e466983f8bd4e2c3fe139312933aff15cc7181ab6f1e2f3486e9d664b592a870625a80130e786bc6c0a810958e2edf67f5a6fe527cef7a6f0d68aa65c80156234522af730e632c4cbcc6e52cf7f5015334b19b1c15742bd07418b20820c045cfabd922fddc41b2c61cab341c33dd324619754d6a2ded4acc3491e34f54aa7bc95f864fe24390f119ab721828c9095c3ccaea3a406f4ef97c24c603e492e1adb19373ebabe16aa3636dcb383650b57cb5cef6ebb4a5ba3aa25ec01e6684c6ad0ec6f6c48e9db3e558176db9a44ec272db22f4bfa22169211f0aaac04d791712703f2f58102f4ebf3a2999112924282cfaeea4507d40";
 
     public JWTService() {
 
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey sk = keyGen.generateKey();
-            secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
+            //SecretKey sk = keyGen.generateKey();
+           // secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }

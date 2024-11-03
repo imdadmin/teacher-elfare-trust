@@ -24,6 +24,7 @@ public class UrlConstantsConfig {
         public final UrlConstants.Expense expense = new UrlConstants.Expense();
 
         public final UrlConstants.Bank bank = new UrlConstants.Bank();
+        public final UrlConstants.Yearlyfee yearlyfee = new UrlConstants.Yearlyfee();
 
         public final UrlConstants.District district = new UrlConstants.District();
         public final UrlConstants.Upazila upazila = new UrlConstants.Upazila();

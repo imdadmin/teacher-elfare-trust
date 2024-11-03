@@ -9,6 +9,7 @@ import com.khaledmosharraf.twtms.model.SubDistrict;
 import com.khaledmosharraf.twtms.model.User;
 import com.khaledmosharraf.twtms.repository.UserRepository;
 import com.khaledmosharraf.twtms.service.UserService;
+import com.khaledmosharraf.twtms.utils.DatabaseConstants;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
 
     @Override
     public List<UserDTO> getAll() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAll(DatabaseConstants.sortById_DESC);
         return users.stream().map(userMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -53,12 +54,15 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
         // Encode the default password
         Optional<User> optionalUser = userRepository.findByUsername(userDTO.getUsername());
         if (optionalUser.isPresent()) {
-            throw new ResourceNotFoundException("User found with username: " + userDTO.getUsername());
+            logger.debug("Already Exist");
+            User user = optionalUser.orElse(null);
+            return userMapper.toDTO(user);
+            //throw new ResourceNotFoundException("User found with username: " + userDTO.getUsername());
         }
         Set<String> roles = new HashSet<>();
         roles.add("USER");
         userDTO.setRoles(roles);
-        String defaultPassword = userDTO.getUsername();
+        String defaultPassword = userDTO.getPassword();
         String encodedPassword = passwordEncoder.encode(defaultPassword);
         userDTO.setPassword(encodedPassword);
         User user = userMapper.toModel(userDTO);

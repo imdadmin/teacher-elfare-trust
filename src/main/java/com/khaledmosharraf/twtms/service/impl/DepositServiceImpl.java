@@ -5,6 +5,7 @@ import com.khaledmosharraf.twtms.mapper.DepositMapper;
 import com.khaledmosharraf.twtms.model.Deposit;
 import com.khaledmosharraf.twtms.repository.DepositRepository;
 import com.khaledmosharraf.twtms.service.DepositService;
+import com.khaledmosharraf.twtms.utils.DatabaseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class DepositServiceImpl extends IdCheckingService<Deposit,Long> implemen
 
     @Override
     public List<DepositDTO> getAll() {
-        List<Deposit> deposits = depositRepository.findAll();
+        List<Deposit> deposits = depositRepository.findAll(DatabaseConstants.sortById_DESC);
         return deposits.stream().map(depositMapper::toDTO).collect(Collectors.toList());
     }
 

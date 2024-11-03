@@ -137,7 +137,7 @@
                     class="relative flex items-center justify-center gap-x-3 px-2 py-2 text-sm outline-none"
                   >
                     <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
-                      <div  class="absolute -top-1/2 bottom-1/2 w-px bg-gray-300 dark:bg-gray-600"></div>
+                      <div  class="absolute -top-1/2 -bottom-1/2 w-px bg-gray-300 dark:bg-gray-600"></div>
                       <div   th:class="'relative h-1.5 w-1.5 rounded-full ' +(${activePage == '/report/member'} ? 'bg-custom-yellow-600' : 'bg-gray-400')"></div>
                     </div>
                     <span  class=" flex-1">মেম্বার / শিক্ষক রিপোর্ট</span>
@@ -169,13 +169,26 @@
                 </svg>
               </button>
               <ul id="dropdown-setting" class=" py-2 space-y-2">
-                <!-- banks -->
+                  <!-- yearlyfees -->
+                  <li th:class="'rounded-lg font-bold' + ${activePage == '/yearlyfees' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
+                      <a th:href="@{${@urlConstants.yearlyfee.LIST}}"
+                         class="relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none "
+                      >
+                          <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
+                              <div  class="absolute -bottom-1/2 top-1/2 w-px bg-gray-300 dark:bg-gray-600"></div>
+
+                              <div  th:class="'relative h-1.5 w-1.5 rounded-full ' +(${activePage == '/yearlyfees'} ? 'bg-custom-yellow-600' : 'bg-gray-400')"></div>
+                          </div>
+                          <span  class=" flex-1">বাৎসরিক ফি</span>
+                      </a>
+                  </li>
+                  <!-- banks -->
                 <li th:class="'rounded-lg font-bold' + ${activePage == '/banks' ? ' text-custom-yellow-600  dark:bg-gray-800 bg-gray-100 ' : ' text-gray-500 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 '}">
                   <a th:href="@{${@urlConstants.bank.LIST}}"
                     class="relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none "
                   >
                     <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
-                      <div  class="absolute -bottom-1/2 top-1/2 w-px bg-gray-300 dark:bg-gray-600"></div>
+                      <div  class="absolute -top-1/2 -bottom-1/2 w-px bg-gray-300 dark:bg-gray-600"></div>
 
                       <div  th:class="'relative h-1.5 w-1.5 rounded-full ' +(${activePage == '/banks'} ? 'bg-custom-yellow-600' : 'bg-gray-400')"></div>
                     </div>
@@ -188,7 +201,7 @@
                     class="relative flex items-center justify-center gap-x-3 rounded-lg px-2 py-2 text-sm outline-none "
                   >
                     <div  class="fi-sidebar-item-grouped-border relative flex h-6 w-6 items-center justify-center">
-                      <div  class="absolute -top-1/2 bottom-1/2 w-px bg-gray-300 dark:bg-gray-600"></div>
+                      <div  class="absolute -top-1/2 -bottom-1/2 w-px bg-gray-300 dark:bg-gray-600"></div>
                       <div  th:class="'relative h-1.5 w-1.5 rounded-full ' +(${activePage == '/districts'} ? 'bg-custom-yellow-600' : 'bg-gray-400')"></div>
                     </div>
                     <span  class=" flex-1"> জেলা</span>

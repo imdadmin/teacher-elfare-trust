@@ -9,7 +9,9 @@ import com.khaledmosharraf.twtms.model.User;
 import com.khaledmosharraf.twtms.repository.SubscriptionPaymentRepository;
 import com.khaledmosharraf.twtms.repository.UserRepository;
 import com.khaledmosharraf.twtms.service.SubscriptionPaymentService;
+import com.khaledmosharraf.twtms.utils.DatabaseConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,13 +30,15 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
     SubscriptionPaymentMapper subscriptionPaymentMapper;
     @Autowired
     UserRepository userRepository;
+    @Value("${payment.year.start}")
+    private Integer startYear;
     public SubscriptionPaymentServiceImpl(SubscriptionPaymentRepository subscriptionPaymentRepository) {
         super(subscriptionPaymentRepository);
     }
 
     @Override
     public List<SubscriptionPaymentDTO> getAll() {
-        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findAll();
+        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findAll(DatabaseConstants.sortById_DESC);
         return subscriptionPayments.stream().map(subscriptionPaymentMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -68,7 +72,7 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
 
     @Override
     public List<SubscriptionPaymentDTO> getByUserId(Long id) {
-        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findByUserIdOrderByPaymentDateDesc(id);
+        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findByUserIdOrderByIdDesc(id);
         return subscriptionPayments.stream().map(subscriptionPaymentMapper::toDTO).collect(Collectors.toList());
     }
 
@@ -99,7 +103,11 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
         Integer tempLastPaymentYear = lastPaymentYear;
         if (lastPaymentYear == null) {
             tempLastPaymentYear = joiningYear;
+            if(tempLastPaymentYear==null){
+                tempLastPaymentYear = startYear-1;
+            }
         }
+        tempLastPaymentYear = Integer.max(tempLastPaymentYear,startYear-1);
         int currentYear = LocalDate.now().getYear();
         paymentInfo.setLastPaymentYear(lastPaymentYear);
         paymentInfo.setDueYears(currentYear-tempLastPaymentYear);
