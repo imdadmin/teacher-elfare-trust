@@ -35,7 +35,7 @@ public class SecurityConfig {
 
         return http.csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/login", "/signup", "/", "/css/**", "/js/**", "/images/**","/api/excel/**","/error/**","/api/**","/pay/response/**","/uploads/**","/application/**").permitAll()
+                                .requestMatchers("/login", "/signup", "/", "/css/**", "/documents/**", "/fonts/**","/images/**", "/js/**","/uploads/**", "/api/excel/**","/error/**","/api/**","/pay/response/**","/application/**").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                                 //.requestMatchers("/user/**").permitAll()

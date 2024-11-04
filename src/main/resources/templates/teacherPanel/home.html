@@ -39,14 +39,7 @@
         </div>
         <div class="flex px-10 items-center justify-between h-14 bg-sky-300">
           <div class="py-3">
-            <select
-              name=""
-              class="bg-transparent text-white border-white rounded-lg"
-              id=""
-            >
-              <option class="text-gray-800" value="">English</option>
-              <option class="text-gray-800" value="">বাংলা</option>
-            </select>
+
           </div>
           
           <div class="py-3 flex gap-2">
@@ -82,17 +75,23 @@
 
           <!-- Login -->
           <div class="flex py-2 gap-x-2">
-            <a
-              th:href="@{/dashboard}"
+            <a th:if="${isAuthenticated}"
+              th:href="@{/login}"
               class="font-semibold text-white hover:bg-blue-700 px-3 py-2 flex items-centerrounded-lg bg-blue-500 focus:outline focus:outline-2 focus:rounded-lg focus:outline-blue-800 rounded-lg "
             >
               Dashboard
             </a>
-            <a
+            <a th:if="${isAuthenticated}"
+               th:href="@{/logout}"
+               class="font-semibold text-white bg-green-600 px-3 py-2 flex items-center rounded-lg hover:bg-green-700 focus:outline focus:outline-2 focus:rounded-lg focus:outline-green-800"
+            >
+              Logout
+            </a>
+            <a th:unless="${isAuthenticated}"
               th:href="@{/login}"
               class="font-semibold text-white bg-green-600 px-3 py-2 flex items-center rounded-lg hover:bg-green-700 focus:outline focus:outline-2 focus:rounded-lg focus:outline-green-800"
             >
-              Log in
+              Login
             </a>
             <a
               th:if="${canRegister}"

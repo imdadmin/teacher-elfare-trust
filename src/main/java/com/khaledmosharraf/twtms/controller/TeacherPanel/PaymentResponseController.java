@@ -35,7 +35,7 @@ public class PaymentResponseController {
     @Autowired
     SubscriptionPaymentService subscriptionPaymentService;
     @PostMapping("pay/response/success")
-    public String paymentSuccess(@RequestParam Map<String, String> params, HttpSession session, Model model) {
+    public String paymentSuccess(@RequestParam Map<String, String> params, HttpSession session,RedirectAttributes redirectAttributes) {
         // Validate and handle the successful payment response here
         logger.debug(params.toString());
         try {
@@ -47,8 +47,8 @@ public class PaymentResponseController {
             subscriptionPaymentRequestDTO.setBankTranId(params.get("bank_tran_id"));
 
             subscriptionPaymentService.add(subscriptionPaymentRequestMapper.toSubscriptionPaymentDTO(subscriptionPaymentRequestDTO));
-            model.addAttribute("successMessage", "Payment Successful. Thank You.");
-          //  redirectAttributes.addFlashAttribute("successMessage", "Payment Successful. Thank You.");
+           // model.addAttribute("successMessage", "Payment Successful. Thank You.");
+            redirectAttributes.addFlashAttribute("successMessage", "Payment Successful. Thank You.");
 
             return "redirect:/user/dashboard";
 
@@ -56,13 +56,13 @@ public class PaymentResponseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        redirectAttributes.addFlashAttribute("errorMessage", "We apologize! An error has occurred.");
         return "redirect:/user/dashboard";
-
 
     }
 
     @PostMapping("pay/response/fail")
-    public String paymentFail(@RequestParam Map<String, String> params) {
+    public String paymentFail(@RequestParam Map<String, String> params,RedirectAttributes redirectAttributes) {
         logger.debug(params.toString());
         try {
 
@@ -71,6 +71,7 @@ public class PaymentResponseController {
             subscriptionPaymentRequestDTO.setStatus(PaymentStatus.FAILED);
 
             subscriptionPaymentService.add(subscriptionPaymentRequestMapper.toSubscriptionPaymentDTO(subscriptionPaymentRequestDTO));
+            redirectAttributes.addFlashAttribute("errorMessage", "We apologize! The payment has failed.");
 
             return "redirect:/user/dashboard";
 
@@ -78,13 +79,15 @@ public class PaymentResponseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        redirectAttributes.addFlashAttribute("errorMessage", "We apologize! The payment has failed.");
+
         return "redirect:/user/dashboard";
 
 
     }
 
     @PostMapping("pay/response/cancel")
-    public String paymentCancel(@RequestParam Map<String, String> params) {
+    public String paymentCancel(@RequestParam Map<String, String> params, RedirectAttributes redirectAttributes) {
         logger.debug(params.toString());
         try {
 
@@ -93,7 +96,7 @@ public class PaymentResponseController {
             subscriptionPaymentRequestDTO.setStatus(PaymentStatus.CANCELED);
 
             subscriptionPaymentService.add(subscriptionPaymentRequestMapper.toSubscriptionPaymentDTO(subscriptionPaymentRequestDTO));
-
+            redirectAttributes.addFlashAttribute("errorMessage", "We apologize! The payment has been Canceled.");
 
             return "redirect:/user/dashboard";
 
@@ -101,6 +104,8 @@ public class PaymentResponseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        redirectAttributes.addFlashAttribute("errorMessage", "Sorry! Payment Canceled.");
+
         return "redirect:/user/dashboard";
 
     }

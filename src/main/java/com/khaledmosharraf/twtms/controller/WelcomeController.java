@@ -2,6 +2,8 @@ package com.khaledmosharraf.twtms.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,20 @@ public class WelcomeController {
 
     @GetMapping({"/","/home"})
     public String ShowLangdingPage(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = authentication.isAuthenticated();
+        logger.debug("isAuthenticated: "+isAuthenticated);
+        logger.debug("username: "+getLoggedUsername());
+        logger.debug("user: "+authentication);
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            isAuthenticated=false;
+        }
+
         model.addAttribute("pageTitle","Welcome Page");
         model.addAttribute("username", getLoggedUsername());
+        model.addAttribute("isAuthenticated", isAuthenticated);
+
+
         return "teacherPanel/home";
     }
     @GetMapping("/test")

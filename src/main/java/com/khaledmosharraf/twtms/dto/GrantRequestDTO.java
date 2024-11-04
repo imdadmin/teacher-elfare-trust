@@ -27,7 +27,6 @@ public class GrantRequestDTO {
     private String type;
     private String details;
     private Double currentPayscale;
-    @NotNull
     @DecimalMin(value = "0.0", message = "{validation.amount}")
     private Double requestedAmount;
     private Double totalSalaryWithdraw;

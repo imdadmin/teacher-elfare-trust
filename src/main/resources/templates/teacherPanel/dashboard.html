@@ -14,14 +14,78 @@
         .red {
             color: red;
         }
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px;
+            font-size: 17px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadeInOut 3s;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            animation: slide-in 0.5s forwards;
+        }
+        .toast.success {
+            background-color: #4caf50; /* Green for success */
+        }
+
+        .toast.error {
+            background-color: #f44336; /* Red for error */
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateY(-20px);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
     </style>
     <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css}" rel="stylesheet"/>
     <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js}"></script>
 </head>
 <body class="bg-[#f3f4f6]">
-
+<div id="toast-container" class="toast-container"></div>
 <!-- /Header -->
 <header class="bg-white border-b border-gray-200">
     <div class="flex mx-auto px-4 border-b border-gray-200 px-4 sm:px-6 lg:px-8 h-16 py-4">
@@ -339,22 +403,6 @@
                                 </div>
                             </fieldset>
 
-
-                            <fieldset>
-                                <!-- Requested Amount / requestedAmount -->
-                                <div class="w-full px-3 mb-6 md:mb-0">
-                                    <label class="block font-medium text-sm text-gray-700"
-                                           th:for="*{requestedAmount}"><span>অনুরোধকৃত পরিমাণ (TK)</span><span class="red">*</span></label>
-                                    <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                           type="number" placeholder="Enter Amount"
-                                           th:field="*{requestedAmount}"
-                                    >
-                                    <p class="mt-2 text-sm text-red-600"
-                                       th:if="${#fields.hasErrors('*{requestedAmount}')}"
-                                       th:errors="*{requestedAmount}">Error</p>
-
-                                </div>
-                            </fieldset>
                         </div>
 
 
@@ -414,6 +462,12 @@
 
 
                         <div class="col-span-full hidden" id="scholarshipOption2" >
+
+                            <textarea
+                                   id="educationDetails2"
+                                   th:field="*{educationDetails2}"
+                                   hidden
+                            ></textarea>
                             <h2>বিভিন্ন পরীক্ষার বিবরণ<span class="red">*</span></h2>
 
                             <table id="employee-table" class="w-full rounded-s-lg text-center">
@@ -434,6 +488,21 @@
                                 </svg>
                             </button>
                         </div>
+                        <fieldset>
+                            <!-- Requested Amount / requestedAmount -->
+                            <div class="w-full px-3 mb-6 md:mb-0">
+                                <label class="block font-medium text-sm text-gray-700"
+                                       th:for="*{requestedAmount}"><span>অনুরোধকৃত পরিমাণ (TK)</span><span class="red">*</span></label>
+                                <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                       type="number" placeholder="Enter Amount"
+                                       th:field="*{requestedAmount}"
+                                >
+                                <p class="mt-2 text-sm text-red-600"
+                                   th:if="${#fields.hasErrors('*{requestedAmount}')}"
+                                   th:errors="*{requestedAmount}">Error</p>
+
+                            </div>
+                        </fieldset>
 
                         <!-- Scholarship// -->
 
@@ -446,7 +515,11 @@
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
                                        type="file" accept="application/pdf" required
                                        th:field="*{application}"
+                                       onchange="validateFileSize(this)"
                                 >
+                                <p style="color: gray; margin-top: 5px;">
+                                    Note: The maximum file size allowed is 5 MB.
+                                </p>
                                 <p class="mt-2 text-sm text-red-600"
                                    th:if="${#fields.hasErrors('*{application}')}" th:errors="*{application}">
                                     Error</p>
@@ -459,7 +532,11 @@
                                 <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full bg-white border-gray-300 rounded-lg border"
                                        type="file"  accept="application/pdf" required
                                        th:field="*{attachment}"
+                                       onchange="validateFileSize(this)"
                                 >
+                                <p style="color: gray; margin-top: 5px;">
+                                    Note: The maximum file size allowed is 5 MB.
+                                </p>
                                 <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{attachment}')}"
                                    th:errors="*{attachment}">Error</p>
                             </div>
@@ -637,6 +714,8 @@
         </div>
 
     </div>
+    <button onclick="getExam()">Show Success</button>
+    <button onclick="showToast('fsdfs','error')">Show Error</button>
 </div>
 
 <script>
@@ -715,7 +794,7 @@
     var dataObj = [];
 
     var it = 1;
-    var educationDetails2 = document.querySelector("input[id='educationDetails2']")
+    var educationDetails2 = document.getElementById("educationDetails2");
 
     function addNewRow() {
         var table = document.getElementById("employee-table");
@@ -724,17 +803,17 @@
         var row = table.insertRow(rowCount);
         for (var i = 0; i < cellCount; i++) {
             var cell = row.insertCell(i);
-            if (i == 0) {
+            if (i === 0) {
                 cell.innerHTML = '<input type="text" class="text-center -mr-5 w-[100%] rounded-l-lg -mr-2" value="' + it++ + '"  disabled/>';
-            } else if (i == 1) {
+            } else if (i === 1) {
                 cell.innerHTML = '<input type="text" class="text-center -mr-4 w-[100%]  " placeholder="Exam Name" />';
-            } else if (i == 2) {
+            } else if (i === 2) {
                 cell.innerHTML = '<input type="text" class="text-center -mr-3 w-[100%]  " placeholder="GPA" />';
-            } else if (i == 3) {
+            } else if (i === 3) {
                 cell.innerHTML = '<input type="text" class="text-center -mr-2 w-[100%]  "  placeholder="Passing Year" />';
-            } else if (i == 4) {
+            } else if (i === 4) {
                 cell.innerHTML = '<input type="text" class="text-center -mr-1 w-[100%] "  placeholder="Board"/>';
-            } else if (i == 5) {
+            } else if (i === 5) {
                 cell.innerHTML = '<input type="text" class="text-center w-[100%] rounded-r-lg "  placeholder="Result"/>';
             } else {
                 cell.innerHTML = '<button type="button" class="text-center px-2" onclick="deleteRow(this)"  ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z" fill="rgba(221,33,33,1)"></path></svg></button>';
@@ -751,6 +830,7 @@
         var rowCount = table.rows.length;
         var cellCount = table.rows[0].cells.length;
         var exdata="";
+        var formatedString="";
         for (var i = 1; i < rowCount; i++) {
             var sl = table.rows[i].cells[0].querySelector("input").value;
             var name = table.rows[i].cells[1].querySelector("input").value;
@@ -758,12 +838,19 @@
             var year = table.rows[i].cells[3].querySelector("input").value;
             var board = table.rows[i].cells[4].querySelector("input").value;
             var result = table.rows[i].cells[5].querySelector("input").value;
-            exdata = {'name': name, 'gpa': gpa, 'year': year, 'board': board, 'result': result,}
+            formatedString = formatedString+"Exam: "+name+', GPA: '+ gpa+ ', Year: '+ year+ ', Board: '+ board+ ', Result: '+ result+"\n";
+            exdata = {'name': name, 'gpa': gpa, 'year': year, 'board': board, 'result': result}
             examData.push(exdata);
         }
-        var jsonString = JSON.stringify(examData, null, 2);
-        educationDetails2.value = jsonString;
+        let jsonString = JSON.stringify(examData, null, 2);
         console.log(jsonString);
+        console.log(formatedString);
+        if(educationDetails2){
+            educationDetails2.value = formatedString;
+        }
+        else
+        educationDetails2.value = "NULL";
+
     }
 
 
@@ -789,14 +876,55 @@
 
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<script th:if="${successMessage}">
-    $(document).ready(function() {
-        toastr.success([[${successMessage}]]);
-    });
+<script>
+    function showToast(message, type) {
+        const toastContainer = document.getElementById('toast-container');
+
+        // Create a new toast element
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`; // Add type class for different styling
+        toast.innerText = message;
+
+        // Append the toast to the container
+        toastContainer.appendChild(toast);
+
+        // Show the toast
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+
+        // Remove the toast after a delay
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toastContainer.removeChild(toast);
+            }, 300); // Delay for fade-out transition
+        }, 3000); // Duration the toast will be visible
+    }
+
 </script>
 
+<script th:if="${successMessage != null}">
+    showToast("[[${successMessage}]]", 'success');
+</script>
+<script th:if="${errorMessage != null}">
+    showToast("[[${errorMessage}]]", 'error');
+</script>
+
+<script>
+    function validateFileSize(input) {
+        const maxSize = 5 * 1024 * 1024; // 5 MB in bytes
+        const file = input.files[0];
+
+        if (file) {
+            if (file.size > maxSize) {
+                alert("File size exceeds 5 MB! Please upload a smaller file.");
+                input.value = ""; // Clear the input
+            }
+        }
+    }
+</script>
 
 </body>
 </html>

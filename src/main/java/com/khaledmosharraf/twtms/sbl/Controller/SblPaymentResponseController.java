@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
 
@@ -32,10 +33,10 @@ public class SblPaymentResponseController {
     @Autowired
     SblApiService sblApiService;
     @GetMapping("pay/response")
-    public String paymentSuccess(@RequestParam String  Token,@RequestParam String  Mode , HttpSession session, Model model) {
+    public String paymentSuccess(@RequestParam String  Token, @RequestParam String  Mode , HttpSession session, RedirectAttributes redirectAttributes) {
         // Validate and handle the successful payment response here
-        if(Token.length()<=5){
-            model.addAttribute("successMessage", "Unexpected Output.");
+        if(Token.length()<=2){
+            redirectAttributes.addFlashAttribute("errorMessage", "We apologize! An error has occurred.");
             return "redirect:/user/dashboard";
         }
         logger.debug(Token+" : "+Mode);
@@ -49,11 +50,12 @@ public class SblPaymentResponseController {
                 subscriptionPaymentRequestDTO.setTranDate(verifyResponse.getTransactionDate());
                 if(verifyResponse.getStatus().equals("200")){
                     subscriptionPaymentRequestDTO.setStatus(PaymentStatus.SUCCESS);
-                    model.addAttribute("successMessage", "Payment Successful. Thank You.");
+                    redirectAttributes.addFlashAttribute("successMessage", "Payment Successful. Thank You.");
+
                 }
                 else {
-                    subscriptionPaymentRequestDTO.setStatus(PaymentStatus.CANCELED);
-                    model.addAttribute("successMessage", "Sorry. Payment Failed.");
+                    subscriptionPaymentRequestDTO.setStatus(PaymentStatus.FAILED);
+                    redirectAttributes.addFlashAttribute("errorMessage", "We apologize! The payment has failed.");
                 }
                 subscriptionPaymentRequestDTO.setBankTranId(verifyResponse.getTransactionId());
                 subscriptionPaymentRequestDTO.setTranId(verifyResponse.getTransactionId());

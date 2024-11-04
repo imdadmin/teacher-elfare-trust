@@ -82,6 +82,7 @@ public class TeacherDashboardController {
     public String showUserDashboard(Model model){
 
         logger.debug("Logged in user dashboard: "+getLoggedUsername());
+       // model.asMap().forEach((key, value) -> logger.debug("Flash Attribute: {} = {}", key, value));
 
         String username = getLoggedUsername();
         UserDTO userDTO = userService.getByUsername(username);
@@ -107,7 +108,6 @@ public class TeacherDashboardController {
         model.addAttribute("grants",grants);
         model.addAttribute("subscriptionPayments",subscriptionPayments);
         model.addAttribute("pageTitle", "Dashboard Page");
-
         model.addAttribute("username",getLoggedUsername());
 
         return "teacherPanel/dashboard";
@@ -138,6 +138,7 @@ public class TeacherDashboardController {
             model.addAttribute("pageTitle", "Dashboard Page");
 
             model.addAttribute("username",getLoggedUsername());
+            model.addAttribute("errorMessage","Unsuccessful attempt. Please try again.");
 
             return "teacherPanel/dashboard";
         }
@@ -191,29 +192,37 @@ public class TeacherDashboardController {
 
     @PostMapping("create-grant")
     public String submitGrantForm(@Valid @ModelAttribute("grant") GrantRequestDTO grantRequestDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+
         if(bindingResult.hasErrors()){
-            String username = getLoggedUsername();
-            UserDTO userDTO = userService.getByUsername(username);
-            List<GrantDTO> grants = grantService.getByUserId(userDTO.getId());
-            List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getByUserId(userDTO.getId());
-            SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO = new SubscriptionPaymentRequestDTO();
+            try {
+                String username = getLoggedUsername();
+                UserDTO userDTO = userService.getByUsername(username);
+                List<GrantDTO> grants = grantService.getByUserId(userDTO.getId());
+                List<SubscriptionPaymentDTO> subscriptionPayments = subscriptionPaymentService.getByUserId(userDTO.getId());
+                SubscriptionPaymentRequestDTO subscriptionPaymentRequestDTO = new SubscriptionPaymentRequestDTO();
 
-            List<Integer> years = CommonMethod.getLastFewYears();
-            Integer lastPaymentYear = subscriptionPaymentService.getLastPaymentYear(userDTO.getId());
-            PaymentInfoDTO paymentInfo = subscriptionPaymentService.getPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
-            NextPaymentDTO nextPaymentDTO = yearlyfeeService.getNextPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
-            model.addAttribute("errorFrom","grant");
-            model.addAttribute("years", years);
-            model.addAttribute("paymentInfo", paymentInfo);
-            model.addAttribute("nextPayment", nextPaymentDTO);
-            model.addAttribute("user",userDTO);
-            model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
-            model.addAttribute("grant",grantRequestDTO);
-            model.addAttribute("grants",grants);
-            model.addAttribute("subscriptionPayments",subscriptionPayments);
-            model.addAttribute("pageTitle", "Dashboard Page");
+                List<Integer> years = CommonMethod.getLastFewYears();
+                Integer lastPaymentYear = subscriptionPaymentService.getLastPaymentYear(userDTO.getId());
+                PaymentInfoDTO paymentInfo = subscriptionPaymentService.getPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
+                NextPaymentDTO nextPaymentDTO = yearlyfeeService.getNextPaymentInfo(lastPaymentYear,userDTO.getJoiningDate().getYear());
+                model.addAttribute("errorFrom","grant");
+                model.addAttribute("years", years);
+                model.addAttribute("paymentInfo", paymentInfo);
+                model.addAttribute("nextPayment", nextPaymentDTO);
+                model.addAttribute("user",userDTO);
+                model.addAttribute("subscriptionPayment",subscriptionPaymentRequestDTO);
+                model.addAttribute("grant",grantRequestDTO);
+                model.addAttribute("grants",grants);
+                model.addAttribute("subscriptionPayments",subscriptionPayments);
+                model.addAttribute("pageTitle", "Dashboard Page");
 
-            model.addAttribute("username",getLoggedUsername());
+                model.addAttribute("username",getLoggedUsername());
+                model.addAttribute("errorMessage","Unsuccessful attempt. Please try again.");
+
+            }
+            catch (Exception exception){
+                logger.debug("Grand Exception: "+exception);
+            }
 
             return "teacherPanel/dashboard";
         }
@@ -274,11 +283,11 @@ public class TeacherDashboardController {
 
     }
 
-    @GetMapping("delete-grant")
-    public String deleteTodo(@RequestParam long id , RedirectAttributes redirectAttributes) {
+    @PostMapping("delete-grant")
+    public String deleteGrant(@RequestParam long id , RedirectAttributes redirectAttributes) {
         grantService.delete(id);
         redirectAttributes.addFlashAttribute("successMessage", "Deleted Successfully. Thank You.");
-        return "redirect:/grants";
+        return "redirect:/user/dashboard";
     }
 
     private String getLoggedUsername(){
