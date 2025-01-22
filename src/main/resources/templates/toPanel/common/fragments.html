@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html  lang="" xmlns:th="http://www.thymeleaf.org"  th:fragment="Layout(content)">
+<head th:fragment="html_head">
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">Title</title>
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
+    
+    <link th:href="@{https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css}" rel="stylesheet">
+    <!-- css -->
+
+    <link th:href="@{https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" th:href="@{https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css}" />
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css}" rel="stylesheet" /> 
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+    <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+    <link th:href="@{https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&family=Tiro+Bangla:ital@0;1&display=swap}" rel="stylesheet">
+    <!-- Js -->
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{https://cdn.datatables.net/2.0.7/js/dataTables.js}"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+
+    <style>
+        body {
+        font-family: "Tiro Bangla", serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+       
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 dark:text-white">
+
+    <div class="border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 fixed py-1 left-0 top-0 z-50">
+      <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 ">
+         <span class="sr-only">Open sidebar</span>
+         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+         </svg>
+      </button>
+   </div>
+   
+    <aside th:replace="toPanel/common/sidebar::sidebar" />
+
+    <div class="sm:ml-64 ">
+
+        <nav class="fixed -right-12 top-0 z-40 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 px-12">  
+
+            <div class="flex justify-end px-3 py-3 lg:px-5 lg:pl-3">
+                    <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-8 h-8 rounded-full"  src="https://ui-avatars.com/api/?name=T+O&amp;color=FFFFFF&amp;background=09090b" alt="user photo">
+                    </button>
+                    <div id="dropdown-user" class="hidden">
+                        <div class="z-50 relative  right-7 w-56 border-1 border-gray-100 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-gray-600 "  >
+
+                            <div class=" flex w-full gap-2 p-1 text-sm " >
+                                <svg  class="h-5 w-5 text-gray-400 "    xmlns="http://www.w3.org/2000/svg"    viewBox="0 0 20 20" fill="currentColor"    aria-hidden="true"    >
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z"    clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="flex-1 text-gray-700" > TO </span>
+                            </div>
+
+                            <div class="p-1">
+                                <div class=" grid grid-flow-col gap-x-1" >
+                
+                                        
+                                        <button type="button" class="flex justify-center rounded-lg p-2 outline-none transition duration-75 bg-gray-50 dark:bg-gray-800" id="lightTheme" >
+                                            <svg  class="h-5 w-5"   xmlns="http://www.w3.org/2000/svg"    viewBox="0 0 20 20"    fill="currentColor"    aria-hidden="true"    >
+                                                <path  d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zM10 15a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 15zM10 7a3 3 0 100 6 3 3 0 000-6zM15.657 5.404a.75.75 0 10-1.06-1.06l-1.061 1.06a.75.75 0 001.06 1.06l1.06-1.06zM6.464 14.596a.75.75 0 10-1.06-1.06l-1.06 1.06a.75.75 0 001.06 1.06l1.06-1.06zM18 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0118 10zM5 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 015 10zM14.596 15.657a.75.75 0 001.06-1.06l-1.06-1.061a.75.75 0 10-1.06 1.06l1.06 1.06zM5.404 6.464a.75.75 0 001.06-1.06l-1.06-1.06a.75.75 0 10-1.061 1.06l1.06 1.06z"></path>
+                                            </svg>
+                                        </button>
+
+                                        <button type="button" class="flex justify-center rounded-lg p-2 outline-none transition duration-75 dark:bg-gray-800" id="darkTheme">
+                                            <svg  class="h-5 w-5"    xmlns="http://www.w3.org/2000/svg"    viewBox="0 0 20 20"    fill="currentColor"    aria-hidden="true"    >
+                                                <path  fill-rule="evenodd"  d="M7.455 2.004a.75.75 0 01.26.77 7 7 0 009.958 7.967.75.75 0 011.067.853A8.5 8.5 0 116.647 1.921a.75.75 0 01.808.083z"    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+
+                                        <button class="flex justify-center rounded-lg p-2 outline-none transition duration-75 hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5 text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400">
+                                            <svg  class="h-5 w-5"    xmlns="http://www.w3.org/2000/svg"    viewBox="0 0 20 20"    fill="currentColor"    aria-hidden="true"    >
+                                                <path    fill-rule="evenodd"    d="M2 4.25A2.25 2.25 0 014.25 2h11.5A2.25 2.25 0 0118 4.25v8.5A2.25 2.25 0 0115.75 15h-3.105a3.501 3.501 0 001.1 1.677A.75.75 0 0113.26 18H6.74a.75.75 0 01-.484-1.323A3.501 3.501 0 007.355 15H4.25A2.25 2.25 0 012 12.75v-8.5zm1.5 0a.75.75 0 01.75-.75h11.5a.75.75 0 01.75.75v7.5a.75.75 0 01-.75.75H4.25a.75.75 0 01-.75-.75v-7.5z"    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+
+                                </div>
+                            </div>
+
+                            <div class="p-1">
+                                <form action="/logout" method="post" >
+                                    <input type="text"  class="hidden"  name="_token"    value="wcwX1MGnRQF1MU4iNrbQwWFA52kfVUlbyuPsrNvk"  autocomplete="off"
+                                    />
+                                    <button  type="submit" class=" flex gap-x-3 text-gray-700 text-sm">
+                                        <svg class=" h-5 w-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" >
+                                            <path fill-rule="evenodd"  d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z"    clip-rule="evenodd"></path>
+                                            <path  fill-rule="evenodd"    d="M19 10a.75.75 0 00-.75-.75H8.704l1.048-.943a.75.75 0 10-1.004-1.114l-2.5 2.25a.75.75 0 000 1.114l2.5 2.25a.75.75 0 101.004-1.114l-1.048-.943h9.546A.75.75 0 0019 10z"    clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class=" flex-1  text-gray-700 " > Sign out </span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <div class="relative px-4 py-1 -top-8">
+            <div th:insert="${content}" />
+        </div>
+    </div>
+           
+ <script>
+      
+
+        var lightTheme = document.getElementById('lightTheme');
+        var darkTheme = document.getElementById('darkTheme');
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightTheme.classList.remove('bg-gray-50');
+            darkTheme.classList.add('bg-gray-50');
+        } else {
+            document.documentElement.classList.remove('dark')
+            lightTheme.classList.add('bg-gray-50');
+            darkTheme.classList.remove('bg-gray-50');
+        }
+
+      
+        lightTheme.addEventListener('click',function(){
+            lightTheme.classList.add('bg-gray-50');
+            darkTheme.classList.remove('bg-gray-50');
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+
+        })
+        darkTheme.addEventListener('click',function(){
+            lightTheme.classList.remove('bg-gray-50');
+            darkTheme.classList.add('bg-gray-50');
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        });
+
+    </script>
+</body>
+</html>

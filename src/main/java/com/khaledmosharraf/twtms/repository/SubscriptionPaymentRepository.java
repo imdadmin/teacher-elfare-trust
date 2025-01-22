@@ -25,6 +25,9 @@ public interface SubscriptionPaymentRepository extends JpaRepository<Subscriptio
     SubscriptionPayment findFirstByTranId(String tranId);
     SubscriptionPayment findFirstByToken(String token);
 
+    @Query("SELECT u FROM SubscriptionPayment u WHERE u.user.subDistrict.id = :subDistrictId " +
+            " ORDER BY u.id DESC")
+    List<SubscriptionPayment> findBySubDistrictId(@Param("subDistrictId") Long subDistrictId);
 
     @Query("SELECT g FROM SubscriptionPayment g WHERE g.createdDate BETWEEN :fromDate AND :toDate ORDER BY g.id ASC")
     List<SubscriptionPayment> findAllSubscriptionPaymentsByDates(@Param("fromDate") LocalDateTime fromDate, @Param("toDate") LocalDateTime toDate);

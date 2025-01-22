@@ -75,6 +75,11 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
         List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findByUserIdOrderByIdDesc(id);
         return subscriptionPayments.stream().map(subscriptionPaymentMapper::toDTO).collect(Collectors.toList());
     }
+    @Override
+    public List<SubscriptionPaymentDTO> getBySubDistrictId(Long subDistrictId) {
+        List<SubscriptionPayment> subscriptionPayments = subscriptionPaymentRepository.findBySubDistrictId(subDistrictId);
+        return subscriptionPayments.stream().map(subscriptionPaymentMapper::toDTO).collect(Collectors.toList());
+    }
 
     @Override
     public List<SubscriptionPaymentDTO> getByUsername(String username) {
@@ -119,6 +124,17 @@ public class SubscriptionPaymentServiceImpl extends IdCheckingService<Subscripti
 
     public Map<Long, PaymentInfoDTO> getLastPaymentsForUsers() {
         List<User> users = userRepository.findAllTeacher();
+        Map<Long, PaymentInfoDTO> paymentInfoMap = new HashMap<>();
+
+        for (User user : users) {
+            Integer lastPayment = subscriptionPaymentRepository.findLastPaymentYear(user.getId());
+            PaymentInfoDTO paymentInfo = getPaymentInfo(lastPayment,user.getJoiningDate().getYear());
+            paymentInfoMap.put(user.getId(), paymentInfo);
+        }
+        return paymentInfoMap;
+    }
+    public Map<Long, PaymentInfoDTO> getLastPaymentsForUsersByUpazila(Long subDistrictId) {
+        List<User> users = userRepository.findBySubDistrictId(subDistrictId);
         Map<Long, PaymentInfoDTO> paymentInfoMap = new HashMap<>();
 
         for (User user : users) {

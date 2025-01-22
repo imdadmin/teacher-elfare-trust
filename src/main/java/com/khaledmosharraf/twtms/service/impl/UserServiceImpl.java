@@ -59,10 +59,18 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
             return userMapper.toDTO(user);
             //throw new ResourceNotFoundException("User found with username: " + userDTO.getUsername());
         }
-        Set<String> roles = new HashSet<>();
-        roles.add("USER");
-        userDTO.setRoles(roles);
         String defaultPassword = userDTO.getPassword();
+        String tmpUsername = userDTO.getUsername();
+        Set<String> roles = new HashSet<>();
+
+        if (tmpUsername.startsWith("TO")) {
+            roles.add("TO");
+            defaultPassword = "12345678";
+        } else {
+            roles.add("USER");
+        }
+        userDTO.setRoles(roles);
+
         String encodedPassword = passwordEncoder.encode(defaultPassword);
         userDTO.setPassword(encodedPassword);
         User user = userMapper.toModel(userDTO);

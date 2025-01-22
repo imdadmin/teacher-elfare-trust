@@ -12,6 +12,7 @@ import java.util.Map;
 
 public interface SubscriptionPaymentService extends CrudService<SubscriptionPaymentDTO,Long> {
     public List<SubscriptionPaymentDTO> getByUserId(Long id);
+    public List<SubscriptionPaymentDTO> getBySubDistrictId(Long subDistrictId);
     public List<SubscriptionPaymentDTO> getByUsername(String username);
 
     public SubscriptionPaymentDTO getByTranId(String tranId);
@@ -19,7 +20,7 @@ public interface SubscriptionPaymentService extends CrudService<SubscriptionPaym
     public Integer getLastPaymentYear( Long userId);
     public PaymentInfoDTO getPaymentInfo( Integer lastPaymentYear, Integer joiningYear );
     public Map<Long, PaymentInfoDTO> getLastPaymentsForUsers();
-
+    Map<Long, PaymentInfoDTO> getLastPaymentsForUsersByUpazila(Long subDistrictId);
     public List<SubscriptionPaymentDTO> getAllSubscriptionPaymentsByDates(LocalDateTime fromDate, LocalDateTime toDate);
 
     public List<SubscriptionPaymentDTO> getByDistrictIdByDates(Long districtId,LocalDateTime fromDate,LocalDateTime toDate);

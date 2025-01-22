@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymleaf.org"
+  th:replace="toPanel/common/fragments::Layout(~{::section})">
+<head th:replace="~{common/fragments :: html_head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTopic}">টাইটেল</title>
+</head>
+<body>
+ <section class="mt-24 overflow-hidden">
+         <!-- Modal Delete-->
+         <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                 <div class="relative p-4 w-full max-w-md max-h-full">
+                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                 <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                         </svg>
+                                         <span class="sr-only">Close modal</span>
+                                 </button>
+                                 <div class="p-4 md:p-5 text-center">
+                                         <div class="rounded-full fi-color-custom bg-red-100 dark:bg-red-500/20 p-3" style="    width: 50px;height:50px;color: red; position: relative; left: 50%;transform: translateX(-50%); top:10px">
+                                                 <svg class="fi-modal-icon h-6 w-6 text-custom-600 dark:text-custom-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                                                 </svg>
+                                         </div>
+                                         <h1 class="my-5 text-xl  text-gray-700 dark:text-gray-700 font-bold" >Delete Grant</h1>
+                                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400 text-xl">are you sure you would like to do this?</h3>
+                                         <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
+                                         <a th:href="@{${@urlConstants.togrant.DELETE+'?id='+grant.id} }"
+                                            type="button"
+                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                 Confirm
+                                         </a>
+                                 </div>
+                         </div>
+                 </div>
+         </div>
+
+         <!-- Page Title -->
+        <header class="fi-header   gap-4 pb-10  sm:flex-row sm:items-center sm:justify-between">
+                <nav class="fi-breadcrumbs mb-2 hidden sm:block">
+                <ol class="flex flex-wrap items-center gap-x-2">
+                <li class="flex gap-x-2">
+                        <a th:href="@{${@urlConstants.togrant.LIST}}" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200">গ্র্যান্ট আবেদন   </a>
+                </li>
+                <li class="flex gap-x-2">
+                <svg class="h-5 w-5 text-gray-400 dark:text-gray-500 rtl:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"></path>
+                </svg>
+                <a href="#" class="text-sm font-medium text-gray-500 outline-none transition duration-75 hover:text-gray-700 focus-visible:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:focus-visible:text-gray-200" th:text="${pageStatus_tag}">নতুন</a>
+                </li>
+                </ol>
+                </nav>
+                <div class="pt-5 flex justify-between">
+                        <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl pt-5" th:text="${pageTopic}">টাইটেল</h1>
+                        <!-- Action button -->
+                        <div>
+                                <a th:href="@{/application/grant(applicationId=${grant.id})}"  target="_blank"class="inline-flex items-center px-4 py-2 bg-blue-500 border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-blue-800 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                   >PDF
+                                </a>
+
+                                <a
+                                        th:href="@{${@urlConstants.togrant.VIEW+'?id='+grant.id} }"
+                                        class="inline-flex items-center px-4 py-2 bg-gray-200 border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                        th:if="${pageStatus == 2}"
+
+                                >দেখুন </a>
+
+                                <a th:href="@{${@urlConstants.togrant.UPDATE+'?id='+grant.id} }"
+                                   class="inline-flex items-center px-4 py-2 bg-yellow-600 border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-yellow-400 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white focus:ring-offset-2 transition ease-in-out duration-150"
+                                   th:if="${pageStatus == 3}"
+                                >
+                                        সংশোধন </a>
+
+                                <button
+                                        data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                                        class=" text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                                        type="button"
+                                        th:if="${pageStatus == 2}"
+                                >ডিলেট</button>
+                        </div>
+                </div>
+
+        </header>
+        <form method="post" th:object="${grant}" class="bg-white">
+
+                <div class="px-4 py-5  sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
+
+                        <div class="grid grid-cols-2 gap-6">
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{applicationDate}"><strong> <span>আবেদনের তারিখ</span><span class="red">*</span></strong></label>
+
+                                                <input
+                                                        type="date" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                        th:field="*{applicationDate}"
+                                                        th:disabled="${pageStatus == 3}">
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{applicationDate}')}" th:errors="*{applicationDate}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+                                <!-- User -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{userId}"> <strong><span>শিক্ষক</span><span class="red">*</span></strong></label>
+
+                                                <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
+                                                        th:field="*{userId}"   th:disabled="${pageStatus == 3}">
+                                                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}">শিক্ষকের নাম</option>
+                                                </select>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{userId}')}" th:errors="*{userId}" >Error</p>
+                                        </div>
+                                </fieldset>
+                                <!-- Amount -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{amount}"><strong> <span>পরিমাণ (TK)</span><span class="red">*</span></strong></label>
+
+                                                <input
+                                                        type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                        th:field="*{amount}"
+                                                        th:disabled="${pageStatus == 3}">
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{amount}')}" th:errors="*{amount}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{remarks}"><strong> <span>মন্তব্য</span><span class="red">*</span></strong></label>
+
+                                                <input
+                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                        th:field="*{remarks}"
+                                                        th:disabled="${pageStatus == 3}">
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{remarks}')}" th:errors="*{remarks}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+
+                                <!-- Status  -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700"
+                                                th:for="*{status}"><strong><span>স্ট্যাটাস</span><span class="red">*</span></strong></label>
+                                                <select
+                                                class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 " th:field="*{status}"
+                                                th:disabled="${pageStatus == 3}">
+                                                        <option value="Pending">প্যান্ডিং</option>
+                                                        <option value="Accepted">গৃহীত</option>
+                                                        <option value="Rejected">প্রত্যাখ্যাত</option>
+                                                </select>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{status}')}" th:errors="*{status}" >Error</p>
+                                        </div>
+                                </fieldset>
+
+
+                                <!-- type  -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700"
+                                                th:for="*{type}"><strong><span>তহবিলের অনুরোধের ধরন</span><span class="red">*</span></strong></label>
+
+                                                <select
+                                                class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 " th:field="*{type}" onchange="handleGrant(this.value)"
+                                                th:disabled="${pageStatus == 3}">
+                                                        <option value="Medical Aid">চিকিৎসা সেবা</option>
+                                                        <option value="Scholarship">বৃত্তি</option>
+                                                </select>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{type}')}" th:errors="*{type}" >Error</p>
+                                        </div>
+                                </fieldset>
+
+
+
+                                <!-- currentPayscale -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{currentPayscale}"><strong> <span>মূল বেতন</span><span class="red">*</span></strong></label>
+
+                                                <input
+                                                type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{currentPayscale}"
+                                                th:disabled="${pageStatus == 3}">
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{currentPayscale}')}" th:errors="*{currentPayscale}" >Error</p>
+                                        </div>
+                                </fieldset>
+                                <div class="w-full col-span-2">
+                                        <h1>যার জন্য আবেদন করা হচ্ছে </h1>
+                                </div>
+                                <!-- requestedForName -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{requestedForName}"><strong> <span>নাম</span><span class="red">*</span></strong></label>
+
+                                                <input
+                                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{requestedForName}"
+                                                th:disabled="${pageStatus == 3}">
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requestedForName}')}" th:errors="*{requestedForName}" >Error</p>
+                                        </div>
+                                </fieldset>
+
+                                <!-- requestedForDateOfBirth -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700"  th:for="*{requestedForDateOfBirth}"><strong> <span>জন্ম তারিখ</span><span class="red">*</span></strong></label>
+
+                                                <input
+                                                type="date" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{requestedForDateOfBirth}"
+                                                th:disabled="${pageStatus == 3}">
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requestedForDateOfBirth}')}" th:errors="*{requestedForDateOfBirth}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{relation}"><strong> <span>সদস্যের সাথে সম্পর্ক</span><span class="red">*</span></strong></label>
+
+                                                <input
+                                                        type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                        th:field="*{relation}"
+                                                        th:disabled="${pageStatus == 3}">
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{relation}')}" th:errors="*{relation}" >Error</p>
+                                        </div>
+                                </fieldset>
+
+                                <!-- educationDetails -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1 hidden" id="scholarshipOption1" >
+
+                                                <label class="block font-medium text-sm text-gray-700 "  th:for="*{educationDetails}"><strong><span>অধ্যয়নরত প্রতিষ্ঠানের নাম এবং শ্রেনী</span> <span class="red">*</span></strong></label>
+
+                                                <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                th:field="*{educationDetails}"
+                                                th:disabled="${pageStatus == 3}">
+                                                </textarea>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{educationDetails}')}" th:errors="*{educationDetails}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+
+                                <div id="medicalAidOption1"  class="col-span-2">
+                                        <fieldset>
+                                                <div class="col-span-2 sm:col-span-1  py-3">
+                                                        <label class="block font-medium text-sm text-gray-700" th:for="*{diseaseName}"><strong> <span>রোগের নাম</span><span class="red">*</span></strong></label>
+
+                                                        <input
+                                                                type="text" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                                th:field="*{diseaseName}"
+                                                                th:disabled="${pageStatus == 3}">
+
+                                                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{diseaseName}')}" th:errors="*{diseaseName}" >Error</p>
+                                                </div>
+                                        </fieldset>
+                                        <fieldset>
+                                                <div class="col-span-2 sm:col-span-1  py-3">
+
+                                                        <label class="block font-medium text-sm text-gray-700" th:for="*{diseaseDetails}"><strong><span>রোগের বিবরণ</span> <span class="red">*</span></strong></label>
+
+                                                        <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                                  th:field="*{diseaseDetails}"
+                                                                  th:disabled="${pageStatus == 3}">
+                                                </textarea>
+
+                                                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{diseaseDetails}')}" th:errors="*{diseaseDetails}" >Error</p>
+
+                                                </div>
+                                        </fieldset>
+                                        <fieldset>
+                                                <div class="col-span-1 sm:col-span-1 py-3">
+                                                        <input
+                                                                type="checkbox" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1"
+                                                                value="yes"
+                                                                th:field="*{surgery}"
+                                                                th:disabled="${pageStatus == 3}">
+                                                        <label class="form-check-label" th:for="*{surgery}">
+                                                                সার্জারি প্রয়োজন
+                                                        </label>
+
+                                                        <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{surgery}')}" th:errors="*{surgery}" >Error</p>
+                                                </div>
+                                        </fieldset>
+                                </div>
+                                <!-- requestedAmount -->
+                                <fieldset>
+                                        <div class="col-span-2 sm:col-span-1">
+
+                                                <label class="block font-medium text-sm text-gray-700"
+                                                       th:for="*{requestedAmount}"><strong> <span> অনুরোধকৃত পরিমাণ (TK)</span><span class="red">*</span></strong></label>
+
+                                                <input
+                                                        type="number" class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                        th:field="*{requestedAmount}"
+                                                        th:disabled="${pageStatus == 3}">
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{requestedAmount}')}" th:errors="*{requestedAmount}" >Error</p>
+
+                                        </div>
+                                </fieldset>
+
+
+                                <div class="col-span-full hidden" id="scholarshipOption2" >
+                                        <div class="col-span-2 sm:col-span-1  py-3">
+
+                                                <label class="block font-medium text-sm text-gray-700" th:for="*{educationDetails2}"><strong><span>বিভিন্ন পরীক্ষার বিবরণ</span> <span class="red">*</span></strong></label>
+
+                                                <textarea class="border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                                          th:field="*{educationDetails2}"
+                                                          th:disabled="${pageStatus == 3}">
+                                                </textarea>
+
+                                                <p class="mt-2 text-sm text-red-600" th:if="${#fields.hasErrors('*{educationDetails2}')}" th:errors="*{educationDetails2}" >Error</p>
+
+                                        </div>
+                                </div>
+
+
+                        </div>
+                </div>
+
+                <div class="flex items-center gap-2 justify-start px-4 py-3  text-end mb-5">
+                        <button
+                                type="submit"
+                                class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-sm text-white  tracking-widest hover:bg-yellow-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 "
+                                th:text="${pageStatus == 2 ? 'আপডেট' : 'নতুন'}"
+                                th:if="${pageStatus != 3}"
+                                >
+                                সাবমিট
+                        </button>
+                        <a th:href="@{${@urlConstants.togrant.LIST}}" class="inline-flex items-center px-4 py-2 bg-white border rounded-md font-semibold text-sm text-gray-800 tracking-widest hover:bg-gray-200 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                বাতিল
+                        </a>
+                </div>
+        </form>
+
+         <script>
+                 var medicalAidOption1 = document.getElementById("medicalAidOption1");
+                 var scholarshipOption1 = document.getElementById("scholarshipOption1");
+                 var scholarshipOption2 = document.getElementById("scholarshipOption2");
+
+                 window.onload = function() {
+                         const typeElement = document.getElementById("type");
+                         if (typeElement && typeElement.value === "Scholarship") {
+                                 handleGrant("Scholarship");
+                         }
+                         else{
+                                 handleGrant("Medical Aid");
+                         }
+
+                 };
+                 function handleGrant(option) {
+
+                         if (option === "Medical Aid") {
+                                 medicalAidOption1.classList.remove('hidden');
+                                 scholarshipOption1.classList.remove('hidden');
+                                 scholarshipOption2.classList.remove('hidden');
+                                 scholarshipOption1.classList.add('hidden');
+                                 scholarshipOption2.classList.add('hidden');
+                         } else if (option === "Scholarship") {
+
+                                 scholarshipOption1.classList.remove('hidden');
+                                 scholarshipOption2.classList.remove('hidden');
+                                 medicalAidOption1.classList.remove('hidden');
+                                 medicalAidOption1.classList.add('hidden');
+
+                         }
+                 }
+         </script>
+
+   </section>
+</body>
+</html>

@@ -5,10 +5,12 @@ public final class UrlConstants {
 
     public static final String USER_BASE = "/user";
     public static final String ADMIN_BASE = "/admin";
+    public static final String TO_BASE = "/to";
     public static final class Common {
         public static final String INDEX = "/";
         public static final String USER_DASHBOARD = USER_BASE+"/dashboard";
         public static final String ADMIN_DASHBOARD = ADMIN_BASE+"/dashboard";
+        public static final String TO_DASHBOARD = TO_BASE+"/dashboard";
     }
 
     public static final class User {
@@ -88,6 +90,28 @@ public final class UrlConstants {
     }
     public static final class Report {
         public static final String BASE = ADMIN_BASE+"/report";
+        public static final String GRANT = BASE + "/grant";
+        public static final String PAYMENT = BASE + "/payment";
+        public static final String MEMBER = BASE + "/member";
+    }
+    public static final class TOSubscriptionPayment {
+        public static final String BASE = TO_BASE+"/payment";
+        public static final String LIST = TO_BASE+"/payments";
+        public static final String CREATE = BASE + "/create";
+        public static final String UPDATE = BASE + "/update";
+        public static final String DELETE = BASE + "/delete";
+        public static final String VIEW = BASE + "/view";
+    }
+    public static final class TOGrant {
+        public static final String BASE = TO_BASE+"/grant";
+        public static final String LIST = TO_BASE+"/grants";
+        public static final String CREATE = BASE + "/create";
+        public static final String UPDATE = BASE + "/update";
+        public static final String DELETE = BASE + "/delete";
+        public static final String VIEW = BASE + "/view";
+    }
+    public static final class TOReport {
+        public static final String BASE = TO_BASE+"/report";
         public static final String GRANT = BASE + "/grant";
         public static final String PAYMENT = BASE + "/payment";
         public static final String MEMBER = BASE + "/member";

@@ -93,6 +93,8 @@ public class AuthController {
             redirectURL = "/admin/dashboard";
         } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
             redirectURL = "/user/dashboard";
+        } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_TO"))) {
+            redirectURL = "/to/dashboard";
         }
         logger.debug("redirect url: "+redirectURL);
         return "redirect:"+redirectURL;

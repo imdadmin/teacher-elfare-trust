@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="toPanel/common/fragments::Layout(~{::section})"
+      xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{common/fragments :: html_head}">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" e_name="viewport">
+    <title th:text="${pageTopic}">Title</title>
+</head>
+<body>
+<section class="mt-14 mx-2 ">
+    <div class=" mx-auto  px-4 ">
+
+        <p class="text-sm pb-5">সদস্য<strong class="px-2">></strong> <span class="text-yellow-500 ">রিপোর্ট</span></p>
+        <h2 class="text-xl font-bold mb-4 fontBangla my-2" th:text="${pageTopic}">Title</h2>
+        <form action="/to/grant/pdf" method="get">
+            <div class="px-4 py-5  sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- District -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label
+                                class="block font-medium text-sm text-gray-700"
+                        > <strong> <span>জেলা</span><span class="text-red-600 ml-1 ">*</span></strong>
+                        </label>
+                        <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
+                                name="districtId">
+                            <option value="">সকল জেলা</option>
+                            <option th:each="district : ${districts}" th:text="${district.eName}"
+                                    th:value="${district.id}">জেলার নাম
+                            </option>
+                        </select>
+                    </div>
+                    <!-- upazila -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label
+                                class="block font-medium text-sm text-gray-700"
+                        > <strong> <span>উপজেলা</span><span class="text-red-600 ml-1 ">*</span></strong>
+                        </label>
+                        <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
+                                name="subDistrictId">
+                            <option value="">সকল উপজেলা</option>
+                            <option th:each="subDistrict : ${subDistricts}" th:text="${subDistrict.eName}"
+                                    th:value="${subDistrict.id}">উপজেলার নাম
+                            </option>
+                        </select>
+                    </div>
+                    <!-- From Date -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block font-medium text-sm text-gray-700">
+                            <strong><span>From Date</span><span class="text-red-600 ml-1">*</span></strong>
+                        </label>
+                        <input type="date" required class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
+                               name="fromDate">
+                    </div>
+                    <!-- To Date -->
+                    <div class="col-span-2 sm:col-span-1">
+                        <label class="block font-medium text-sm text-gray-700">
+                            <strong><span>To Date</span><span class="text-red-600 ml-1">*</span></strong>
+                        </label>
+                        <input type="date" required class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
+                               name="toDate">
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex items-center gap-2 justify-start px-4 py-3  text-end ">
+                <div class="me-3">
+                </div>
+                <button class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-sm text-white  tracking-widest hover:bg-yellow-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 "
+                        type="submit">
+                    সাবমিট
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
