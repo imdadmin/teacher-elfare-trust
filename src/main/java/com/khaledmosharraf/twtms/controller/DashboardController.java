@@ -56,9 +56,9 @@ public class DashboardController {
         Long totalDistrict = districtRepository.count();
         Long totalSubDistrict = subDistrictRepository.count();
         Double totalExpense = expenseRepository.getTotalExpenseAmount();
-        Long totalGrants = grantRepository.count();
         Long totaluser = userRepository.count();
-        Long totalsub = subscriptionPaymentRepository.count();
+        Long totalsub = subscriptionPaymentRepository.countByStatus("SUCCESS");
+        Long totalGrants = grantRepository.count();
         Long acceptedGrants = grantRepository.countByStatus("Accepted");
         Long rejectedGrants = grantRepository.countByStatus("Rejected");
         model.addAttribute("acceptedGrants", acceptedGrants);

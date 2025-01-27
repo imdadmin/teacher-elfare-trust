@@ -53,5 +53,6 @@ public interface GrantRepository extends JpaRepository<Grant,Long> {
                                                         @Param("fromDate") LocalDateTime fromDate,
                                                         @Param("toDate") LocalDateTime toDate);
     Long countByStatus(String status);
-
+    Long countByStatusAndUser_SubDistrict_Id(String status, Long subDistrictId);
+    Long countByUser_SubDistrict_Id(Long subDistrictId);
 }

@@ -1,5 +1,6 @@
 package com.khaledmosharraf.twtms.controller.TOPanel;
 
+import com.khaledmosharraf.twtms.dto.UserDTO;
 import com.khaledmosharraf.twtms.mapper.GrantRequestMapper;
 import com.khaledmosharraf.twtms.repository.*;
 import com.khaledmosharraf.twtms.service.DistrictService;
@@ -21,7 +22,7 @@ import java.util.UUID;
 
 @Controller
 @SessionAttributes("username")
-public class TOashboardController {
+public class TODashboardController {
 
     @Autowired
     GrantRequestMapper grantRequestMapper;
@@ -45,25 +46,22 @@ public class TOashboardController {
     DistrictRepository districtRepository;
     @Autowired
     SubDistrictRepository subDistrictRepository;
-    Logger logger = LoggerFactory.getLogger(TOashboardController.class);
+    Logger logger = LoggerFactory.getLogger(TODashboardController.class);
     @GetMapping(UrlConstants.Common.TO_DASHBOARD)
     public String showGrantList(Model model){
 
         String requestId = UUID.randomUUID().toString(); // Generate if not present
         logger.debug("Controller request ID: "+ requestId);
         logger.debug("request count: ");
-        Long totalDistrict = districtRepository.count();
-        Long totalSubDistrict = subDistrictRepository.count();
-        Double totalExpense = expenseRepository.getTotalExpenseAmount();
-        Long totalGrants = grantRepository.count();
-        Long totaluser = userRepository.count();
-        Long totalsub = subscriptionPaymentRepository.count();
-        Long acceptedGrants = grantRepository.countByStatus("Accepted");
-        Long rejectedGrants = grantRepository.countByStatus("Rejected");
+        String username = getLoggedUsername();
+        UserDTO userDTO = userService.getByUsername(username);
+        Long subDistrictId = userDTO.getSubDistrict().getId();
+        Long totaluser = userRepository.countBySubDistrict_Id(subDistrictId);
+        Long totalsub = subscriptionPaymentRepository.countByStatusAndUser_SubDistrict_Id("SUCCESS",subDistrictId);
+        Long totalGrants = grantRepository.countByUser_SubDistrict_Id(subDistrictId);
+        Long acceptedGrants = grantRepository.countByStatusAndUser_SubDistrict_Id("Accepted",subDistrictId);
+        Long rejectedGrants = grantRepository.countByStatusAndUser_SubDistrict_Id("Rejected",subDistrictId);
         model.addAttribute("acceptedGrants", acceptedGrants);
-        model.addAttribute("totalDistrict", totalDistrict);
-        model.addAttribute("totalSubDistrict", totalSubDistrict);
-        model.addAttribute("totalExpense", totalExpense);
         model.addAttribute("totalGrants", totalGrants);
         model.addAttribute("rejectedGrants", rejectedGrants);
         model.addAttribute("totaluser", totaluser);

@@ -52,4 +52,7 @@ public interface SubscriptionPaymentRepository extends JpaRepository<Subscriptio
                                                         @Param("subDistrictId") Long subDistrictId,
                                                         @Param("fromDate") LocalDateTime fromDate,
                                                         @Param("toDate") LocalDateTime toDate);
+    Long countByStatus(String status);
+    Long countByUser_SubDistrict_Id(Long subDistrictId);
+    Long countByStatusAndUser_SubDistrict_Id(String status, Long subDistrictId);
 }

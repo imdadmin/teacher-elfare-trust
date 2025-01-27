@@ -16,7 +16,7 @@
             <div class="px-4 py-5  sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
                 <div class="grid grid-cols-2 gap-6">
                     <!-- District -->
-                    <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2 sm:col-span-1" style="display: none;">
                         <label
                                 class="block font-medium text-sm text-gray-700"
                         > <strong> <span>জেলা</span><span class="text-red-600 ml-1 ">*</span></strong>
@@ -24,21 +24,18 @@
                         <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
                                 name="districtId">
                             <option value="">সকল জেলা</option>
-                            <option th:each="district : ${districts}" th:text="${district.eName}"
-                                    th:value="${district.id}">জেলার নাম
-                            </option>
+
                         </select>
                     </div>
                     <!-- upazila -->
-                    <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2 sm:col-span-1" style="display: none;">
                         <label
                                 class="block font-medium text-sm text-gray-700"
                         > <strong> <span>উপজেলা</span><span class="text-red-600 ml-1 ">*</span></strong>
                         </label>
                         <select class="rounded-lg w-full mt-1 border-gray-300 border py-2 px-1 focus:border-indigo-500 focus:ring-indigo-500"
                                 name="subDistrictId">
-                            <option value="">সকল উপজেলা</option>
-                            <option th:each="subDistrict : ${subDistricts}" th:text="${subDistrict.eName}"
+                            <option th:text="${subDistrict.eName}"
                                     th:value="${subDistrict.id}">উপজেলার নাম
                             </option>
                         </select>

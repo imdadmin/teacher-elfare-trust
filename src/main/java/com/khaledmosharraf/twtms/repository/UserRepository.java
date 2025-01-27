@@ -20,5 +20,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findBySubDistrictId(@Param("subDistrictId") Long subDistrictId);
     @Query("SELECT u FROM User u WHERE u.subDistrict.district.id = :districtId AND u.subDistrict.id = :subDistrictId  AND 'USER' MEMBER OF u.roles order by u.id")
     List<User> findByDistrictIdAndSubDistrictId(@Param("districtId") Long districtId, @Param("subDistrictId") Long subDistrictId);
-
+    Long countBySubDistrict_Id(Long subDistrictId);
 }

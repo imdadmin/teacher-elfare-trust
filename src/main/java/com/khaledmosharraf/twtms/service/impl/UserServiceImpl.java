@@ -63,7 +63,7 @@ public class UserServiceImpl extends IdCheckingService<User,Long> implements Use
         String tmpUsername = userDTO.getUsername();
         Set<String> roles = new HashSet<>();
 
-        if (tmpUsername.startsWith("TO")) {
+        if (tmpUsername.startsWith("TEO")) {
             roles.add("TO");
             defaultPassword = "12345678";
         } else {

@@ -151,7 +151,7 @@ public class TOGrantController {
     public String acceptItem(@PathVariable Long id) {
         GrantDTO grantDTO =  grantService.get(id);
         grantDTO.setAmount(grantDTO.getRequestedAmount());
-        grantDTO.setStatus("Accepted");
+        grantDTO.setStatus("Approved by TEO");
         grantService.update(grantDTO);
         return "redirect:"+UrlConstants.TOGrant.LIST; // Redirect to the home page to refresh the table
     }
